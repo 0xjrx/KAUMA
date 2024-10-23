@@ -29,7 +29,7 @@ class ParseJson:
             # For the testserver we need to throw the results in dict format to stdout
             print(json.dumps(self.results, indent=4))
         
-        # We need to exception in case a key is not given    
+        # We need exception in case a key is not given    
         except KeyError as e:
             print(f"Missing key in given Testfile {e}")
         except json.JSONDecodeError:
