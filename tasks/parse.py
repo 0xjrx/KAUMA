@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from tasks.poly import block2poly, poly2block
-import json
 
+import json
+from tasks.poly import block2poly, poly2block
+from common.common import stderr_write
 
 class ParseJson:
     def __init__(self, filename):
@@ -24,16 +25,16 @@ class ParseJson:
                     elif action == "block2poly":
                         self.handleb2p(arguments, test_case_id)
                     else:
-                        print(f"Unknown error for {action} with ID:{test_case_id}")
+                        stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
             
             # For the testserver we need to throw the results in dict format to stdout
             print(json.dumps(self.results, indent=4))
         
         # We need exception in case a key is not given    
         except KeyError as e:
-            print(f"Missing key in given Testfile {e}")
+            stderr_write(f"Missing key in given Testfile {e}")
         except json.JSONDecodeError:
-            print("Error: Failed to decode the file given")
+            stderr_write("Error: Failed to decode the file given")
     
 
     def handlep2b(self, arguments, test_case_id):    

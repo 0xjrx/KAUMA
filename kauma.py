@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from tasks.parse import ParseJson
 from argparse import ArgumentParser
+from common.common import stderr_write
 
 def get_args():
     parser = ArgumentParser()
@@ -15,7 +16,7 @@ def main():
         parser.parse()
 
     except ValueError as e:
-        print(f"Error: {e}")
+        stderr_write(f"Error: {e}")
 
 
 

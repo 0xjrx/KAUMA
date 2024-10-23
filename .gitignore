@@ -7,7 +7,7 @@ venv/
 __pycache__/
 *.py[cod]
 *.pyo
-
+*.pyc
 # Poetry build artifacts
 dist/
 build/
