@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from tasks.parse import parse_json
+from tasks.parse import ParseJson
 from argparse import ArgumentParser
 
 def get_args():
@@ -11,8 +11,9 @@ def get_args():
 def main():
     try:
         args = get_args()
-        parser = parse_json(args.file)
+        parser = ParseJson(args.file)
         parser.parse()
+
     except ValueError as e:
         print(f"Error: {e}")
 
@@ -20,3 +21,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

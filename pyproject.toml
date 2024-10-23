@@ -2,7 +2,7 @@
 name = "kauma"
 version = "0.1.0"
 description = ""
-authors = ["0xjrx <mmarquard737@gmail.com>"]
+authors = ["0xjrx <mrmarquard@protonmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

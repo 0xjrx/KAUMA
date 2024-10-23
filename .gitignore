@@ -1,0 +1,23 @@
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Poetry build artifacts
+dist/
+build/
+*.egg-info/
+
+# VSCode and IDEs
+.vscode/
+.idea/
+
+# Environment variables
+.
+tasks/__pycache__
+
