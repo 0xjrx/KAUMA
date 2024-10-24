@@ -28,7 +28,7 @@ class ParseJson:
                         stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
             
             # For the testserver we need to throw the results in dict format to stdout
-            print(json.dumps(self.results, indent=4))
+            print(json.dumps(self.results))
         
         # We need exception in case a key is not given    
         except KeyError as e:
