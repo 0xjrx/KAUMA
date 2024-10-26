@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+#!/usr/bin/env python3
 
 import json
 from tasks.poly import block2poly, poly2block
 from common.common import stderr_write
+from tasks.gfmul import gfmul
 
 class ParseJson:
     def __init__(self, filename):
@@ -19,15 +21,18 @@ class ParseJson:
                     action = test_case.get("action")
                     arguments = test_case.get("arguments")
                     
+                    
                     # We need to pass the dictionary to the different action handlers
-                    if action == "poly2block":
-                        self.handlep2b(arguments, test_case_id)
-                    elif action == "block2poly":
-                        self.handleb2p(arguments, test_case_id)
-                    else:
-                        stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
-            
-            # For the testserver we need to throw the results in dict format to stdout
+                    match action:
+                        case "poly2block":
+                            self.handlep2b(arguments, test_case_id)
+                        case "block2poly":
+                            self.handleb2p(arguments, test_case_id)
+                        case "gfmul":
+                            self.handle_gfmul(arguments, test_case_id)
+                        case _:
+                            stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
+                                   # For the testserver we need to throw the results in dict format to stdout
             print(json.dumps(self.results))
         
         # We need exception in case a key is not given    
@@ -53,7 +58,12 @@ class ParseJson:
             b2p = block2poly(block)
             poly = b2p.b2p()
             self.results["responses"][test_case_id] = {"coefficients":list(poly)}
-
+    def handle_gfmul(self, arguments, test_case_id):
+        if arguments["semantic"] == 'xex':
+            a = arguments["a"]
+            b = arguments["b"]
+            res = gfmul(a,b)
+            self.results["responses"][test_case_id] = {"product":res}
 
 
 

@@ -6,6 +6,14 @@
         "semantic": "xex",
         "block": "ARIAAAAAAAAAAAAAAAAAgA=="
       }
+    },
+    "b756d760-023d-4b00-bad2-15d2b6da22fe":{
+      "action": "gfmul",
+      "arguments":{
+        "semantic": "xex",
+        "a": "ARIAAAAAAAAAAAAAAAAAgA==",
+        "b": "AgAAAAAAAAAAAAAAAAAAAA=="
+      }
     }
   }
 }
