@@ -6,6 +6,7 @@ import json
 from tasks.poly import block2poly, poly2block
 from common.common import stderr_write
 from tasks.gfmul import gfmul
+from tasks.sea import sea_enc, sea_dec
 
 class ParseJson:
     def __init__(self, filename):
@@ -30,6 +31,8 @@ class ParseJson:
                             self.handleb2p(arguments, test_case_id)
                         case "gfmul":
                             self.handle_gfmul(arguments, test_case_id)
+                        case "sea128":
+                            self.handle_sea(arguments, test_case_id)
                         case _:
                             stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
                                    # For the testserver we need to throw the results in dict format to stdout
@@ -64,6 +67,18 @@ class ParseJson:
             b = arguments["b"]
             res = gfmul(a,b)
             self.results["responses"][test_case_id] = {"product":res}
+    def handle_sea(self, arguments, test_case_id):
+        if arguments["mode"] =='encrypt':
+            key = arguments["key"]
+            input = arguments["input"]
+            res = sea_enc(key, input)
+            self.results["responses"][test_case_id] = {"output":res}
+        if arguments["mode"] =='decrypt':
+            key = arguments["key"]
+            input = arguments["input"]
+            res = sea_dec(key, input)
+            self.results["responses"][test_case_id] = {"output":res}
+        
 
 
 

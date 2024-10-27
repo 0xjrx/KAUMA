@@ -13,7 +13,6 @@ def gfmul(element_1: str, element_2: str):
     byte_arr_poly = base64.b64decode(irr_poly)
     poly = int.from_bytes(byte_arr_poly, byteorder = 'little')
 
-    print(len(byte_arr1)) 
     result = 0
     x = 1 
     if uint2 & 1:
