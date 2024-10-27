@@ -27,6 +27,6 @@ def gfmul(element_1: str, element_2: str):
         x+=1  
         if uint2 == 0:
             break
-    byte_arr_res = result.to_bytes(16, byteorder = 'little')
-    res = base64.b64encode(byte_arr_res).decode('ascii')
+    byte_arr_res = result.to_bytes(17, byteorder = 'little')
+    res = base64.b64encode(byte_arr_res[:-1]).decode('ascii')
     return(res)
