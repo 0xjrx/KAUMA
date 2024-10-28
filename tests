@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd $SCRIPT_DIR
+
+export PYTHONPATH=$(pwd)
+if python3 common/tests.py; then
+  echo ""
+  echo "All tests passed!"
+else
+  echo "Some tests failed"
+fi
+
