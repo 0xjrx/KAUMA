@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-#!/usr/bin/env python3
-
 import json
 from tasks.poly import block2poly, poly2block
 from common.common import stderr_write
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
+from tasks.xex import XEX
 
 class ParseJson:
     def __init__(self, filename):
@@ -33,6 +32,8 @@ class ParseJson:
                             self.handle_gfmul(arguments, test_case_id)
                         case "sea128":
                             self.handle_sea(arguments, test_case_id)
+                        case "xex":
+                            self.handle_xex(arguments, test_case_id)
                         case _:
                             stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
                                    # For the testserver we need to throw the results in dict format to stdout
@@ -78,7 +79,22 @@ class ParseJson:
             input = arguments["input"]
             res = sea_dec(key, input)
             self.results["responses"][test_case_id] = {"output":res}
-        
+    def handle_xex(self, arguments, test_case_id):
+        if arguments["mode"] == 'encrypt':
+            key = arguments["key"]
+            tweak = arguments["tweak"]
+            input = arguments["input"]
+            xex_instance = XEX(key, tweak, input)
+            res = xex_instance.xex_round_enc()
+            self.results["responses"][test_case_id] = {"output": res}
+        if arguments["mode"] == 'decrypt':
+            key = arguments["key"]
+            tweak = arguments["tweak"]
+            input = arguments["input"]
+            xex_instance = XEX(key, tweak, input)
+            res = xex_instance.xex_round_dec()
+            self.results["responses"][test_case_id] = {"output": res}
+    
 
 
 

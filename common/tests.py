@@ -3,6 +3,7 @@
 from tasks.gfmul import gfmul
 from tasks.poly import block2poly, poly2block
 from tasks.sea import sea_enc, sea_dec
+from tasks.xex import XEX
 
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
@@ -41,12 +42,33 @@ def test_sea_dec() -> None:
     assert sea_dec(key, input) == result
     print(f"Sea decrypt test result is: {result}")
 
+def test_xex_enc() -> None:
+    key = "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0="
+    tweak = "6VXORr+YYHrd2nVe0OlA+Q=="
+    input = "/aOg4jMocLkBLkDLgkHYtFKc2L9jjyd2WXSSyxXQikpMY9ZRnsJE76e9dW9olZIW"
+    result = "mHAVhRCKPAPx0BcufG5BZ4+/CbneMV/gRvqK5rtLe0OJgpDU5iT7z2P0R7gEeRDO"
+    xex_inst = XEX(key, tweak, input)
+    assert xex_inst.xex_round_enc() == result
+    print(f"XEX encrypt test result is: {result}")
+
+def test_xex_dec() -> None:
+    key = "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0="
+    tweak = "6VXORr+YYHrd2nVe0OlA+Q=="
+    input = "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
+    xex_inst = XEX(key, tweak, input)
+    result = "SGV5IHdpZSBrcmFzcyBkYXMgZnVua3Rpb25pZXJ0IGphIG9mZmVuYmFyIGVjaHQu"
+    assert xex_inst.xex_round_dec() == result
+    print(f"XEX decrypt test result is: {result}")
+
+
 def tests_run() -> None:
     test_block2poly()
     test_poly2block()
     test_gfmul()
     test_sea_enc()
     test_sea_dec()
+    test_xex_enc()
+    test_xex_dec()
 
 def main():
     tests_run()

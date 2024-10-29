@@ -30,6 +30,25 @@
         "key": "istDASeincoolerKEYrofg==",
         "input": "yv66vvrO263eyviIiDNEVQ=="
       }
+    },
+    "b366d760-023d-4b00-bad2-15d2b6da22fe": {
+      "action": "xex",
+      "arguments": {
+        "mode": "encrypt",
+        "tweak":"6VXORr+YYHrd2nVe0OlA+Q==",
+        "key": "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0=",
+        "input": "/aOg4jMocLkBLkDLgkHYtFKc2L9jjyd2WXSSyxXQikpMY9ZRnsJE76e9dW9olZIW"
+      }
+    },
+    "b366d760-023d-4b08-bad2-15d2b6da22fe": {
+      "action": "xex",
+      "arguments": {
+        "mode": "decrypt",
+        "tweak":"6VXORr+YYHrd2nVe0OlA+Q==",
+        "key": "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0=",
+        "input": "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
+      }
     }
+  
   }
 }

@@ -8,7 +8,6 @@ def get_args():
     parser.add_argument('file', action='store', help='Specify json file')
     return parser.parse_args()
         
-        
 def main():
     try:
         args = get_args()
@@ -22,4 +21,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
