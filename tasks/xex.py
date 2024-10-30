@@ -3,28 +3,44 @@ import base64
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 
-key = "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0="
-tweak = "6VXORr+YYHrd2nVe0OlA+Q=="
-input =       "/aOg4jMocLkBLkDLgkHYtFKc2L9jjyd2WXSSyxXQikpMY9ZRnsJE76e9dW9olZIW"
-key2 = "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0="
-ciphertext =  "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
-
 class XEX:
+    """
+    This class can encrypt and decrypt blocks using XEX as in full disk encryption
+    using input in base64.
+
+    The class function xex_round_* takes a key, tweak and input, beeing either ciphertext oder plaintext
+    which can be a multiple of 16 Byte and is encoded in base64. When creating an instance of this class
+    the input is automatically sliced into 16 Byte blocks, while the Key, which is 32 bytes long, is split into two parts.
+    Afterwards, if the class function is called, both keys are used to iteratively encrypt the plaintext blocks
+    or decrypt the ciphertext.
+    
+    Args:
+        key = Key for en/decryption, length 32 Bytes
+        tweak = Used for multiplication with alpha and xor with the input
+        input  = this can eithe be the plaintext or ciphertext, encoded in b64 as an integer multiple of at least 16 Byte
+    
+    Returns:
+        Encrypted ciphertext or decrypted plaintext in both base64 encoding
+
+    Notes:
+        As of now the alpha polynomial for multiplication is hardcoded, this can be subject to change
+
+    """
     def __init__(self, key, tweak, input):
         self.key = self._handle_key(key)
         self.tweak = tweak
         self.input = self._slice_input(input)
-    
-    def _base64_to_int(self, b64) -> int:
-        bytes = base64.b64decode(b64)
-        return int.from_bytes(bytes, 'big')
-    
-    def _handle_key(self, key):
+   
+    # For our input to be directly split as of creating an instance of this class we implement
+    # a helper function that splits the key
+    def _handle_key(self, key) -> list:
         bytes = base64.b64decode(key)
         key_1 = bytes[:-16]
         key_2 = bytes[16:]
         return [base64.b64encode(key_1).decode('utf-8'), base64.b64encode(key_2).decode('utf-8')]
     
+    # For our input to be sliced into the correct blocks we use this helper function
+    # that is called as of creating an instance of XEX
     def _slice_input(self, input) -> list:
         bytes = base64.b64decode(input)
         input_block = []
@@ -32,18 +48,26 @@ class XEX:
             input_block.append(base64.b64encode(bytes[i:i + 16]).decode('utf-8'))
         return input_block
 
-
-    def _tweak_encr(self):
+    # We need to encrypt the tweak once per encryption/decryption. This function is called 
+    # at the beginning of every encryption
+    def _tweak_encr(self) -> str:
         result = sea_enc(self.key[1], self.tweak)
         return result
-    
-    def xex_round_enc(self):
+
+    # This function encrypts an input and returns the ciphertext as base64
+    def xex_round_enc(self)-> str:
         # Encrypt tweak outside loop
         tweak = self._tweak_encr()
+        
+        # We set our alpha polynomial
         alpha = "Ag=="
+
+        # We initialize our result bytearray
         ciphertext = bytearray()
-        # start loop for every element in input
+
+        # start loop for every block in input
         for input_block in self.input:
+            
             # XOR Input 1 with tweak
             enc_tweak_bytes = base64.b64decode(tweak)
             input_bytes = base64.b64decode(input_block)
@@ -52,22 +76,22 @@ class XEX:
             # Use sea128 to encryt result of encrypted tweak xor input 1
             encrypt_sea = sea_enc(self.key[0],base64.b64encode(xor_result).decode('utf-8'))       
             
-            # xor encrypted tweak with res of sea128 -> Ciphertext
+            # xor encrypted tweak with result of sea128 -> Ciphertext
             encrypt_sea_bytes = base64.b64decode(encrypt_sea)
             xor_result2 = bytes(a ^ b for a, b in zip(enc_tweak_bytes, encrypt_sea_bytes))
             ciphertext.extend(xor_result2) 
+            
             # Multiply tweak 
             tweak = gfmul(tweak,alpha) 
         return base64.b64encode(ciphertext).decode('utf-8')    
     
-    def xex_round_dec(self):
-        # Encrypt tweak outside loop
+    def xex_round_dec(self) -> str:
         tweak = self._tweak_encr()
         alpha = "Ag=="
         ciphertext = bytearray()
-        # start loop for every element in input
+        
         for input_block in self.input:
-            # XOR Input 1 with tweak
+            
             enc_tweak_bytes = base64.b64decode(tweak)
             input_bytes = base64.b64decode(input_block)
             xor_result = bytes(a ^ b for a, b in zip(enc_tweak_bytes, input_bytes))
@@ -79,7 +103,6 @@ class XEX:
             xor_result2 = bytes(a ^ b for a, b in zip(enc_tweak_bytes, encrypt_sea_bytes))
             ciphertext.extend(xor_result2) 
             
-            # Multiply tweak 
             tweak = gfmul(tweak,alpha) 
         return base64.b64encode(ciphertext).decode('utf-8')    
 
