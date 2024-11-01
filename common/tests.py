@@ -60,6 +60,12 @@ def test_xex_dec() -> None:
     assert xex_inst.xex_round_dec() == result
     print(f"XEX decrypt test result is: {result}")
 
+def test_gfmul_arbitrary() -> None:
+    element_1 = "AwEAAAAAAAAAAAAAAAAAgA=="
+    element_2 = "oBAAAAAAAAAAAAAAAAAAAA=="
+    result = "UIAUAAAAAAAAAAAAAAAAAA=="
+    assert gfmul(element_1, element_2) == result
+    print(f"Result for arbitrary gfmul is {result}")
 
 def tests_run() -> None:
     test_block2poly()
@@ -69,6 +75,7 @@ def tests_run() -> None:
     test_sea_dec()
     test_xex_enc()
     test_xex_dec()
+    test_gfmul_arbitrary()
 
 def main():
     tests_run()

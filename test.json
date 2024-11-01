@@ -7,6 +7,37 @@
         "block": "ARIAAAAAAAAAAAAAAAAAgA=="
       }
     },
+    "b856d760-023da4b00-bad2-15d2b6da22fe": {
+      "action": "block2poly",
+      "arguments": {
+        "semantic": "gcm",
+        "block": "ARIAAAAAAAAAAAAAAAAAgA=="
+      }
+    },
+    "b856d760-023d-4b00-bad2-16d2b6da22fe": {
+      "action": "poly2block",
+      "arguments": {
+        "semantic": "gcm",
+        "coefficients": [
+          12,
+          127,
+          9,
+          0
+        ]
+      }
+    },
+    "b356d760-023d-4b00-bad2-15d2b6da22fe": {
+      "action": "poly2block",
+      "arguments": {
+        "semantic": "xex",
+        "coefficients": [
+          12,
+          127,
+          9,
+          0
+        ]
+      }
+    },
     "b756d760-023d-4b00-bad2-15d2b6da22fe": {
       "action": "gfmul",
       "arguments": {
@@ -35,7 +66,7 @@
       "action": "xex",
       "arguments": {
         "mode": "encrypt",
-        "tweak":"6VXORr+YYHrd2nVe0OlA+Q==",
+        "tweak": "6VXORr+YYHrd2nVe0OlA+Q==",
         "key": "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0=",
         "input": "/aOg4jMocLkBLkDLgkHYtFKc2L9jjyd2WXSSyxXQikpMY9ZRnsJE76e9dW9olZIW"
       }
@@ -44,11 +75,10 @@
       "action": "xex",
       "arguments": {
         "mode": "decrypt",
-        "tweak":"6VXORr+YYHrd2nVe0OlA+Q==",
+        "tweak": "6VXORr+YYHrd2nVe0OlA+Q==",
         "key": "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0=",
         "input": "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
       }
     }
-  
   }
 }

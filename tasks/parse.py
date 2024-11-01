@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 import json
-from tasks.poly import block2poly, poly2block
+from tasks.poly import block2poly, poly2block, block2poly_gcm, poly2block_gcm
 from common.common import stderr_write
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
+
 
 class ParseJson:
     def __init__(self, filename):
@@ -54,13 +55,19 @@ class ParseJson:
             block = p2b.p2b()
             # We need to pass the res to our own result dictionary
             self.results["responses"][test_case_id] = {"block":block}
-                
-
+        if arguments["semantic"] == "gcm":
+            coefficients = arguments["coefficients"]
+            block = poly2block_gcm(coefficients)
+            self.results["responses"][test_case_id] = {"block":block}        
     def handleb2p(self, arguments, test_case_id):
         if arguments["semantic"] == "xex":
             block = arguments["block"]
             b2p = block2poly(block)
             poly = b2p.b2p()
+            self.results["responses"][test_case_id] = {"coefficients":list(poly)}
+        if arguments["semantic"] == "gcm":
+            block = arguments["block"]
+            poly = block2poly_gcm(block)
             self.results["responses"][test_case_id] = {"coefficients":list(poly)}
     def handle_gfmul(self, arguments, test_case_id):
         if arguments["semantic"] == 'xex':

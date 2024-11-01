@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import base64
+from tasks.gcm import gcm_sem
+
 
 class poly2block:
     def __init__(self, coefficients: list):
@@ -25,4 +27,12 @@ class block2poly:
                 coefficients.append(i)
         return coefficients
 
-   
+def poly2block_gcm(input):
+    p2b_instance = poly2block(input)
+    poly = p2b_instance.p2b()
+    poly_gcm = gcm_sem(poly)
+    return poly_gcm
+def block2poly_gcm(input):
+    gcm_poly = gcm_sem(input)
+    b2p_instance = block2poly(gcm_poly)
+    return b2p_instance.b2p()
