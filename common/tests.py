@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 from tasks.gfmul import gfmul
-from tasks.poly import block2poly, poly2block
+from tasks.poly import block2poly, poly2block, poly2block_gcm, block2poly_gcm
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
+
 
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
@@ -20,6 +21,14 @@ def test_poly2block() -> None:
     assert res == result
     print(f"Poly2block test result is: {res}")
 
+def test_poly2block_gcm() -> None:
+    coefficients = [12, 127, 9, 0]
+    result = "gEgAAAAAAAAAAAAAAAAAAQ=="
+    res = poly2block_gcm(coefficients)
+    assert res == result
+    print(f"Poly2block_gcm test result is: {res}")
+
+    
 def test_block2poly() -> None:
     block = "ARIAAAAAAAAAAAAAAAAAgA=="
     result = [0, 9, 12, 127]
@@ -27,6 +36,14 @@ def test_block2poly() -> None:
     res = b2p_instance.b2p()
     assert res == result
     print(f"Block2poly test result is: {res}")
+
+def test_block2poly_gcm() -> None:
+    block = "gEgAAAAAAAAAAAAAAAAAAQ=="
+    result = [0, 9, 12, 127]
+    res = block2poly_gcm(block)
+    assert res == result
+    print(f"Block2poly_gcm test result is: {res}")
+
 
 def test_sea_enc() -> None:
     key = "istDASeincoolerKEYrofg=="
@@ -76,7 +93,8 @@ def tests_run() -> None:
     test_xex_enc()
     test_xex_dec()
     test_gfmul_arbitrary()
-
+    test_poly2block_gcm()
+    test_block2poly_gcm()
 def main():
     tests_run()
 if __name__ == "__main__":

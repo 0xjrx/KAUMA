@@ -6,7 +6,7 @@ from common.common import stderr_write
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-
+from tasks.gcm import gcm_sem
 
 class ParseJson:
     def __init__(self, filename):
@@ -68,12 +68,18 @@ class ParseJson:
         if arguments["semantic"] == "gcm":
             block = arguments["block"]
             poly = block2poly_gcm(block)
-            self.results["responses"][test_case_id] = {"coefficients":list(poly)}
+            self.results["responses"][test_case_id] = {"coefficients":poly}
     def handle_gfmul(self, arguments, test_case_id):
         if arguments["semantic"] == 'xex':
             a = arguments["a"]
             b = arguments["b"]
             res = gfmul(a,b)
+            self.results["responses"][test_case_id] = {"product":res}
+        if arguments["semantic"] == 'gcm':
+            a = arguments["a"]
+            b = arguments["b"]
+            res_normal = gfmul(a,b)
+            res = gcm_sem(res_normal)
             self.results["responses"][test_case_id] = {"product":res}
     def handle_sea(self, arguments, test_case_id):
         if arguments["mode"] =='encrypt':
