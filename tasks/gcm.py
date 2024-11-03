@@ -104,7 +104,14 @@ def _slice_input(input) -> list:
     for i in range (0, len(bytes), 16):        
         input_block.append(bytes[i:i + 16])
     return input_block
-# Main  GCM encryption function    
+# Main  GCM encryption function 
+def ghash_associated_data(associated_data_blocks, h_field_elem):
+    ghash_result = FieldElementGCM(base64.b64encode(bytes(16)).decode('utf-8'))
+    for block in associated_data_blocks:
+        block_fe = FieldElementGCM(base64.b64encode(block).decode('utf-8'))
+        ghash_result = (ghash_result + block_fe) * h_field_elem
+    
+    return ghash_result
 def GCM_encrypt(nonce, key, plaintext, associated_data):
     # Split the plaintext into blocks
     plaintext_blocks = _slice_input(plaintext)
@@ -119,22 +126,22 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     null_array = bytes(16)
     auth_key = encryptor.update(null_array) + encryptor.finalize()
     #print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
-    
+    h_field_elem = FieldElementGCM(base64.b64encode(auth_key).decode('utf-8'))
+   
+    # Pad associated data
+    associated_data_blocks = []
+    for i in range(0, len(associated_data_bytes), 16):
+        block = associated_data_bytes[i:i + 16]
+        if len(block) < 16:  # Pad last block if necessary
+            block = block + b'\x00' * (16 - len(block))
+        associated_data_blocks.append(block)
     # Calculate the associated data length in bits, needef for the length field L
     len_a = len(associated_data_bytes) * 8
 
     # Pad associated data before ghash if necessary
-    if len(associated_data_bytes) <= 16:
-        padding = 16 - len(associated_data_bytes)
-        associated_data_bytes = associated_data_bytes + b'\x00' * padding
     
     # Initial GHASH with the associated data
-    associated_data_bytes_fe = FieldElementGCM(base64.b64encode(associated_data_bytes).decode('utf-8'))
-    null_array_fe = FieldElementGCM(base64.b64encode(null_array).decode('utf-8'))
-    ghash_1 = associated_data_bytes_fe + null_array_fe        
-    h_field_elem = FieldElementGCM(base64.b64encode(auth_key).decode('utf-8'))
-    ghash_first = ghash_1 * h_field_elem
-    
+    ghash_first = ghash_associated_data(associated_data_blocks, h_field_elem) 
     # Counter starts at 2 (1 is reserved for tag)
     ctr = 2
 
@@ -165,8 +172,7 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
 
     # Complete GHASH computation
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
-    ghash_res_1 = ghash_first + l_fe
-    ghash_res = ghash_res_1 * h_field_elem
+    ghash_res = (ghash_first + l_fe) * h_field_elem    
     
     # Generate Authentication Tag
     ctr_tag = 1
