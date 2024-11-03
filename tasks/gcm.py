@@ -192,9 +192,8 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     null_array = bytes(16)
     auth_key = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))    #print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
     
-    # Calculate the associated data length in bits, needef for the length field L
+    # Calculate the associated data length in bits, needed for the length field L
     len_a = len(associated_data_bytes) * 8
-
     # Pad associated data before ghash if necessary
     if len(associated_data_bytes) <= 128:
         padding = 16 - len(associated_data_bytes)
@@ -246,6 +245,72 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     #print(f"The Tag is: {tag}")
     
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
+
+def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
+    # Split the plaintext into blocks
+    ciphertext_blocks = _slice_input(ciphertext)
+    nonce_bytes = base64.b64decode(nonce)
+    key_bytes = base64.b64decode(key)
+    plaintext = bytearray()
+    
+   # Encrypt plaintext blocks using a counter
+    for block in ciphertext_blocks:
+        # Counter starts at 2 (1 is reserved for tag)
+        ctr = 2
+        counter = ctr.to_bytes(4, 'big')
+        Y = nonce_bytes + counter
+        
+        # Encrypt Y
+        cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
+        encryptor = cipher.encryptor()
+        encrypted_Y = encryptor.update(Y) + encryptor.finalize()
+        
+        # XOR with plaintext and update GHASH
+        ct = bytes(a ^ b for a, b in zip(encrypted_Y, block))
+        
+        plaintext.extend(ct)
+        ctr += 1
+    print(base64.b64encode(plaintext).decode('utf-8')) 
+    # Check authenticity
+    computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data)
+    computed_tag = computed_tag["tag"]
+    if computed_tag == tag:
+        return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
+    else:
+        return {"authentic":False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
+def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
+    # Split the plaintext into blocks
+    ciphertext_blocks = _slice_input(ciphertext)
+    nonce_bytes = base64.b64decode(nonce)
+    plaintext = bytearray()
+    
+   # Encrypt plaintext blocks using a counter
+    for block in ciphertext_blocks:
+        # Counter starts at 2 (1 is reserved for tag)
+        ctr = 2
+        counter = ctr.to_bytes(4, 'big')
+        Y = nonce_bytes + counter
+        
+        # Encrypt Y
+        encrypted_Y = sea_enc(key, base64.b64encode(Y).decode('utf-8'))
+        # XOR with plaintext and update GHASH
+        ct = bytes(a ^ b for a, b in zip(base64.b64decode(encrypted_Y), block))
+        
+        plaintext.extend(ct)
+        ctr += 1
+
+    print(base64.b64encode(plaintext).decode('utf-8')) 
+    # Check authenticity
+    computed_tag =  GCM_encrypt_sea(nonce, key, base64.b64encode(plaintext), associated_data)
+    computed_tag = computed_tag["tag"]
+    if computed_tag == tag:
+        return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
+    else:
+        return {"authentic":False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
 
 
 # Test inputs   

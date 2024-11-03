@@ -6,7 +6,7 @@ from common.common import stderr_write
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea
+from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea 
 
 class ParseJson:
     def __init__(self, filename):
@@ -36,7 +36,9 @@ class ParseJson:
                         case "xex":
                             self.handle_xex(arguments, test_case_id)
                         case "gcm_encrypt":
-                            self.handle_gcm(arguments, test_case_id)
+                            self.handle_gcm_encrypt(arguments, test_case_id)
+                        case "gcm_decrypt":
+                            self.handle_gcm_decrypt(arguments, test_case_id)
                         case _:
                             stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
                                    # For the testserver we need to throw the results in dict format to stdout
@@ -111,7 +113,7 @@ class ParseJson:
             xex_instance = XEX(key, tweak, input)
             res = xex_instance.xex_round_dec()
             self.results["responses"][test_case_id] = {"output": res}
-    def handle_gcm(self, arguments, test_case_id):
+    def handle_gcm_encrypt(self, arguments, test_case_id):
         if arguments["algorithm"] == 'aes128':
             nonce = arguments["nonce"]
             key = arguments["key"]
@@ -126,6 +128,24 @@ class ParseJson:
             associated_data = arguments["ad"]
             result = GCM_encrypt_sea(nonce, key, plaintext, associated_data)
             self.results["responses"][test_case_id] = result
+    def handle_gcm_decrypt(self, arguments, test_case_id):
+        if arguments["algorithm"] == 'aes128':
+            nonce = arguments["nonce"]
+            key = arguments["key"]
+            ciphertext = arguments["ciphertext"]
+            associated_data = arguments["ad"]
+            tag = arguments["tag"]
+            result = GCM_decrypt(nonce, key, ciphertext, associated_data, tag)
+            self.results["responses"][test_case_id] = result
+        if arguments["algorithm"] == 'sea128':
+            nonce = arguments["nonce"]
+            key = arguments["key"]
+            ciphertext = arguments["ciphertext"]
+            associated_data = arguments["ad"]
+            tag = arguments["tag"]
+            result = GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag)
+            self.results["responses"][test_case_id] = result
+        
    
 
 
