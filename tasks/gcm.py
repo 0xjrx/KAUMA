@@ -124,7 +124,7 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     len_a = len(associated_data_bytes) * 8
 
     # Pad associated data before ghash if necessary
-    if len(associated_data_bytes) <= 128:
+    if len(associated_data_bytes) <= 16:
         padding = 16 - len(associated_data_bytes)
         associated_data_bytes = associated_data_bytes + b'\x00' * padding
     
@@ -194,7 +194,7 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     # Calculate the associated data length in bits, needed for the length field L
     len_a = len(associated_data_bytes) * 8
     # Pad associated data before ghash if necessary
-    if len(associated_data_bytes) <= 128:
+    if len(associated_data_bytes) <= 16:
         padding = 16 - len(associated_data_bytes)
         associated_data_bytes = associated_data_bytes + b'\x00' * padding
     
