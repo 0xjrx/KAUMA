@@ -101,8 +101,14 @@ def test_gcm_dec() -> None:
     result = {"authentic": True, "plaintext":"RGFzIGlzdCBlaW4gVGVzdA=="}
     assert GCM_decrypt(nonce, key, ciphertext,ad, tag) == result
     print("AES GCMdecryption successful")
-
-
+def test_gcm_enc_ad() -> None:
+    nonce = "yv66vvrO263eyviI"
+    key = "/v/pkoZlcxxtao+UZzCDCA=="
+    plaintext = "2TEyJfiEBuWlWQnFr/UmmoanqVMVNPfaLkwwPYoxinIcPAyVlWgJUy/PDiRJprUlsWrt9aoN5le6Y3s5"
+    ad = "/u36zt6tvu/+7frO3q2+76ut2tI="
+    result = {"ciphertext": "QoMewiF3dCRLciG3hNDUnOOqIS8sAqTgNcF+IymsoS4h1RSyVGaTHH2PalqshKoFG6MLOWoKrJc9WOCR","tag": "W8lPvDIhpduU+ula5xIaRw==","L": "AAAAAAAAAKAAAAAAAAAB4A==","H": "uDtTNwi/U10KpuUpgNU7eA=="}
+    assert GCM_encrypt(nonce, key, plaintext, ad) == result
+    print("GCM Edge case successful")
 
     
 def tests_run() -> None:
@@ -118,6 +124,7 @@ def tests_run() -> None:
     test_block2poly_gcm()
     test_gcm_enc()
     test_gcm_dec()
+    test_gcm_enc_ad()
 def main():
     tests_run()
 if __name__ == "__main__":
