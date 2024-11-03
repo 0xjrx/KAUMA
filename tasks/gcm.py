@@ -3,6 +3,7 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
+from common.common import stderr_write
 
 # Helper function that reverses the bits of a given byte
 # this is needed as gcm uses a different semantic when performing galois field operations
@@ -160,7 +161,6 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     # Prepare length block for GHASH finalization
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
-    #print(f"L is: {base64.b64encode(L).decode('utf-8')}")
 
     # Complete GHASH computation
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
@@ -176,7 +176,6 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     tag_bytes = encryptor.update(y_0) + encryptor.finalize()
     tag_b64 = FieldElementGCM(base64.b64encode(tag_bytes).decode('utf-8'))
     tag = (tag_b64 + ghash_res).element
-    #print(f"The Tag is: {tag}")
     
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
     
@@ -184,7 +183,6 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     # Split the plaintext into blocks
     plaintext_blocks = _slice_input(plaintext)
     nonce_bytes = base64.b64decode(nonce)
-    key_bytes = base64.b64decode(key)
     associated_data_bytes = base64.b64decode(associated_data)
     ciphertext = bytearray()
     
@@ -228,7 +226,6 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     # Prepare length block for GHASH finalization
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
-    #print(f"L is: {base64.b64encode(L).decode('utf-8')}")
 
     # Complete GHASH computation
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
@@ -242,7 +239,6 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     y_0 = sea_enc(key, base64.b64encode(y_0_bytes).decode('utf-8'))
     tag_b64 = FieldElementGCM(y_0)
     tag = (tag_b64 + ghash_res).element
-    #print(f"The Tag is: {tag}")
     
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
 
@@ -270,7 +266,6 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
         
         plaintext.extend(ct)
         ctr += 1
-    print(base64.b64encode(plaintext).decode('utf-8')) 
     # Check authenticity
     computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data)
     computed_tag = computed_tag["tag"]
@@ -301,23 +296,10 @@ def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
         plaintext.extend(ct)
         ctr += 1
 
-    print(base64.b64encode(plaintext).decode('utf-8')) 
     # Check authenticity
     computed_tag =  GCM_encrypt_sea(nonce, key, base64.b64encode(plaintext), associated_data)
     computed_tag = computed_tag["tag"]
     if computed_tag == tag:
         return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}
-
     else:
-        return {"authentic":False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
-
-
-
-# Test inputs   
-#nonce = "4gF+BtR3ku/PUQci"
-#key = "Xjq/GkpTSWoe3ZH0F+tjrQ=="
-#plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
-#associated_data = "QUQtRGF0ZW4="
-
-
-#print(GCM_encrypt_sea(nonce, key, plaintext, associated_data))
+        return {"authentic": False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
