@@ -3,7 +3,6 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
-from common.common import stderr_write
 
 # Helper function that reverses the bits of a given byte
 # this is needed as gcm uses a different semantic when performing galois field operations
@@ -135,11 +134,13 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     ghash_1 = associated_data_bytes_fe + null_array_fe        
     h_field_elem = FieldElementGCM(base64.b64encode(auth_key).decode('utf-8'))
     ghash_first = ghash_1 * h_field_elem
-        
+    
+    # Counter starts at 2 (1 is reserved for tag)
+    ctr = 2
+
     # Encrypt plaintext blocks using a counter
     for block in plaintext_blocks:
-        # Counter starts at 2 (1 is reserved for tag)
-        ctr = 2
+        
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
         
@@ -203,11 +204,12 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     ghash_1 = associated_data_bytes_fe + null_array_fe        
     h_field_elem = FieldElementGCM(auth_key)
     ghash_first = ghash_1 * h_field_elem
-        
+    
+    # Counter starts at 2 (1 is reserved for tag)
+    ctr = 2
+
     # Encrypt plaintext blocks using a counter
     for block in plaintext_blocks:
-        # Counter starts at 2 (1 is reserved for tag)
-        ctr = 2
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
         
@@ -249,10 +251,11 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
     key_bytes = base64.b64decode(key)
     plaintext = bytearray()
     
+    # Counter starts at 2 (1 is reserved for tag)
+    ctr = 2
+
    # Encrypt plaintext blocks using a counter
     for block in ciphertext_blocks:
-        # Counter starts at 2 (1 is reserved for tag)
-        ctr = 2
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
         
@@ -281,10 +284,11 @@ def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
     nonce_bytes = base64.b64decode(nonce)
     plaintext = bytearray()
     
+    # Counter starts at 2 (1 is reserved for tag)
+    ctr = 2
    # Encrypt plaintext blocks using a counter
     for block in ciphertext_blocks:
-        # Counter starts at 2 (1 is reserved for tag)
-        ctr = 2
+       
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
         
