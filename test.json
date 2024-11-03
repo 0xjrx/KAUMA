@@ -89,6 +89,16 @@
         "plaintext": "RGFzIGlzdCBlaW4gVGVzdA==",
         "ad": "QUQtRGF0ZW4="
       }
+    },
+    "b3665760-023d-4b08-bad2-15d3b6da22fe": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "algorithm": "sea128",
+        "nonce": "4gF+BtR3ku/PUQci",
+        "key": "Xjq/GkpTSWoe3ZH0F+tjrQ==",
+        "plaintext": "RGFzIGlzdCBlaW4gVGVzdA==",
+        "ad": "QUQtRGF0ZW4="
+      }
     }
   }
 }

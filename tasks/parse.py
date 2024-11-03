@@ -6,7 +6,7 @@ from common.common import stderr_write
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import FieldElementGCM, GCM_encrypt
+from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea
 
 class ParseJson:
     def __init__(self, filename):
@@ -119,7 +119,14 @@ class ParseJson:
             associated_data = arguments["ad"]
             result = GCM_encrypt(nonce, key, plaintext, associated_data)
             self.results["responses"][test_case_id] = result
-            
+        if arguments["algorithm"] == 'sea128':
+            nonce = arguments["nonce"]
+            key = arguments["key"]
+            plaintext = arguments["plaintext"]
+            associated_data = arguments["ad"]
+            result = GCM_encrypt_sea(nonce, key, plaintext, associated_data)
+            self.results["responses"][test_case_id] = result
+   
 
 
 

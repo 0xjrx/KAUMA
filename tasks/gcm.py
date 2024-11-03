@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import base64
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, base, modes
-
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from tasks.sea import sea_enc
 
 # Helper function that reverses the bits of a given byte
 # this is needed as gcm uses a different semantic when performing galois field operations
@@ -179,6 +179,74 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     #print(f"The Tag is: {tag}")
     
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
+    
+def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
+    # Split the plaintext into blocks
+    plaintext_blocks = _slice_input(plaintext)
+    nonce_bytes = base64.b64decode(nonce)
+    key_bytes = base64.b64decode(key)
+    associated_data_bytes = base64.b64decode(associated_data)
+    ciphertext = bytearray()
+    
+    # Generate the authentication key H
+    null_array = bytes(16)
+    auth_key = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))    #print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
+    
+    # Calculate the associated data length in bits, needef for the length field L
+    len_a = len(associated_data_bytes) * 8
+
+    # Pad associated data before ghash if necessary
+    if len(associated_data_bytes) <= 128:
+        padding = 16 - len(associated_data_bytes)
+        associated_data_bytes = associated_data_bytes + b'\x00' * padding
+    
+    # Initial GHASH with the associated data
+    associated_data_bytes_fe = FieldElementGCM(base64.b64encode(associated_data_bytes).decode('utf-8'))
+    null_array_fe = FieldElementGCM(base64.b64encode(null_array).decode('utf-8'))
+    ghash_1 = associated_data_bytes_fe + null_array_fe        
+    h_field_elem = FieldElementGCM(auth_key)
+    ghash_first = ghash_1 * h_field_elem
+        
+    # Encrypt plaintext blocks using a counter
+    for block in plaintext_blocks:
+        # Counter starts at 2 (1 is reserved for tag)
+        ctr = 2
+        counter = ctr.to_bytes(4, 'big')
+        Y = nonce_bytes + counter
+        
+        # Encrypt Y
+        encrypted_Y = sea_enc(key, base64.b64encode(Y).decode('utf-8'))
+        # XOR with plaintext and update GHASH
+        ct = bytes(a ^ b for a, b in zip(base64.b64decode(encrypted_Y), block))
+        ghash_ct = FieldElementGCM(base64.b64encode(ct).decode('utf-8'))
+        xor_res = ghash_ct + ghash_first 
+        mul_res = xor_res * h_field_elem
+        ghash_first = mul_res
+        
+        ciphertext.extend(ct)
+        ctr += 1
+    
+    # Prepare length block for GHASH finalization
+    len_b = len(ciphertext) * 8
+    L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
+    #print(f"L is: {base64.b64encode(L).decode('utf-8')}")
+
+    # Complete GHASH computation
+    l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
+    ghash_res_1 = ghash_first + l_fe
+    ghash_res = ghash_res_1 * h_field_elem
+    
+    # Generate Authentication Tag
+    ctr_tag = 1
+    ctr_tag_bytes = ctr_tag.to_bytes(4, 'big')
+    y_0_bytes = nonce_bytes + ctr_tag_bytes
+    y_0 = sea_enc(key, base64.b64encode(y_0_bytes).decode('utf-8'))
+    tag_b64 = FieldElementGCM(y_0)
+    tag = (tag_b64 + ghash_res).element
+    #print(f"The Tag is: {tag}")
+    
+    return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
+
 
 # Test inputs   
 #nonce = "4gF+BtR3ku/PUQci"
@@ -187,4 +255,4 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
 #associated_data = "QUQtRGF0ZW4="
 
 
-#print(GCM_encrypt(nonce, key, plaintext, associated_data))
+#print(GCM_encrypt_sea(nonce, key, plaintext, associated_data))
