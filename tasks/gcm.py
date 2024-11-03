@@ -118,7 +118,7 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     encryptor = cipher.encryptor()
     null_array = bytes(16)
     auth_key = encryptor.update(null_array) + encryptor.finalize()
-    print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
+    #print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
     
     # Calculate the associated data length in bits, needef for the length field L
     len_a = len(associated_data_bytes) * 8
@@ -160,7 +160,7 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     # Prepare length block for GHASH finalization
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
-    print(f"L is: {base64.b64encode(L).decode('utf-8')}")
+    #print(f"L is: {base64.b64encode(L).decode('utf-8')}")
 
     # Complete GHASH computation
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
@@ -176,15 +176,15 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     tag_bytes = encryptor.update(y_0) + encryptor.finalize()
     tag_b64 = FieldElementGCM(base64.b64encode(tag_bytes).decode('utf-8'))
     tag = (tag_b64 + ghash_res).element
-    print(f"The Tag is: {tag}")
+    #print(f"The Tag is: {tag}")
     
-    return base64.b64encode(ciphertext).decode('utf-8')
+    return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
 
 # Test inputs   
-nonce = "4gF+BtR3ku/PUQci"
-key = "Xjq/GkpTSWoe3ZH0F+tjrQ=="
-plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
-associated_data = "QUQtRGF0ZW4="
+#nonce = "4gF+BtR3ku/PUQci"
+#key = "Xjq/GkpTSWoe3ZH0F+tjrQ=="
+#plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
+#associated_data = "QUQtRGF0ZW4="
 
 
-print(f"Ciphertext: {GCM_encrypt(nonce, key, plaintext, associated_data)}")
+#print(GCM_encrypt(nonce, key, plaintext, associated_data))

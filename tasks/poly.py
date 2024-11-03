@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import base64
-from tasks.gcm import gcm_sem
 
 
 class poly2block:
@@ -26,6 +25,30 @@ class block2poly:
             if uint & (1<<i):
                 coefficients.append(i)
         return coefficients
+
+def reverse_bit(byte):
+    result = 0
+    for _ in range(8):
+        result = (result << 1) | (byte & 1)
+        byte >>= 1
+    return result
+
+def gcm_sem(byte):
+        # Padd the the base64 string if necessary
+        while len(byte) % 4 != 0:
+            byte += '='
+        elem_bytes = base64.b64decode(byte)
+        byte_list = []
+        
+        for i in range(len(elem_bytes)):
+            byte_list.append(elem_bytes[i])
+        # Reverse bits in each byte
+        reversed_bytes = [reverse_bit(byte) for byte in byte_list]
+    
+        reversed_bytes_arr = bytes(reversed_bytes)
+        return base64.b64encode(reversed_bytes_arr).decode('utf-8')
+    
+
 
 def poly2block_gcm(input):
     p2b_instance = poly2block(input)

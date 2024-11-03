@@ -75,9 +75,19 @@
       "action": "xex",
       "arguments": {
         "mode": "decrypt",
-        "tweak": "6VXORr+YYHrd2nVe0OlA+Q==",
+        "tweak": "7VXORr+YYHrd2nVe0OlA+Q==",
         "key": "B1ygNO/CyRYIUYhTSgoUysX5Y/wWLi4UiWaVeloUWs0=",
         "input": "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
+      }
+    },
+    "b3665760-023d-4b08-bad2-15d2b6da22fe": {
+      "action": "gcm_encrypt",
+      "arguments": {
+        "algorithm": "aes128",
+        "nonce": "4gF+BtR3ku/PUQci",
+        "key": "Xjq/GkpTSWoe3ZH0F+tjrQ==",
+        "plaintext": "RGFzIGlzdCBlaW4gVGVzdA==",
+        "ad": "QUQtRGF0ZW4="
       }
     }
   }
