@@ -36,7 +36,9 @@ curl -sSL https://install.python-poetry.org | python3 -
 poetry install
 
 # Activate the virtual environment
-poetry shell```
+poetry shell
+
+```
 
 ## Usage
 
