@@ -195,22 +195,20 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     
     # Generate the authentication key H
     null_array = bytes(16)
-    auth_key = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))    #print(f"Auth Key: {base64.b64encode(auth_key).decode('utf-8')}") 
+    auth_key = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))
+    h_field_elem = FieldElementGCM(auth_key)
     
     # Calculate the associated data length in bits, needed for the length field L
     len_a = len(associated_data_bytes) * 8
     # Pad associated data before ghash if necessary
-    if len(associated_data_bytes) <= 16:
-        padding = 16 - len(associated_data_bytes)
-        associated_data_bytes = associated_data_bytes + b'\x00' * padding
-    
+    associated_data_blocks = []
+    for i in range(0, len(associated_data_bytes), 16):
+        block = associated_data_bytes[i:i + 16]
+        if len(block) < 16:
+            block = block + b'\x00' * (16 - len(block))
+        associated_data_blocks.append(block)    
     # Initial GHASH with the associated data
-    associated_data_bytes_fe = FieldElementGCM(base64.b64encode(associated_data_bytes).decode('utf-8'))
-    null_array_fe = FieldElementGCM(base64.b64encode(null_array).decode('utf-8'))
-    ghash_1 = associated_data_bytes_fe + null_array_fe        
-    h_field_elem = FieldElementGCM(auth_key)
-    ghash_first = ghash_1 * h_field_elem
-    
+    ghash_first = ghash_associated_data(associated_data_blocks, h_field_elem)
     # Counter starts at 2 (1 is reserved for tag)
     ctr = 2
 
