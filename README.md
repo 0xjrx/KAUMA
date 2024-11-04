@@ -74,27 +74,28 @@ Example input file:
 ### Supported Operations
 
 #### 1. Polynomial-Block Conversions
-- `poly2block`: Convert polynomial coefficients to block representation
-- `block2poly`: Convert block to polynomial coefficients
-- Supports both XEX and GCM semantics
+- `poly2block`: Convert polynomial coefficients to block representation in XEX semantic
+- `block2poly`: Convert block to polynomial coefficients in XEX semantic
+- `poly2block_gcm` & `block2poly_gcm` support GCM semantics
 
 #### 2. SEA-128 Operations
 - Encryption and decryption using SEA-128 algorithm
 - 128-bit key and block size
+- `sea_enc` encrypts and input using SEA-128
+- `sea_dec` decrypts an input using SEA-128
 
 #### 3. Field Operations
-- `gfmul`: Galois Field multiplication
-- Supports both XEX and GCM field semantics
+- `gfmul`: Galois Field multiplication, supports xex semantic
 
 #### 4. XEX Mode
 - Tweakable block cipher mode
-- Encryption and decryption operations
-- Supports tweaks for domain separation
+- `XEX` class with function `.xex_round_enc` and `.xex_roud_dec` provide encryption and decryption operations
+- `FieldElementGCM` class provides easy addition and multiplication within GF(2^128)
 
 #### 5. GCM Mode
 - Authenticated encryption with associated data
-- Supports both AES-128 and SEA-128 as underlying block ciphers
-- Provides both encryption and decryption capabilities
+- `GCM_encrypt`, `GCM_decrypt` uses AES-128 as the underlying block cipher
+- `GCM_encrypt_sea`, `GCM_decrypt_sea` uses SEA-128 as the underlying block cipher
 
 ### Output Format
 
