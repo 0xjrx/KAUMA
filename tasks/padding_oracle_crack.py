@@ -27,7 +27,6 @@ def padding_oracle_crack(host, port, iv, ciphertext):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         intermediate = bytearray([0]*16)
         current_plaintext = bytearray([0]*16)  
-        #stderr_write(f"Connected to {host}:{port}")
         s.connect((host, port))
             
         counter = 256
@@ -52,11 +51,9 @@ def padding_oracle_crack(host, port, iv, ciphertext):
 
                 response = s.recv(256)
                 candidates = [] 
-                #print(f"Response: {response}")
                 for j in range(0,256):
                     if response[j] == 1:
                         candidates.append(j)
-                #print(f"Candidates: {candidates}")
                 
                 true_candidate = None
                 for candidate in candidates:
@@ -117,13 +114,6 @@ def padding_oracle_crack(host, port, iv, ciphertext):
         s.close()
         ct += 1 
         
-    return plaintext
+    return base64.b64encode(plaintext).decode('utf-8')
 
-ct = base64.b64decode("RWNwJGx1cyhsY2VpLWVgYjYEGFRJFhpUFgoGCVUOHAFSam81bF58P3dyZGYwdBETQ3h8IXlIayduaH96LWoOEw==")
-iv = base64.b64decode("dxTwbO/hhIeycOTbTnp8QQ==")    
-port = 42069
-host = '127.0.0.1'
-print("Starting padding oracle attack...")
-plaintext = padding_oracle_crack(host, port,iv, ct)
-print(f"Final plaintext:  {plaintext}")
 

@@ -3,14 +3,13 @@
 import json
 from tasks.poly import block2poly, poly2block, block2poly_gcm, poly2block_gcm
 from common.common import stderr_write
-from typing import Dict, Any
-from functools import partial
 import multiprocessing as mp
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea
-import time
+from tasks.padding_oracle_crack import padding_oracle_crack
+import time, base64
 
 def process_test_case(test_case, test_case_id):    
     action = test_case.get("action")
@@ -33,6 +32,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gcm_encrypt(arguments)
             case "gcm_decrypt":
                 result = handle_gcm_decrypt(arguments)
+            case "padding_oracle":
+                result = handle_po(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -128,9 +129,15 @@ def handle_gcm_decrypt(arguments):
         ciphertext = arguments["ciphertext"]
         associated_data = arguments["ad"]
         tag = arguments["tag"]
-        return GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag)
-        
-
+        return GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag) 
+def handle_po(arguments):
+    hostname = arguments["hostname"]
+    print(f"Hostname: {hostname}")
+    port = arguments["port"]
+    iv = base64.b64decode(arguments["iv"])
+    ct = base64.b64decode(arguments["ciphertext"])
+    result = padding_oracle_crack(hostname, port, iv, ct)
+    return {"plaintext": result}
 
 class ParseJson:
     def __init__(self, filename):
