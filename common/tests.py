@@ -4,7 +4,7 @@ from tasks.gfmul import gfmul
 from tasks.poly import block2poly, poly2block, poly2block_gcm, block2poly_gcm
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea, GCM_decrypt_sea
+from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea, GCM_decrypt_sea, test
 
 
 def test_gfmul() -> None:
@@ -92,6 +92,14 @@ def test_gcm_enc() -> None:
     result = {"ciphertext": "ET3RmvH/Hbuxba63EuPRrw==","tag": "Mp0APJb/ZIURRwQlMgNN/w==","L": "AAAAAAAAAEAAAAAAAAAAgA==","H": "Bu6ywbsUKlpmZXMQyuGAng=="}
     assert GCM_encrypt(nonce, key, plaintext,ad) == result
     print("AES GCM encryption successful")
+def test_gcm_enc_sea() -> None:
+    nonce = "4gF+BtR3ku/PUQci"
+    key = "Xjq/GkpTSWoe3ZH0F+tjrQ=="
+    plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
+    ad = "QUQtRGF0ZW4="
+    result = {"ciphertext": "0cI/Wg4R3URfrVFZ0hw/vg==","tag": "ysDdzOSnqLH0MQ+Mkb23gw==","L": "AAAAAAAAAEAAAAAAAAAAgA==","H": "xhFcAUT66qWIpYz+Ch5ujw=="}
+    assert GCM_encrypt_sea(nonce, key, plaintext,ad) == result
+    print("AES GCM sea encryption successful")
 def test_gcm_dec() -> None:
     nonce = "4gF+BtR3ku/PUQci"
     key = "Xjq/GkpTSWoe3ZH0F+tjrQ=="
@@ -125,6 +133,8 @@ def tests_run() -> None:
     test_gcm_enc()
     test_gcm_dec()
     test_gcm_enc_ad()
+    test_gcm_enc_sea()
+    test()
 def main():
     tests_run()
 if __name__ == "__main__":

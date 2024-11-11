@@ -3,13 +3,10 @@
 import base64
 import socket
 import struct
-import time
 def slice_blocks_16(data):
     return [data[i:i + 16] for i in range(0, len(data), 16)]
 def p16(val):
     return struct.pack('<H', val)
-def u16(val):
-    return struct.unpack('<H', val)[0]
 def padding_oracle_crack(host, port, iv, ciphertext):
     """
     Perform paddin oracle attack to decrypt a ciphertext
@@ -23,94 +20,105 @@ def padding_oracle_crack(host, port, iv, ciphertext):
     Returns:
         bytes: The decrypted plaintext.
     """
-    plaintext = bytearray() # Initialize empty bytearray to store plaintext
+    plaintext = bytearray()  
     ciphertext_blocks = slice_blocks_16(ciphertext)
-    ct = 0 # Track the current ciphertext block
-    
+    ct = 0 
     for block in ciphertext_blocks:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         intermediate = bytearray([0]*16)
-
-        # Connect to the server
-        print(f"Connected to {host}:{port}")
+        current_plaintext = bytearray([0]*16)  
+        #stderr_write(f"Connected to {host}:{port}")
         s.connect((host, port))
-        #s.setblocking(True)
             
-        # Initialize q block with zeros
-        q_block = bytearray([0]*16)
-        counter = 256 # Maximum number of guesses
+        counter = 256
         s.sendall(block)
    
-        # Send the current ciphertext block
-
         # Iterate through the ciphertext block from right to left
         for i in range(15, -1, -1):
-            plaintext_byte = bytearray([0]*16)
             padding_value = 16-i
             candidates = []
-            if i ==15:
-                length = p16(counter)
-                s.sendall(length)            
+            
+            if i == 15:
+                q_block = bytearray([0]*16)
+                block = b''
+                length = p16(256)
+                block += length
+
 
                 for guess in range(0,256):
-                    # Counter to length field and send
                     q_block[i] = guess
-
-                    s.sendall(q_block)
+                    block += q_block
+                s.sendall(block)
 
                 response = s.recv(256)
+                candidates = [] 
+                #print(f"Response: {response}")
                 for j in range(0,256):
-                    if response[j] == b'\x01':
+                    if response[j] == 1:
                         candidates.append(j)
+                #print(f"Candidates: {candidates}")
+                
                 true_candidate = None
-                for candidates in candidates:
-                    s.sendall(block)
+                for candidate in candidates:
                     s.sendall(p16(1))
                     verify_block = bytearray([0]*16)
-                    verify_block[15] = candidates
-                    verify_block[14] = candidates ^ 0xFF
+                    verify_block[15] = candidate
+                    verify_block[14] = candidate ^ 0xFF
                     s.sendall(verify_block)
-                    response = s.recv(1)
-                    if response == b'x01':
+                    
+                    verif_response = s.recv(1)
+                    if verif_response == b"\x01":
                         true_candidate = candidates[0]
-                        break
                     else:
                         true_candidate = candidates[1]
-                        break
-                if true_candidate:  
+
+                if true_candidate is not None:
                     intermediate[15] = true_candidate ^ padding_value
-                    
-                plaintext_byte[15] = intermediate[15] ^ ciphertext_blocks[ct-1][15]
-                    
-                plaintext.append(plaintext_byte[15])
+                    if ct == 0:
+                        current_plaintext[15] = intermediate[15] ^ iv[15]
+                    else:
+                        current_plaintext[15] = intermediate[15] ^ ciphertext_blocks[ct-1][15]
+                else:
+                    break
             
             else:
-                length = p16(counter)
-                s.sendall(length)
-
+                q_block = bytearray([0]*16)
+                
+                for g in range(i+1, 16):
+                    q_block[g] = intermediate[g] ^ padding_value 
+                
+                block = b''
+                length = p16(256)
+                block += length
                 for guess in range(0,256):
                     q_block[i] = guess
-                    s.sendall(q_block)
+                    block+=q_block
+                s.sendall(block)
                 
                 valid = None
-                response = s.recv(256)
+                response_else = s.recv(256)
                 for e in range(0,256):
-                    if response[e] == b'\x01':
+                    if response_else[e] == 1:
                         valid = e
                         q_block[i] = valid
+                        break
+                        
                 if valid is not None:
                     intermediate[i] = valid ^ padding_value
-                    if ct ==0:
-                        plaintext_byte[i] = intermediate[i] ^ iv[i]
+                    if ct == 0:
+                        current_plaintext[i] = intermediate[i] ^ iv[i]
                     else:
-                        plaintext_byte[i] = intermediate ^ ciphertext_blocks[ct-1][i]
-                plaintext.append(plaintext_byte[i])
+                        current_plaintext[i] = intermediate[i] ^ ciphertext_blocks[ct-1][i]
+                else:
+                    break
+
+        # After processing the entire block, extend plaintext
+        plaintext.extend(current_plaintext)
         s.close()
         ct += 1 
-    plaintext.reverse()
-    print(base64.b64encode(plaintext).decode())
+        
     return plaintext
-# Main execution
+
 ct = base64.b64decode("RWNwJGx1cyhsY2VpLWVgYjYEGFRJFhpUFgoGCVUOHAFSam81bF58P3dyZGYwdBETQ3h8IXlIayduaH96LWoOEw==")
 iv = base64.b64decode("dxTwbO/hhIeycOTbTnp8QQ==")    
 port = 42069

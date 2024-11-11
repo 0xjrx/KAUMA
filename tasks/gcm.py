@@ -85,6 +85,9 @@ class FieldElementGCM:
         reversed_bytes_arr = bytes(reversed_bytes)
         return base64.b64encode(reversed_bytes_arr).decode('utf-8')
     
+    def test(self, element):
+        return self._gcm_sem(element)
+    
     def __mul__(self, other):
         """
         Multiply two field elements in GF(2^128).
@@ -100,7 +103,6 @@ class FieldElementGCM:
         """
         # irreducible polynomial for GF(2^128)
         IRR_POLY = "hwAAAAAAAAAAAAAAAAAAAAE="
-    
         # Convert our operants to GCM's semantic and then integers for easy bit manipulation
         
         first = base64.b64decode(self._gcm_sem(self.element))
@@ -189,10 +191,12 @@ def ghash_associated_data(associated_data_blocks, h_field_elem):
     """
     ghash_result = FieldElementGCM(base64.b64encode(bytes(16)).decode('utf-8'))
     for block in associated_data_blocks:
+        #print(f"associated data blocks: {associated_data_blocks}")
         if len(block) < 16:  # Pad last block if necessary
             block = block + b'\x00' * (16 - len(block))
         block_fe = FieldElementGCM(base64.b64encode(block).decode('utf-8'))
         ghash_result = (ghash_result + block_fe) * h_field_elem
+        #print(f"GHASH Res with AD {int.from_bytes(base64.b64decode(ghash_result.element), 'little')}")
     return ghash_result
 
 
@@ -214,7 +218,6 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     key_bytes = base64.b64decode(key)
     associated_data_bytes = base64.b64decode(associated_data)
     ciphertext = bytearray()
-    
     # Generate the authentication key H = AES_K(0)
     cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
     encryptor = cipher.encryptor()
@@ -265,12 +268,14 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
     ghash_result = (ghash_result + l_fe)* h_field_elem   
 
+
     # Generate Authentication Tag
     y_0 = nonce_bytes + b'\x00\x00\x00\x01'
     cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
     encryptor = cipher.encryptor()
     tag_bytes = encryptor.update(y_0) + encryptor.finalize()
     tag_b64 = FieldElementGCM(base64.b64encode(tag_bytes).decode('utf-8'))
+    
     tag = (tag_b64 + ghash_result).element
     
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}
@@ -288,12 +293,13 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     nonce_bytes = base64.b64decode(nonce)
     associated_data_bytes = base64.b64decode(associated_data)
     ciphertext = bytearray()
-    
+    #print(f"Associated Data in little: {int.from_bytes(associated_data_bytes, 'big')}") 
+ 
     # Generate H using SEA128
     null_array = bytes(16)
     h = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))
     h_field_elem = FieldElementGCM(h)
-   
+    print(f"Authentication Key H is: {int.from_bytes(base64.b64decode(h), 'little')}") 
     # Process associated data
     associated_data_blocks = []
     for i in range(0, len(associated_data_bytes), 16):
@@ -329,6 +335,7 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     for ct_block in ghash_blocks:
         ct_fe = FieldElementGCM(base64.b64encode(ct_block).decode('utf-8'))
         ghash_result =(ghash_result + ct_fe) * h_field_elem
+        #print(f"GHASH round result with ciphertext blocks: {int.from_bytes(base64.b64decode(ghash_result.element), 'big')}")
     
     # Add length block
     len_a = len(associated_data_bytes) * 8
@@ -336,10 +343,13 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
     l_fe = FieldElementGCM(base64.b64encode(L).decode('utf-8'))
     ghash_result = (ghash_result + l_fe)* h_field_elem   
+    #print(f"GHASH res after adding of L: {int.from_bytes(base64.b64decode(ghash_result.element), 'big')}")
     
     # Generate Tag
     y_0 = nonce_bytes + b'\x00\x00\x00\x01'
     tag_b64 = sea_enc(key, base64.b64encode(y_0).decode('utf-8'))
+    #print(f"Block ciphert encrypt with nonce 0 is: {int.from_bytes(base64.b64decode(tag_b64), 'big')}")
+
     tag_fe = FieldElementGCM(tag_b64)
     tag = (tag_fe + ghash_result).element
 
@@ -425,3 +435,9 @@ def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
         return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}
     else:
         return {"authentic": False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
+def test():
+    element = "ARIAAAAAAAAAAAAAAAAAgA=="
+    elem_fe = FieldElementGCM(element)
+    transformed_element = elem_fe.test(element)
+    print(f"GCM Semantic Element: {transformed_element}")
