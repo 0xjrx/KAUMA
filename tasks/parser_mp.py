@@ -132,7 +132,6 @@ def handle_gcm_decrypt(arguments):
         return GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag) 
 def handle_po(arguments):
     hostname = arguments["hostname"]
-    print(f"Hostname: {hostname}")
     port = arguments["port"]
     iv = base64.b64decode(arguments["iv"])
     ct = base64.b64decode(arguments["ciphertext"])
