@@ -141,6 +141,15 @@
         "iv": "dxTwbO/hhIeycOTbTnp8QQ==",
         "ciphertext": "RWNwJGx1cyhsY2VpLWVgYjYEGFRJFhpUFgoGCVUOHAFSam81bF58P3dyZGYwdBETQ3h8IXlIayduaH96LWoOEw=="
       }
+    },
+    "padding_oracle_test3": {
+      "action": "padding_oracle",
+      "arguments": {
+        "hostname": "127.0.0.1",
+        "port": 42069,
+        "iv": "",
+        "ciphertext": "ruxCs5oMXsInEPuzjsYSJ7/+UaePGknaPgrgr5PYDSc="
+      }
     }
   }
 }

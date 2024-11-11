@@ -22,7 +22,9 @@ def padding_oracle_crack(host, port, iv, ciphertext):
     """
     plaintext = bytearray()  
     ciphertext_blocks = slice_blocks_16(ciphertext)
-    ct = 0 
+    ct = 0
+    if len(iv) != 16:
+        iv = b'\x00'*16
     for block in ciphertext_blocks:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         intermediate = bytearray([0]*16)
@@ -66,8 +68,10 @@ def padding_oracle_crack(host, port, iv, ciphertext):
                     verif_response = s.recv(1)
                     if verif_response == b"\x01":
                         true_candidate = candidates[0]
+                    
                     else:
                         true_candidate = candidates[1]
+                    break
 
                 if true_candidate is not None:
                     intermediate[15] = true_candidate ^ padding_value
