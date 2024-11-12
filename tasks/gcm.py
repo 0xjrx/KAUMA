@@ -339,8 +339,8 @@ def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
     
     # Generate Tag
     y_0 = nonce_bytes + b'\x00\x00\x00\x01'
-    tag_b64 = sea_enc(key, base64.b64encode(y_0).decode('utf-8'))
-    tag_fe = FieldElementGCM(tag_b64)
+    y_0_enc = sea_enc(key, base64.b64encode(y_0).decode('utf-8'))
+    tag_fe = FieldElementGCM(y_0_enc)
     tag = (tag_fe + ghash_result).element
 
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":tag,"L":l_fe.element,"H":h_field_elem.element}

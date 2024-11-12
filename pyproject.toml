@@ -9,7 +9,8 @@ packages = [
   {include = "*.py", from = "common"},
   {include = "tests"},
   {include = "kauma"},
-  {include = "test.json"}
+  {include = "test.json"},
+  {include = "*.py"}
   ]
 
 [tool.poetry.dependencies]

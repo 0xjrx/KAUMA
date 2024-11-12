@@ -9,6 +9,7 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea
 from tasks.padding_oracle_crack import padding_oracle_crack
+from tasks.polynom import Polynom
 import time, base64
 
 def process_test_case(test_case, test_case_id):    
@@ -34,6 +35,10 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gcm_decrypt(arguments)
             case "padding_oracle":
                 result = handle_po(arguments)
+            case "gfpoly_add":
+                result = handle_gfpoly_add(arguments)
+            case "gfpoly_mul":
+                result = handle_gfpoly_mul(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -137,6 +142,21 @@ def handle_po(arguments):
     ct = base64.b64decode(arguments["ciphertext"])
     result = padding_oracle_crack(hostname, port, iv, ct)
     return {"plaintext": result}
+def handle_gfpoly_add(arguments):
+    a = arguments["A"]
+    b = arguments["B"]
+    a_poly = Polynom(a)
+    b_poly = Polynom(b)
+    res = (a_poly + b_poly).polynomials
+    return {"S":res}
+def handle_gfpoly_mul(arguments):
+    a = arguments["A"] 
+    b = arguments["B"] 
+    a_poly = Polynom(a)
+    b_poly = Polynom(b)
+    res = (a_poly * b_poly).polynomials
+    return {"S":res}
+
 
 class ParseJson:
     def __init__(self, filename):

@@ -150,6 +150,35 @@
         "iv": "",
         "ciphertext": "ruxCs5oMXsInEPuzjsYSJ7/+UaePGknaPgrgr5PYDSc="
       }
+    },
+    "gfpoly_add": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ],
+        "B": [
+          "KryptoanalyseAAAAAAAAA==",
+          "DHBWMannheimAAAAAAAAAA=="
+        ]
+      }
+    },
+    "gfpoly_mul": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
     }
   }
 }
