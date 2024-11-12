@@ -4,11 +4,17 @@ version = "0.1.0"
 description = ""
 authors = ["0xjrx <mrmarquard@protonmail.com>"]
 readme = "README.md"
+packages = [
+  {include = "*.py", from = "tasks"},
+  {include = "*.py", from = "common"},
+  {include = "tests"},
+  {include = "kauma"},
+  {include = "test.json"}
+  ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pendulum = "^3.0.0"
-
 
 [build-system]
 requires = ["poetry-core"]

@@ -103,7 +103,7 @@ Example input file:
 - `GCM_encrypt_sea`, `GCM_decrypt_sea` uses SEA-128 as the underlying block cipher
 
 #### 6. PKCS#7 Padding Cracking using a vulnerable padding oracle
-- `padding_oracle_crack(host, port, iv, ciphertext)` function
+- `padding_oracle_crack` function
 - Decrypt a PKCS#7 Padding given a hostname (for the vulnerable server), port, initialization vector (IV) and ciphertext
 
 ### Output Format
