@@ -20,6 +20,11 @@ KAUMA implements several cryptographic operations and methods:
   - GCM (Galois/Counter Mode) encryption and decryption
   - Support for multiple block ciphers (AES-128, SEA-128)
 
+- **#PKCS7 Padding craking via padding oracle attack**
+  - Retreive Plaintext by cracking its #PKCS7 Padding given a vulnerable Server
+  - Note: This implementation uses a specfic binary protocol to communicate. If you want to use it with your
+  server you have to adjust the communication
+
 ## Installation
 
 ```bash
@@ -97,6 +102,10 @@ Example input file:
 - `GCM_encrypt`, `GCM_decrypt` uses AES-128 as the underlying block cipher
 - `GCM_encrypt_sea`, `GCM_decrypt_sea` uses SEA-128 as the underlying block cipher
 
+#### 6. #PKCS7 Padding Cracking using a vulnerable padding oracle
+- `padding_oracle_crack(host, port, iv, ciphertext)` function
+- Decrypt a #PKCS7 Padding given a hostname (for the vulnerable server), port, initialization vector (IV) and ciphertext
+
 ### Output Format
 
 KAUMA outputs results in JSON format to stdout:
@@ -130,6 +139,8 @@ kauma/
 │   ├── xex.py        # XEX mode
 │   └── gcm.py        # GCM encryption and decryption using AES or SEA
 │   └── parse.py      # Parser for input
+│   └── padding_oracle_crack.py      # PKCS7 padding oracle attack
+│   └── server.py     # Demo oracle server
 └── common/           # Shared utilities and common functions
     └── common.py     # Includes a function to write errors to stderr
     └── tests.py      # Includes unit tests

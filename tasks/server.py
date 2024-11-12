@@ -1,8 +1,12 @@
 from cryptography.hazmat.primitives import padding
 import socket
 import threading
-import base64
 import time
+
+
+# This code was not written by me!!!
+# Credit goes to: https://github.com/VollRagm
+
 class ServerSimulator:
     def __init__(self, demo_key=b'\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10'):
         self.demo_key = demo_key
@@ -87,7 +91,7 @@ class ServerSimulator:
                         bytes_received = self.recv_all(conn, total_bytes_expected)
                         if not bytes_received:
                             break
-                        print("bytes_received received:", bytes_received)
+                        #print("bytes_received received:", bytes_received)
                        
                         for i in range(0, total_bytes_expected, 16):
                             q_block = bytes_received[i:i + 16]
@@ -100,7 +104,6 @@ class ServerSimulator:
 
 
 server = ServerSimulator()
-print(base64.b64encode(server.encrypt("aaaaaaaaaaaaaaaa".encode('ascii'))))
 server_thread = threading.Thread(target=server.start_server)
 server_thread.start()
 time.sleep(10)
