@@ -39,6 +39,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_add(arguments)
             case "gfpoly_mul":
                 result = handle_gfpoly_mul(arguments)
+            case "gfpoly_pow":
+                result = handle_gfpoly_pow(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -156,8 +158,12 @@ def handle_gfpoly_mul(arguments):
     b_poly = Polynom(b)
     res = (a_poly * b_poly).polynomials
     return {"S":res}
-
-
+def handle_gfpoly_pow(arguments):
+    a = arguments["A"]
+    a_poly = Polynom(a)
+    k = arguments["k"]
+    res = (a_poly**k).polynomials
+    return {"Z": res}
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename

@@ -75,9 +75,9 @@ class FieldElement:
         IRR_POLY = b"hwAAAAAAAAAAAAAAAAAAAAE="
     
         # Convert our operants to GCM's semantic
-        multiplicant = self._gcm_sem(self.element)
+        multiplicant = self._gcm_sem(int(self))
         
-        multiplier = self._gcm_sem(other.element)
+        multiplier = self._gcm_sem(int(other))
         
         # Convert the reduction polynomial
         poly_bytes = base64.b64decode(IRR_POLY)
@@ -122,9 +122,11 @@ class FieldElement:
         Returns:
             New FieldElementGCM instance representing the sum
         """
-        xor = self.element ^ other.element
+        xor = int(self) ^ int(other)
         return FieldElement(xor)
-
+    def __int__(self):
+        return self.element
+    
 class Polynom:
     def __init__(self, polynomials: list):
         self.polynomials = polynomials
@@ -148,15 +150,26 @@ class Polynom:
     def __mul__(self, other):
 
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
-        print(result_poly)
+        #print(result_poly)
         for i, a in enumerate(self.polynomials_int):
             for j,b in enumerate(other.polynomials_int):
                 fe_a = FieldElement(a)
                 fe_b = FieldElement(b)
                 result_poly[i+j] ^= (fe_a * fe_b).element
         return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
-    
+    def __pow__(self, exponent):
+        if exponent ==0:
+            return base64.b64encode(int.to_bytes(1, 16, 'little')).decode()
+        if exponent ==1:
+            return self
+        if 100>=exponent>1:
+            base = self
+            result = base
+            exponent -=1
+            while exponent>0:
+                result = result * base
+                exponent -=1
+            return result
+     
     def display_polys(self):
         print(self.polynomials)
-        
-

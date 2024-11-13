@@ -3,7 +3,7 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
-from tasks.polynom import Polynom, FieldElement
+from tasks.polynom import FieldElement
 
 """
 Galois Counter Mode (GCM) Encryption implementation

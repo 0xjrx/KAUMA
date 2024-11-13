@@ -179,6 +179,17 @@
           "IQAAAAAAAAAAAAAAAAAAAA=="
         ]
       }
+    },
+    "gfpoly_pow": {
+      "action": "gfpoly_pow",
+      "arguments": {
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "k": 3
+      }
     }
   }
 }
