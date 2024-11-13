@@ -4,7 +4,7 @@ from tasks.gfmul import gfmul
 from tasks.poly import block2poly, poly2block, poly2block_gcm, block2poly_gcm
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea, GCM_decrypt_sea
+from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea
 
 
 def test_gfmul() -> None:

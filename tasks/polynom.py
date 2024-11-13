@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import base64
-from sys import byteorder
+
 
 
 

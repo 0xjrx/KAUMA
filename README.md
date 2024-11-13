@@ -25,6 +25,10 @@ KAUMA implements several cryptographic operations and methods:
   - Note: This implementation uses a specfic binary protocol to communicate. If you want to use it with your
   server you have to adjust the communication
 
+- **Polnomial Operations in GF 2^128**
+  - Addition of polynomials in GF 2^128
+  - Multiplication of polynomials in GF 2^128
+
 ## Installation
 
 ```bash
@@ -106,6 +110,10 @@ Example input file:
 - `padding_oracle_crack` function
 - Decrypt a PKCS#7 Padding given a hostname (for the vulnerable server), port, initialization vector (IV) and ciphertext
 
+#### 7. Polynomial Operations
+- `Polynom` class with overloaded operators for easy operations
+- Works with polynoms as an array with Field Elements as its factors
+
 ### Output Format
 
 KAUMA outputs results in JSON format to stdout:
@@ -141,6 +149,7 @@ kauma/
 │   └── parse.py      # Parser for input
 │   └── padding_oracle_crack.py      # PKCS#7 padding oracle attack
 │   └── server.py     # Demo oracle server
+│   └── polynom.py    # Operations with Polynomials in GF 2^128
 └── common/           # Shared utilities and common functions
     └── common.py     # Includes a function to write errors to stderr
     └── tests.py      # Includes unit tests

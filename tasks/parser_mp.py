@@ -7,9 +7,9 @@ import multiprocessing as mp
 from tasks.gfmul import gfmul
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import FieldElementGCM, GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea
+from tasks.gcm import GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea
 from tasks.padding_oracle_crack import padding_oracle_crack
-from tasks.polynom import Polynom
+from tasks.polynom import FieldElement, Polynom
 import time, base64
 
 def process_test_case(test_case, test_case_id):    
@@ -77,8 +77,8 @@ def handle_gfmul(arguments):
     if arguments["semantic"] == 'gcm':
         a = arguments["a"]
         b = arguments["b"]
-        a_fe = FieldElementGCM(a)
-        b_fe = FieldElementGCM(b)
+        a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
+        b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
         res = (a_fe*b_fe).element
         return {"product":res}
 def handle_sea(arguments):
