@@ -80,7 +80,7 @@ def handle_gfmul(arguments):
         a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
         b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
         res = (a_fe*b_fe).element
-        return {"product":res}
+        return {"product":base64.b64encode(int.to_bytes(res,16, 'little')).decode('utf-8')}
 def handle_sea(arguments):
     if arguments["mode"] =='encrypt':
         key = arguments["key"]
