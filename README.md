@@ -32,8 +32,9 @@ KAUMA implements several cryptographic operations and methods:
 ## Installation
 
 ```bash
-# Clone the repository
+# Download the release or clone the repository
 git clone https://github.com/0xjrx/kauma.git
+
 
 # Navigate to the project directory
 cd kauma
