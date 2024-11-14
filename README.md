@@ -82,6 +82,7 @@ Example input file:
 }
 
 ```
+An example file is `test.json`. This can be used to test all functions.
 
 ### Supported Operations
 

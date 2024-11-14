@@ -190,6 +190,17 @@
         ],
         "k": 3
       }
+    },
+    "test": {
+      "action": "gcm_decrypt",
+      "arguments": {
+        "algorithm": "aes128",
+        "nonce": "SwVYf3IJ2p/VTiyz",
+        "key": "bYfxz4zIS8NGWT55xSGy7Q==",
+        "ciphertext": "ltCrCEYjUCHd",
+        "ad": "w8pc8/yCt2zxERPVcsnOMx8/HmrfAfGUQtD+vyMMpJ5lrF2S",
+        "tag": "d4Z2uVRSmpVE1TEa/Zhx9A=="
+      }
     }
   }
 }
