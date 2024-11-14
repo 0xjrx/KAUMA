@@ -41,6 +41,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_mul(arguments)
             case "gfpoly_pow":
                 result = handle_gfpoly_pow(arguments)
+            case "gfdiv":
+                result = handle_gfdiv(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -164,6 +166,14 @@ def handle_gfpoly_pow(arguments):
     k = arguments["k"]
     res = (a_poly**k).polynomials
     return {"Z": res}
+def handle_gfdiv(arguments):
+    a = arguments["a"]
+    b = arguments["b"]
+    a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
+    b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
+    c = a_fe / b_fe
+    return {"q": base64.b64encode(int.to_bytes(int(c), 16, 'little')).decode('utf-8')}
+
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename

@@ -4,24 +4,7 @@ import base64
 
 
 
-def reverse_bit(byte: bytes) -> int:
-    """
-    Reverses the bits of a given byte.
 
-    This is required for GCM's bit representation in Galois Field operations, which differ from 
-    the standard representation.
-
-    Args:
-        byte: Single byte to reverse
-
-    Returns:
-        Integer representing the byte with reversed bit order
-    """
-    result = 0
-    for _ in range(8):
-        result = (result << 1) | (byte[0] & 1)
-        byte = bytes([byte[0] >> 1])
-    return result
 
 class FieldElement:
     """
@@ -39,6 +22,25 @@ class FieldElement:
             element: int representing the field element
         """
         self.element = element    
+    
+    def reverse_bit(self,byte: bytes) -> int:
+        """
+        Reverses the bits of a given byte.
+
+        This is required for GCM's bit representation in Galois Field operations, which differ from 
+        the standard representation.
+
+        Args:
+            byte: Single byte to reverse
+
+        Returns:
+            Integer representing the byte with reversed bit order
+        """
+        result = 0
+        for _ in range(8):
+            result = (result << 1) | (byte[0] & 1)
+            byte = bytes([byte[0] >> 1])
+        return result
     def _gcm_sem(self, element) -> int:
         """ 
         Transform a field element to GCM's semantic.
@@ -54,7 +56,7 @@ class FieldElement:
         """
         # Pad the the base64 string if necessary
         element = element.to_bytes(16, 'little') 
-        reversed_bytes = [reverse_bit(bytes([byte])) for byte in element]
+        reversed_bytes = [self.reverse_bit(bytes([byte])) for byte in element]
         reversed_bytes_arr = bytes(reversed_bytes)
         return int.from_bytes(reversed_bytes_arr, 'little')
     
@@ -111,22 +113,35 @@ class FieldElement:
         return FieldElement(gcm_encoded_product)
     
     def __add__(self, other: 'FieldElement'):
-        """
-        Add two field elements in GF(2^128)
-
-        In GF(2^128), addition is simply bitwise XOR of the elements.
-
-        Args:
-            other: Another FieldElementGCM instance
-
-        Returns:
-            New FieldElementGCM instance representing the sum
-        """
-        xor = int(self) ^ int(other)
+        xor = int(self) ^ int(other)    
         return FieldElement(xor)
+        
+    def _sqmul(self, divisor):
+        base = divisor
+        
+        exponent = (1 << 128) - 2
+        
+        res = int(FieldElement(1))
+        result = FieldElement(self._gcm_sem(res))
+        while exponent > 0:
+            if exponent & 1:
+                result = result * base
+            base = base * base
+            exponent >>= 1
+        
+        return result
+    
+    def __truediv__(self, other):
+        if int(other) == 0:
+            raise ValueError("Division by zero")
+        dividend = self 
+        inverse = self._sqmul(other)
+        result = dividend * inverse
+        return result
+
     def __int__(self):
         return self.element
-    
+
 class Polynom:
     def __init__(self, polynomials: list):
         self.polynomials = polynomials
@@ -148,21 +163,27 @@ class Polynom:
         return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
     
     def __mul__(self, other):
-
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
-        #print(result_poly)
+        print(self.polynomials)
+        print(other.polynomials)
+        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+
         for i, a in enumerate(self.polynomials_int):
             for j,b in enumerate(other.polynomials_int):
                 fe_a = FieldElement(a)
                 fe_b = FieldElement(b)
                 result_poly[i+j] ^= (fe_a * fe_b).element
         return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
+    
     def __pow__(self, exponent):
         if exponent ==0:
-            return base64.b64encode(int.to_bytes(1, 16, 'little')).decode()
+            return Polynom([base64.b64encode(int.to_bytes(1, 16, 'little')).decode()])
         if exponent ==1:
             return self
-        if 100>=exponent>1:
+        if 100>=exponent>=2:
             base = self
             result = base
             exponent -=1

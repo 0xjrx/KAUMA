@@ -1,20 +1,20 @@
 {
   "testcases": {
-    "b856d760-023d-4b00-bad2-15d2b6da22fe": {
+    "block2poly_xex": {
       "action": "block2poly",
       "arguments": {
         "semantic": "xex",
         "block": "ARIAAAAAAAAAAAAAAAAAgA=="
       }
     },
-    "b856d760-023da4b00-bad2-15d2b6da22fe": {
+    "block2poly_gcm": {
       "action": "block2poly",
       "arguments": {
         "semantic": "gcm",
         "block": "ARIAAAAAAAAAAAAAAAAAgA=="
       }
     },
-    "gcm": {
+    "poly2block_gcm": {
       "action": "poly2block",
       "arguments": {
         "semantic": "gcm",
@@ -26,7 +26,7 @@
         ]
       }
     },
-    "b356d760-023d-4b00-bad2-15d2b6da22fe": {
+    "poly2block_xex": {
       "action": "poly2block",
       "arguments": {
         "semantic": "xex",
@@ -38,7 +38,7 @@
         ]
       }
     },
-    "b756d760-023d-4b00-bad2-15d2b6da22fe": {
+    "gfmul_xex": {
       "action": "gfmul",
       "arguments": {
         "semantic": "xex",
@@ -46,7 +46,7 @@
         "b": "AgAAAAAAAAAAAAAAAAAAAA=="
       }
     },
-    "b736d760-023d-4b00-bad2-15d2b6da22fe": {
+    "sea_dec": {
       "action": "sea128",
       "arguments": {
         "mode": "decrypt",
@@ -54,7 +54,7 @@
         "input": "D5FDo3iVBoBN9gVi9/MSKQ=="
       }
     },
-    "b336d760-023d-4b00-bad2-15d2b6da22fe": {
+    "sea_enc": {
       "action": "sea128",
       "arguments": {
         "mode": "encrypt",
@@ -62,7 +62,7 @@
         "input": "yv66vvrO263eyviIiDNEVQ=="
       }
     },
-    "b366d760-023d-4b00-bad2-15d2b6da22fe": {
+    "xex_enc": {
       "action": "xex",
       "arguments": {
         "mode": "encrypt",
@@ -71,7 +71,7 @@
         "input": "/aOg4jMocLkBLkDLgkHYtFKc2L9jjyd2WXSSyxXQikpMY9ZRnsJE76e9dW9olZIW"
       }
     },
-    "b366d760-023d-4b08-bad2-15d2b6da22fe": {
+    "xex_dec": {
       "action": "xex",
       "arguments": {
         "mode": "decrypt",
@@ -80,7 +80,7 @@
         "input": "lr/ItaYGFXCtHhdPndE65yg7u/GIdM9wscABiiFOUH2Sbyc2UFMlIRSMnZrYCW1a"
       }
     },
-    "b3665760-023d-4b08-bad2-15d2b6da22fe": {
+    "gcm_enc_aes": {
       "action": "gcm_encrypt",
       "arguments": {
         "algorithm": "aes128",
@@ -90,7 +90,7 @@
         "ad": "QUQtRGF0ZW4="
       }
     },
-    "b3665760-023d-4b08-bad2-15d3b6da22fe": {
+    "gcm_enc_sea": {
       "action": "gcm_encrypt",
       "arguments": {
         "algorithm": "sea128",
@@ -100,7 +100,7 @@
         "ad": "QUQtRGF0ZW4="
       }
     },
-    "b3665760-028d-4b08-cad2-15d3b6da22fe": {
+    "gcm_dec_aes": {
       "action": "gcm_decrypt",
       "arguments": {
         "algorithm": "aes128",
@@ -111,7 +111,7 @@
         "tag": "Mp0APJb/ZIURRwQlMgNN/w=="
       }
     },
-    "b8665760-028d-4b08-cad2-15d3b6da22fe": {
+    "gcm_dec_sea": {
       "action": "gcm_decrypt",
       "arguments": {
         "algorithm": "sea128",
@@ -122,7 +122,7 @@
         "tag": "ysDdzOSnqLH0MQ+Mkb23gw=="
       }
     },
-    "b8665760-028d-4b98-cad2-15d3b6da22fe": {
+    "gcm_dec_sea2": {
       "action": "gcm_decrypt",
       "arguments": {
         "algorithm": "sea128",
@@ -133,7 +133,7 @@
         "tag": "sN0+1fG+WSOHMswF7IBnZA=="
       }
     },
-    "b8665760-028d-4b98-c8d2-15d3b6da22fe": {
+    "padding_oracle_test1": {
       "action": "padding_oracle",
       "arguments": {
         "hostname": "127.0.0.1",
@@ -142,7 +142,7 @@
         "ciphertext": "RWNwJGx1cyhsY2VpLWVgYjYEGFRJFhpUFgoGCVUOHAFSam81bF58P3dyZGYwdBETQ3h8IXlIayduaH96LWoOEw=="
       }
     },
-    "padding_oracle_test3": {
+    "padding_oracle_test2": {
       "action": "padding_oracle",
       "arguments": {
         "hostname": "127.0.0.1",
@@ -180,6 +180,27 @@
         ]
       }
     },
+    "gfpoly_mul_10": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": ["AAAAAAAAAAAAAAAAAAAAAA=="]
+      }
+    },
+    "gfpoly_mul_01": {
+      "action": "gfpoly_mul",
+      "arguments": {
+        "A": ["AAAAAAAAAAAAAAAAAAAAAA=="],
+        "B": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
+    },
     "gfpoly_pow": {
       "action": "gfpoly_pow",
       "arguments": {
@@ -191,15 +212,33 @@
         "k": 3
       }
     },
-    "test": {
-      "action": "gcm_decrypt",
+    "gfpoly_pow_k0": {
+      "action": "gfpoly_pow",
       "arguments": {
-        "algorithm": "aes128",
-        "nonce": "SwVYf3IJ2p/VTiyz",
-        "key": "bYfxz4zIS8NGWT55xSGy7Q==",
-        "ciphertext": "ltCrCEYjUCHd",
-        "ad": "w8pc8/yCt2zxERPVcsnOMx8/HmrfAfGUQtD+vyMMpJ5lrF2S",
-        "tag": "d4Z2uVRSmpVE1TEa/Zhx9A=="
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "k": 0
+      }
+    },
+    "gfpoly_pow_k1": {
+      "action": "gfpoly_pow",
+      "arguments": {
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "k": 1
+      }
+    },
+    "gfdiv": {
+      "action": "gfdiv",
+      "arguments": {
+        "a": "JAAAAAAAAAAAAAAAAAAAAA==",
+        "b": "wAAAAAAAAAAAAAAAAAAAAA=="
       }
     }
   }
