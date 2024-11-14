@@ -154,6 +154,7 @@ class Polynom:
             integer_list.append(int.from_bytes(bytes, 'little'))
         return integer_list
     
+    # TODO: fix addition for the same element as it is a 0 Polynomial 
     def __add__(self, other):
         max_len = max(len(self.polynomials_int), len(other.polynomials_int))
         self_int = self.polynomials_int + [0] * (max_len - len(self.polynomials_int))

@@ -159,7 +159,7 @@ def handle_gfpoly_mul(arguments):
     a_poly = Polynom(a)
     b_poly = Polynom(b)
     res = (a_poly * b_poly).polynomials
-    return {"S":res}
+    return {"P":res}
 def handle_gfpoly_pow(arguments):
     a = arguments["A"]
     a_poly = Polynom(a)
