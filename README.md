@@ -28,6 +28,8 @@ KAUMA implements several cryptographic operations and methods:
 - **Polnomial Operations in GF 2^128**
   - Addition of polynomials in GF 2^128
   - Multiplication of polynomials in GF 2^128
+  - Exponeniation of polynomials in GF 2^128
+
 
 ## Installation
 
@@ -114,6 +116,7 @@ Example input file:
 #### 7. Polynomial Operations
 - `Polynom` class with overloaded operators for easy operations
 - Works with polynoms as an array with Field Elements as its factors
+- Use the overloaded operators `+`, `*`, `**` to perform operations
 
 ### Output Format
 
