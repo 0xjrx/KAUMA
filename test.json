@@ -166,6 +166,37 @@
         ]
       }
     },
+    "gfpoly_add_id": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ],
+        "B": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ]
+      }
+    },
+    "gfpoly_add_self": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ],
+        "B": [
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
+    },
     "gfpoly_mul": {
       "action": "gfpoly_mul",
       "arguments": {
@@ -188,13 +219,17 @@
           "wAAAAAAAAAAAAAAAAAAAAA==",
           "ACAAAAAAAAAAAAAAAAAAAA=="
         ],
-        "B": ["AAAAAAAAAAAAAAAAAAAAAA=="]
+        "B": [
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ]
       }
     },
     "gfpoly_mul_01": {
       "action": "gfpoly_mul",
       "arguments": {
-        "A": ["AAAAAAAAAAAAAAAAAAAAAA=="],
+        "A": [
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ],
         "B": [
           "0AAAAAAAAAAAAAAAAAAAAA==",
           "IQAAAAAAAAAAAAAAAAAAAA=="
@@ -236,6 +271,13 @@
     },
     "gfdiv": {
       "action": "gfdiv",
+      "arguments": {
+        "a": "JAAAAAAAAAAAAAAAAAAAAA==",
+        "b": "wAAAAAAAAAAAAAAAAAAAAA=="
+      }
+    },
+    "gfpoly_divmod": {
+      "action": "gfpoly_divmod",
       "arguments": {
         "a": "JAAAAAAAAAAAAAAAAAAAAA==",
         "b": "wAAAAAAAAAAAAAAAAAAAAA=="

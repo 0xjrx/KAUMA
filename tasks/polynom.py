@@ -156,6 +156,12 @@ class Polynom:
     
     # TODO: fix addition for the same element as it is a 0 Polynomial 
     def __add__(self, other):
+        if self.polynomials == other.polynomials:
+            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+            return other
+        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+            return self
         max_len = max(len(self.polynomials_int), len(other.polynomials_int))
         self_int = self.polynomials_int + [0] * (max_len - len(self.polynomials_int))
         other_int = other.polynomials_int + [0] * (max_len - len(other.polynomials_int))
@@ -165,8 +171,6 @@ class Polynom:
     
     def __mul__(self, other):
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
-        print(self.polynomials)
-        print(other.polynomials)
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
         if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
