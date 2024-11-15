@@ -41,7 +41,7 @@ class FieldElement:
             result = (result << 1) | (byte[0] & 1)
             byte = bytes([byte[0] >> 1])
         return result
-    def _gcm_sem(self, element) -> int:
+    def gcm_sem(self, element) -> int:
         """ 
         Transform a field element to GCM's semantic.
 
@@ -77,9 +77,9 @@ class FieldElement:
         IRR_POLY = b"hwAAAAAAAAAAAAAAAAAAAAE="
     
         # Convert our operants to GCM's semantic
-        multiplicant = self._gcm_sem(int(self))
+        multiplicant = self.gcm_sem(int(self))
         
-        multiplier = self._gcm_sem(int(other))
+        multiplier = self.gcm_sem(int(other))
         
         # Convert the reduction polynomial
         poly_bytes = base64.b64decode(IRR_POLY)
@@ -109,7 +109,7 @@ class FieldElement:
             multiplier >>= 1
         
         # Convert the result back to normal semantic
-        gcm_encoded_product = self._gcm_sem(product)
+        gcm_encoded_product = self.gcm_sem(product)
         return FieldElement(gcm_encoded_product)
     
     def __add__(self, other: 'FieldElement'):
@@ -122,7 +122,7 @@ class FieldElement:
         exponent = (1 << 128) - 2
         
         res = int(FieldElement(1))
-        result = FieldElement(self._gcm_sem(res))
+        result = FieldElement(self.gcm_sem(res))
         while exponent > 0:
             if exponent & 1:
                 result = result * base
@@ -154,7 +154,6 @@ class Polynom:
             integer_list.append(int.from_bytes(bytes, 'little'))
         return integer_list
     
-    # TODO: fix addition for the same element as it is a 0 Polynomial 
     def __add__(self, other):
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
@@ -185,17 +184,20 @@ class Polynom:
     
     def __pow__(self, exponent):
         if exponent ==0:
-            return Polynom([base64.b64encode(int.to_bytes(1, 16, 'little')).decode()])
+            neutral_field_element = FieldElement(1)
+            gcm_semantic_neutral = neutral_field_element.gcm_sem(neutral_field_element.element)
+            neutral_polynom = Polynom([base64.b64encode(int.to_bytes(gcm_semantic_neutral, 16, 'little')).decode()])
+            return neutral_polynom
         if exponent ==1:
             return self
-        if 100>=exponent>=2:
-            base = self
-            result = base
+        
+        base = self
+        result = base
+        exponent -=1
+        while exponent>0:
+            result = result * base
             exponent -=1
-            while exponent>0:
-                result = result * base
-                exponent -=1
-            return result
+        return result
      
     def display_polys(self):
         print(self.polynomials)

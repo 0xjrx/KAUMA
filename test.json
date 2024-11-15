@@ -183,7 +183,21 @@
         ]
       }
     },
-    "gfpoly_add_self": {
+    "gfpoly_add_0": {
+      "action": "gfpoly_add",
+      "arguments": {
+        "A": [
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ]
+      }
+    },
+    "gfpoly_0_add": {
       "action": "gfpoly_add",
       "arguments": {
         "A": [
