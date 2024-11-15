@@ -293,8 +293,15 @@
     "gfpoly_divmod": {
       "action": "gfpoly_divmod",
       "arguments": {
-        "a": "JAAAAAAAAAAAAAAAAAAAAA==",
-        "b": "wAAAAAAAAAAAAAAAAAAAAA=="
+        "A": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ]
       }
     }
   }

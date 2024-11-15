@@ -41,6 +41,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_mul(arguments)
             case "gfpoly_pow":
                 result = handle_gfpoly_pow(arguments)
+            case "gfpoly_divmod":
+                result = handle_gfpoly_divmod(arguments)
             case "gfdiv":
                 result = handle_gfdiv(arguments)
             case _:
@@ -173,6 +175,13 @@ def handle_gfdiv(arguments):
     b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
     c = a_fe / b_fe
     return {"q": base64.b64encode(int.to_bytes(int(c), 16, 'little')).decode('utf-8')}
+def handle_gfpoly_divmod(arguments):
+    A = Polynom(arguments["A"])
+    B = Polynom(arguments["B"])
+    quotient, remainder = A/B
+    return {"Q": quotient.polynomials, "R": remainder.polynomials}
+
+
 
 class ParseJson:
     def __init__(self, filename):
