@@ -215,7 +215,6 @@ class Polynom:
             return Polynom([poly2block_gcm([])]), self
         if len(other.polynomials)>len(self.polynomials):
             null = poly2block_gcm([])
-            print(null)
             return Polynom([null]), self
         dividend = self.polynomials_int
         divisor = other.polynomials_int
