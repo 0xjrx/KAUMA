@@ -153,7 +153,11 @@ class Polynom:
             bytes = base64.b64decode(b46str)
             integer_list.append(int.from_bytes(bytes, 'little'))
         return integer_list
-    
+    def _normalize(self):
+        while self.polynomials_int and self.polynomials_int[-1] ==0:
+            self.polynomials_int.pop()
+        self.polynomials = [base64.b64encode(int.to_bytes(val, 16, "little")).decode()
+        for val in self.polynomials_int]
     def __add__(self, other):
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
@@ -165,9 +169,12 @@ class Polynom:
         self_int = self.polynomials_int + [0] * (max_len - len(self.polynomials_int))
         other_int = other.polynomials_int + [0] * (max_len - len(other.polynomials_int))
 
-        result_poly = [s ^ o for s, o in zip(self_int, other_int)]        
-        return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
-    
+        result_poly = [s ^ o for s, o in zip(self_int, other_int)]
+        result = Polynom(
+            [base64.b64encode(int.to_bytes(res, 16, "little")).decode() for res in result_poly]
+        )
+        result._normalize()
+        return result    
     def __mul__(self, other):
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
