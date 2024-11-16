@@ -218,26 +218,34 @@ class Polynom:
             return Polynom([null]), self
         dividend = self.polynomials_int
         divisor = other.polynomials_int
-        result_poly = [0] * len(dividend)
+        quotient = [0] * (len(dividend)-len(divisor)+1)
+        dividend_deg = len(dividend) - 1
+        divisor_deg = len(divisor) - 1
 
-        while len(dividend) >= len(divisor):
+        while dividend_deg >= divisor_deg:
+            degree_diff = dividend_deg - divisor_deg
+
             lead_dividend = FieldElement(dividend[-1])
             lead_divisor = FieldElement(divisor[-1])
 
             quotient_term = lead_dividend / lead_divisor
-            result_poly[len(dividend) - len(divisor)] = quotient_term.element
+            while len(quotient) <= degree_diff:
+                quotient.append(0)
+            quotient[degree_diff] = quotient_term.element
 
-            temp_divisor = [0] * (len(dividend) - len(divisor)) + [
-                (FieldElement(quotient_term.element) * FieldElement(d)).element for d in divisor
-            ]
-            
-            temp_divisor = [t % (1 << 128) for t in temp_divisor]
-            dividend = [a ^ b for a, b in zip(dividend, temp_divisor)]
-            
+            for i in range(len(divisor)):
+                pos = len(dividend) - len(divisor) + i
+                if pos >= 0 and pos < len(dividend):
+                    mult = (FieldElement(divisor[i]) * quotient_term).element
+                    dividend[pos] ^= mult            
             while dividend and dividend[-1] == 0:
                 dividend.pop()
+                dividend_deg = len(dividend)-1
            
-        quotient_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in result_poly if term != 0]
+        quotient_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in quotient if term != 0]
         remainder_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in dividend if term != 0]
-
+        if not quotient_base64:
+            quotient_base64 = ["AAAAAAAAAAAAAAAAAAAAAA=="]
+        if not remainder_base64:
+            remainder_base64 = ["AAAAAAAAAAAAAAAAAAAAAA=="]
         return Polynom(quotient_base64), Polynom(remainder_base64)
