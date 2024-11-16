@@ -220,7 +220,7 @@ class Polynom:
         divisor = other.polynomials_int
         result_poly = [0] * len(dividend)
 
-        while len(dividend) > len(divisor):
+        while len(dividend) >= len(divisor):
             lead_dividend = FieldElement(dividend[-1])
             lead_divisor = FieldElement(divisor[-1])
 
