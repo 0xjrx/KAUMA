@@ -303,6 +303,32 @@
           "IQAAAAAAAAAAAAAAAAAAAA=="
         ]
       }
+    },
+    "gfpoly_divmod_other_bt_self": {
+      "action": "gfpoly_divmod",
+      "arguments": {
+        "A": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": [
+          "JAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "ACAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
+    },
+    "gfpoly_divmod_divisor_1": {
+      "action": "gfpoly_divmod",
+      "arguments": {
+        "A": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": [
+          "gAAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
     }
   }
 }

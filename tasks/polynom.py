@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import base64
-
+from tasks.poly import block2poly_gcm, poly2block_gcm
 
 
 
@@ -210,13 +210,18 @@ class Polynom:
         print(self.polynomials)
     def __truediv__(self, other):
         if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
-            raise ValueError("Division by zero")
-
+            return Polynom(block2poly_gcm([0])), self
+        if other.polynomials == [poly2block_gcm([0])]:
+            return Polynom([poly2block_gcm([])]), self
+        if len(other.polynomials)>len(self.polynomials):
+            null = poly2block_gcm([])
+            print(null)
+            return Polynom([null]), self
         dividend = self.polynomials_int
         divisor = other.polynomials_int
         result_poly = [0] * len(dividend)
 
-        while len(dividend) >= len(divisor):
+        while len(dividend) > len(divisor):
             lead_dividend = FieldElement(dividend[-1])
             lead_divisor = FieldElement(divisor[-1])
 
@@ -232,7 +237,7 @@ class Polynom:
             
             while dividend and dividend[-1] == 0:
                 dividend.pop()
-
+           
         quotient_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in result_poly if term != 0]
         remainder_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in dividend if term != 0]
 
