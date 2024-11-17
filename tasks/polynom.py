@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import base64
-from tasks.poly import block2poly_gcm, poly2block_gcm
 
 
 
@@ -41,6 +40,7 @@ class FieldElement:
             result = (result << 1) | (byte[0] & 1)
             byte = bytes([byte[0] >> 1])
         return result
+
     def gcm_sem(self, element) -> int:
         """ 
         Transform a field element to GCM's semantic.
@@ -162,6 +162,7 @@ class Polynom:
             base64.b64encode(int.to_bytes(val, 16, "little")).decode()
             for val in self.polynomials_int
         ]
+
     def __add__(self, other):
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
@@ -179,6 +180,7 @@ class Polynom:
         )
         result._normalize()
         return result    
+
     def __mul__(self, other):
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
@@ -211,8 +213,8 @@ class Polynom:
         return result
      
     def display_polys(self):
-
         print(self.polynomials)
+
     def __truediv__(self, divisor):
         # Check for division by zero
         if divisor.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
@@ -295,6 +297,7 @@ class Polynom:
         if remainder.polynomials ==[]:
             remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
         return quotient, remainder
+
     def poly_powmod(self, modulus, exponent):
 
         if exponent == 0:
