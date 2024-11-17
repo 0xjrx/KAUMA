@@ -329,6 +329,16 @@
           "gAAAAAAAAAAAAAAAAAAAAA=="
         ]
       }
+    },
+    "gfpoly_divmod_divisor_0": {
+      "action": "gfpoly_divmod",
+      "arguments": {
+        "A": [
+          "0AAAAAAAAAAAAAAAAAAAAA==",
+          "IQAAAAAAAAAAAAAAAAAAAA=="
+        ],
+        "B": ["AAAAAAAAAAAAAAAAAAAAAA=="]
+      }
     }
   }
 }

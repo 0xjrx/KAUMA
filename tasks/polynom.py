@@ -153,11 +153,15 @@ class Polynom:
             bytes = base64.b64decode(b46str)
             integer_list.append(int.from_bytes(bytes, 'little'))
         return integer_list
+
     def _normalize(self):
-        while self.polynomials_int and self.polynomials_int[-1] ==0:
-            self.polynomials_int.pop()
-        self.polynomials = [base64.b64encode(int.to_bytes(val, 16, "little")).decode()
-        for val in self.polynomials_int]
+        # Only remove trailing zeros, not leading zeros
+        while self.polynomials_int and self.polynomials_int[-1] == 0:
+            self.polynomials_int.pop()  # Remove trailing zeros
+        self.polynomials = [
+            base64.b64encode(int.to_bytes(val, 16, "little")).decode()
+            for val in self.polynomials_int
+        ]
     def __add__(self, other):
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
@@ -207,45 +211,87 @@ class Polynom:
         return result
      
     def display_polys(self):
+
         print(self.polynomials)
-    def __truediv__(self, other):
-        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
-            return Polynom(block2poly_gcm([0])), self
-        if other.polynomials == [poly2block_gcm([0])]:
-            return Polynom([poly2block_gcm([])]), self
-        if len(other.polynomials)>len(self.polynomials):
-            null = poly2block_gcm([])
-            return Polynom([null]), self
-        dividend = self.polynomials_int
-        divisor = other.polynomials_int
-        quotient = [0] * (len(dividend)-len(divisor)+1)
-        dividend_deg = len(dividend) - 1
-        divisor_deg = len(divisor) - 1
-
-        while dividend_deg >= divisor_deg:
-            degree_diff = dividend_deg - divisor_deg
-
-            lead_dividend = FieldElement(dividend[-1])
-            lead_divisor = FieldElement(divisor[-1])
-
-            quotient_term = lead_dividend / lead_divisor
-            while len(quotient) <= degree_diff:
-                quotient.append(0)
-            quotient[degree_diff] = quotient_term.element
-
-            for i in range(len(divisor)):
-                pos = len(dividend) - len(divisor) + i
-                if pos >= 0 and pos < len(dividend):
-                    mult = (FieldElement(divisor[i]) * quotient_term).element
-                    dividend[pos] ^= mult            
-            while dividend and dividend[-1] == 0:
-                dividend.pop()
-                dividend_deg = len(dividend)-1
-           
-        quotient_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in quotient if term != 0]
-        remainder_base64 = [base64.b64encode(int.to_bytes(term, 16, "little")).decode() for term in dividend if term != 0]
-        if not quotient_base64:
-            quotient_base64 = ["AAAAAAAAAAAAAAAAAAAAAA=="]
-        if not remainder_base64:
-            remainder_base64 = ["AAAAAAAAAAAAAAAAAAAAAA=="]
-        return Polynom(quotient_base64), Polynom(remainder_base64)
+    def __truediv__(self, divisor):
+        # Check for division by zero
+        if divisor.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+            return Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="]), self
+            
+        # If dividend is zero, return zero
+        if len(self.polynomials_int) == 0 or (len(self.polynomials_int) == 1 and self.polynomials_int[0] == 0):
+            return (
+                Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()]),
+                Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+            )
+        
+        # Create a copy of the dividend
+        remainder = Polynom(self.polynomials.copy())
+        remainder.polynomials_int = self.polynomials_int.copy()
+        
+        # Get the degrees
+        dividend_degree = len(self.polynomials_int) - 1
+        divisor_degree = len(divisor.polynomials_int) - 1
+        
+        # If dividend degree is less than divisor degree, quotient is 0 and remainder is dividend
+        if dividend_degree < divisor_degree:
+            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()]), remainder
+        
+        # Initialize quotient coefficients with zeros
+        quotient_coeffs = [0] * (dividend_degree - divisor_degree + 1)
+        
+        # Create working copy to preserve zero coefficients
+        work_remainder = remainder.polynomials_int.copy()
+        
+        # Continue as there arre emough terms
+        while len(work_remainder) >= len(divisor.polynomials_int):
+            # Skip if leading coefficient is zero
+            if work_remainder[-1] == 0:
+                work_remainder.pop()
+                continue
+                
+            # Calculate degrees for current step
+            curr_remainder_degree = len(work_remainder) - 1
+            curr_divisor_degree = len(divisor.polynomials_int) - 1
+            
+            # Calculate quotient coefficient
+            lead_remainder = FieldElement(work_remainder[-1])
+            lead_divisor = FieldElement(divisor.polynomials_int[-1])
+            curr_quotient = lead_remainder / lead_divisor
+            
+            # Store quotient coefficient
+            pos = curr_remainder_degree - curr_divisor_degree
+            quotient_coeffs[pos] = int(curr_quotient)
+            
+            # Create subtrahend with preserved zeros
+            subtrahend_coeffs = [0] * pos
+            for coeff in divisor.polynomials_int:
+                mult_result = int(FieldElement(coeff) * curr_quotient)
+                subtrahend_coeffs.append(mult_result)
+                
+            # Ensure subtrahend and work_remainder have same length
+            while len(subtrahend_coeffs) < len(work_remainder):
+                subtrahend_coeffs.insert(0, 0)
+                
+            # Subtract (XOR) term by term
+            for i in range(len(work_remainder)):
+                work_remainder[i] ^= subtrahend_coeffs[i]
+                
+            # Remove leading zero while preserving internal zeros
+            while work_remainder and work_remainder[-1] == 0:
+                work_remainder.pop()
+        
+        # Create remainder polynomial preserving zero coefficients
+        remainder = Polynom([
+            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode()
+            for coeff in work_remainder
+        ])
+        
+        # Create quotient polynomial
+        quotient = Polynom([
+            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode()
+            for coeff in quotient_coeffs
+        ])
+        if remainder.polynomials ==[]:
+            remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
+        return quotient, remainder
