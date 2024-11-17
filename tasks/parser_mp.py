@@ -47,6 +47,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfdiv(arguments)
             case "gfpoly_powmod":
                 result = handle_gfpoly_powmod(arguments)
+            case "gfpoly_sort":
+                result = handle_gfpoly_sort(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -188,7 +190,12 @@ def handle_gfpoly_powmod(arguments):
     k = arguments["k"]
     result = A.poly_powmod(B, k)
     return {"Z":result.polynomials}
-
+def handle_gfpoly_sort(arguments):
+    polys = arguments["polys"]
+    polys_obj = [Polynom(group) for group in polys]
+    sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
+    sorted_polynomials_representation = [p.polynomials for p in sorted_polynomials]
+    return {"sorted_polys": sorted_polynomials_representation}
 
 class ParseJson:
     def __init__(self, filename):

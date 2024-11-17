@@ -323,4 +323,18 @@ class Polynom:
             exponent >>= 1
             
         return result
-
+    def gfpoly_sort(self, *others):
+        all_poly = [self] + list(others)
+        
+        def compare_polys(poly):
+            # We need degree as primary sorting factor
+            degree = len(poly.polynomials_int) - 1
+            
+            # We need to compare the grade of a poly and if the degree are equal the value of the last element
+            last_element = poly.polynomials_int[-1]
+            
+            # Pack our values into a tuple and let python handle the rest 
+            return (degree, last_element)
+        # Sort our polynomials based on all criteria
+        sorted_polys = sorted(all_poly, key=compare_polys)
+        return sorted_polys
