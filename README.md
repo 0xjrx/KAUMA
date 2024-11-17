@@ -26,10 +26,12 @@ KAUMA implements several cryptographic operations and methods:
   server you have to adjust the communication
 
 - **Polnomial Operations in GF 2^128**
-  - Addition of polynomials in GF 2^128
-  - Multiplication of polynomials in GF 2^128
-  - Exponeniation of polynomials in GF 2^128
-
+  - Addition of polynomials and field elements in GF 2^128
+  - Multiplication of polynomials and field elements in GF 2^128
+  - Exponeniation of polynomials and field elements in GF 2^128
+  - Division of polynomials and field elements in GF 2^128
+  - Sorting of polynomials
+  - Converting polynomials into a monic version
 
 ## Installation
 
@@ -115,9 +117,15 @@ An example file is `test.json`. This can be used to test all functions.
 - Decrypt a PKCS#7 Padding given a hostname (for the vulnerable server), port, initialization vector (IV) and ciphertext
 
 #### 7. Polynomial Operations
-- `Polynom` class with overloaded operators for easy operations
-- Works with polynoms as an array with Field Elements as its factors
-- Use the overloaded operators `+`, `*`, `**` to perform operations
+- `FieldElement` class with overloaded operators for easy operations
+- Use the overloaded operators `+`, `*`, `**`, `/` to perform operations with Field Elements
+- Field Elements are instantiated by creating a FieldElement() object that takes an integer
+- The `Polynom` class on the other hand works by taking a list of Base64 strings, each representing a factor of the polynomial
+with the higest degree on the right. You can think of each factor as a Field Element
+- Use operators such as `+`, `*`, `**`, `/` to perform arithmetic operations with polynomials
+- As of now you can also call the instancemethods `grpoly_sort` which sorts multiple polynomials
+and `gfpoly_makemonic` which, as the name suggests, makes a polynomial monic, dividing every FieldElement by the highest coefficients of the polynomial
+
 
 ### Output Format
 
@@ -151,7 +159,7 @@ kauma/
 │   ├── gfmul.py      # Field multiplication
 │   ├── xex.py        # XEX mode
 │   └── gcm.py        # GCM encryption and decryption using AES or SEA
-│   └── parse.py      # Parser for input
+│   └── parser_mp.py  # Parser for input with multiprocessing
 │   └── padding_oracle_crack.py      # PKCS#7 padding oracle attack
 │   └── server.py     # Demo oracle server
 │   └── polynom.py    # Operations with Polynomials in GF 2^128
