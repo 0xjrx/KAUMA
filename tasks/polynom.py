@@ -338,3 +338,13 @@ class Polynom:
         # Sort our polynomials based on all criteria
         sorted_polys = sorted(all_poly, key=compare_polys)
         return sorted_polys
+
+    def gfpoly_makemonic(self):
+        highest_coefficient = FieldElement(self.polynomials_int[-1])
+        new_poly = []
+        for coeff in self.polynomials_int :
+            coeff = FieldElement(coeff)
+            res = coeff / highest_coefficient
+            new_poly.append(res.element)
+        result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
+        return result_poly

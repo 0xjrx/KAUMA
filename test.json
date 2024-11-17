@@ -380,6 +380,17 @@
           ]
         ]
       }
+    },
+    "gfpoly_makemonic": {
+      "action": "gfpoly_make_monic",
+      "arguments": {
+        "A": [
+          "NeverGonnaGiveYouUpAAA==",
+          "NeverGonnaLetYouDownAA==",
+          "NeverGonnaRunAroundAAA==",
+          "AndDesertYouAAAAAAAAAA=="
+        ]
+      }
     }
   }
 }

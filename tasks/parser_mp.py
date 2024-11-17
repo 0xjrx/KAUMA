@@ -49,6 +49,9 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_powmod(arguments)
             case "gfpoly_sort":
                 result = handle_gfpoly_sort(arguments)
+            case "gfpoly_make_monic":
+                result = handle_gfpoly_makemonic(arguments)
+
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -196,7 +199,10 @@ def handle_gfpoly_sort(arguments):
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
     sorted_polynomials_representation = [p.polynomials for p in sorted_polynomials]
     return {"sorted_polys": sorted_polynomials_representation}
-
+def handle_gfpoly_makemonic(arguments):
+    poly = Polynom(arguments["A"])
+    monic_poly = poly.gfpoly_makemonic()
+    return {"A*": monic_poly}
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename
