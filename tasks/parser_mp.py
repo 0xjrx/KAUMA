@@ -45,6 +45,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_divmod(arguments)
             case "gfdiv":
                 result = handle_gfdiv(arguments)
+            case "gfpoly_powmod":
+                result = handle_gfpoly_powmod(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -180,7 +182,12 @@ def handle_gfpoly_divmod(arguments):
     B = Polynom(arguments["B"])
     quotient, remainder = A/B
     return {"Q": quotient.polynomials, "R": remainder.polynomials}
-
+def handle_gfpoly_powmod(arguments):
+    A = Polynom(arguments["A"])
+    B = Polynom(arguments["M"])
+    k = arguments["k"]
+    result = A.poly_powmod(B, k)
+    return {"Z":result.polynomials}
 
 
 class ParseJson:

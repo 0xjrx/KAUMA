@@ -295,3 +295,29 @@ class Polynom:
         if remainder.polynomials ==[]:
             remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
         return quotient, remainder
+    def poly_powmod(self, modulus, exponent):
+
+        if exponent == 0:
+            return Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
+            
+        if exponent == 1:
+            result, remainder = self / modulus
+            return remainder
+            
+        result = Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
+        base = self
+        
+        _, base = base / modulus
+        
+        while exponent > 0:
+            if exponent & 1:
+                result = result * base
+                _, result = result / modulus
+                
+            base = base * base
+            _, base = base / modulus
+                
+            exponent >>= 1
+            
+        return result
+
