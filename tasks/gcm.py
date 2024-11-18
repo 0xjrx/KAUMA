@@ -127,6 +127,7 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     len_a = len(associated_data_bytes) * 8
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
+    #print(base64.b64encode(L).decode())
     l_fe = FieldElement(int.from_bytes(L, 'little'))
     ghash_result = (ghash_result + l_fe)* h_field_elem   
 
