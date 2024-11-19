@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import base64
 
-from cryptography.utils import read_only_property
 
 from common.common import stderr_write
 
