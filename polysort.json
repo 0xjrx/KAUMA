@@ -1,0 +1,125 @@
+{
+  "testcases": {
+    "gfpoly_sort": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "NeverGonnaGiveYouUpAAA==",
+            "NeverGonnaLetYouDownAA==",
+            "NeverGonnaRunAroundAAA==",
+            "AndDesertYouAAAAAAAAAA=="
+          ],
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ],
+          [
+            "NeverGonnaMakeYouCryAA==",
+            "NeverGonnaSayGoodbyeAA==",
+            "NeverGonnaTellALieAAAA==",
+            "AndHurtYouAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "gfpoly_sort1": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ],
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ],
+          [
+            "NeverGonnaMakeYouCryAA==",
+            "NeverGonnaSayGoodbyeAA==",
+            "NeverGonnaTellALieAAAA==",
+            "AndHurtYouAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "gfpoly_sort2": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ],
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ],
+          [
+            "WereNoStrangersToLoveA==",
+            "YouKnowTheRulesAAAAAAA==",
+            "AndSoDoIAAAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "gfpoly_sort3": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "NeverGonnaMakeYouCryAA==",
+            "NeverGonnaSayGoodbyeAA==",
+            "NeverGonnaTellALieAAAA==",
+            "AndHurtYouAAAAAAAAAAAA=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AAAAAAAAAAAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "gfpoly_sort_ZERO": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+            [
+              "WereNoStrangersToLoveA==",
+              "YouKnowTheRulesAAAAAAA==",
+              "AndSoDoIAAAAAAAAAAAAAA=="
+            ],
+            [
+              "WereNoStrangersToLoveA==",
+              "YouKnowTheRulesAAAAAAA==",
+              "AndSoDoIAAAAAAAAAAAAAA=="
+            ],
+            [
+              "WereNoStrangersToLoveA==",
+              "YouKnowTheRulesAAAAAAA=="
+            ],
+            [
+              "NeverGonnaMakeYouCryAA==",
+              "NeverGonnaSayGoodbyeAA==",
+              "NeverGonnaTellALieAAAA=="
+            ],
+            [
+              "AAAAAAAAAAAAAAAAAAA==",
+              "YouKnowTheRulesAAAAAAA=="
+            ],
+            [
+              "WereNoStrangersToLoveA=="
+            ]
+          ]
+      }
+    }
+  }
+}

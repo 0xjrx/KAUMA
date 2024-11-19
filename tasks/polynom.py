@@ -149,9 +149,14 @@ class Polynom:
 
     def _base64poly_to_int(self):
         integer_list = []
+        field_element = FieldElement(0)  # Create a FieldElement instance to use gcm_sem
+    
         for b46str in self.polynomials:
-            bytes = base64.b64decode(b46str)
-            integer_list.append(int.from_bytes(bytes, 'little'))
+            bytes_val = base64.b64decode(b46str)
+            int_val = int.from_bytes(bytes_val, 'little')
+            # Convert to GCM semantic using the FieldElement's gcm_sem method
+            gcm_val = field_element.gcm_sem(int_val)
+            integer_list.append(gcm_val)
         return integer_list
 
     def _normalize(self):
