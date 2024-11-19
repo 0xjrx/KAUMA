@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 import base64
 
+from cryptography.utils import read_only_property
+
+from common.common import stderr_write
+
 
 
 
@@ -130,7 +134,6 @@ class FieldElement:
             exponent >>= 1
         
         return result
-    
     def __truediv__(self, other):
         if int(other) == 0:
             raise ValueError("Division by zero")
@@ -138,6 +141,19 @@ class FieldElement:
         inverse = self._sqmul(other)
         result = dividend * inverse
         return result
+    def sqrt(self):
+        base = self
+        result = FieldElement(0)
+        exponent = (1 << 127)
+        
+        res = int(FieldElement(1))
+        result = FieldElement(self.gcm_sem(res))
+        while exponent > 0:
+            if exponent & 1:
+                result = result * base
+            base = base * base
+            exponent >>= 1
+        return result   
 
     def __int__(self):
         return self.element
@@ -346,8 +362,6 @@ class Polynom:
             for item in poly.polynomials_int_gcm[::-1]:
                 key.append(item)
             key_tuple = tuple(key)
-
-
             
             # Pack our values into a tuple and let python handle the rest 
             return key_tuple
@@ -364,4 +378,14 @@ class Polynom:
             new_poly.append(res.element)
 
         result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
+        return result_poly
+    def sqrt(self):
+        result = []
+        for degree, coeff in enumerate(self.polynomials_int):
+            if (degree+1)%2:
+                coeff_fe = FieldElement(coeff)
+                sqrt_coeff = coeff_fe.sqrt()
+                result.append(sqrt_coeff.element)
+
+        result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in result])
         return result_poly

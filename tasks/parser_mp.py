@@ -51,7 +51,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_sort(arguments)
             case "gfpoly_make_monic":
                 result = handle_gfpoly_makemonic(arguments)
-
+            case "gfpoly_sqrt":
+                result = handle_gfpoly_sqrt(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -203,6 +204,11 @@ def handle_gfpoly_makemonic(arguments):
     poly = Polynom(arguments["A"])
     monic_poly = poly.gfpoly_makemonic()
     return {"A*": monic_poly}
+def handle_gfpoly_sqrt(arguments):
+    poly = Polynom(arguments["Q"])
+    poly_sqrt = poly.sqrt()
+    return {"S": poly_sqrt.polynomials}
+
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename
