@@ -146,8 +146,8 @@ class Polynom:
     def __init__(self, polynomials: list):
         self.polynomials = polynomials
         self.polynomials_int = self._base64poly_to_int()
-
-    def _base64poly_to_int(self):
+        self.polynomials_int_gcm = self._base64poly_to_int_gcm()
+    def _base64poly_to_int_gcm(self):
         integer_list = []
         field_element = FieldElement(0)  # Create a FieldElement instance to use gcm_sem
     
@@ -157,6 +157,13 @@ class Polynom:
             # Convert to GCM semantic using the FieldElement's gcm_sem method
             gcm_val = field_element.gcm_sem(int_val)
             integer_list.append(gcm_val)
+        return integer_list
+    
+    def _base64poly_to_int(self):
+        integer_list = []
+        for b46str in self.polynomials:
+            bytes = base64.b64decode(b46str)
+            integer_list.append(int.from_bytes(bytes, 'little'))
         return integer_list
 
     def _normalize(self):
@@ -334,9 +341,9 @@ class Polynom:
         def compare_polys(poly):
             # We need degree as primary sorting factor
             key = []
-            key.append(len(poly.polynomials_int) - 1)
+            key.append(len(poly.polynomials_int_gcm) - 1)
             
-            for item in poly.polynomials_int[::-1]:
+            for item in poly.polynomials_int_gcm[::-1]:
                 key.append(item)
             key_tuple = tuple(key)
 
@@ -355,5 +362,6 @@ class Polynom:
             coeff = FieldElement(coeff)
             res = coeff / highest_coefficient
             new_poly.append(res.element)
+
         result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
         return result_poly
