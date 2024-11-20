@@ -53,6 +53,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_makemonic(arguments)
             case "gfpoly_sqrt":
                 result = handle_gfpoly_sqrt(arguments)
+            case "gfpoly_diff":
+                result = handle_gfpoly_diff(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -71,7 +73,6 @@ def handle_p2b(arguments):
         coefficients = arguments["coefficients"]
         block = poly2block_gcm(coefficients)
         return {"block": block}
-
 def handle_b2p(arguments):
     if arguments["semantic"] == "xex":
         block = arguments["block"]
@@ -208,6 +209,10 @@ def handle_gfpoly_sqrt(arguments):
     poly = Polynom(arguments["Q"])
     poly_sqrt = poly.sqrt()
     return {"S": poly_sqrt.polynomials}
+def handle_gfpoly_diff(arguments):
+    poly = Polynom(arguments["F"])
+    derivative = poly.derivative()
+    return {"F'": derivative.polynomials}
 
 class ParseJson:
     def __init__(self, filename):
