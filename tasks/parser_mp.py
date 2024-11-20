@@ -55,6 +55,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_sqrt(arguments)
             case "gfpoly_diff":
                 result = handle_gfpoly_diff(arguments)
+            case "gfpoly_gcd":
+                result = handle_gfpoly_gcd(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -213,7 +215,11 @@ def handle_gfpoly_diff(arguments):
     poly = Polynom(arguments["F"])
     derivative = poly.derivative()
     return {"F'": derivative.polynomials}
-
+def handle_gfpoly_gcd(arguments):
+    f = Polynom(arguments["A"])
+    g = Polynom(arguments["B"])
+    result = f.gcd(g)
+    return {"G": result.polynomials}
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename

@@ -548,6 +548,14 @@ class Polynom:
         result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in result])
         return result_poly
     def derivative(self):
+        """
+        Calculates the derivative of a given polynomial in GF(2^128)
+
+        Sets all even exponent coefficients to 0 and removes the 0 degree coefficient
+
+        Returns:
+            New polynom instance representing the derivative
+        """
         if len(self.polynomials_int) == 1:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
         
@@ -564,4 +572,29 @@ class Polynom:
         result_poly._normalize()
         return result_poly
 
+    def gcd(self, other):
+        """
+        Calculates the greates common divisor for two given polynomials in GF(2^128)
+
+        Uses the euclidian algorithm to calculate the result and makes it monic
+
+        Returns:
+            New polynom instance representing the greates common divisor of the two polys
+            in monic form
+        """
+        f = self
+        g = other
+        if len(other.polynomials_int_gcm)>len(self.polynomials_int_gcm):
+            f,g = g,f
+        if self.polynomials_int[0] == 0:
+            return other
+        if other.polynomials_int[0] == 0:
+            return self
+        while g.polynomials_int_gcm != [0]:
+            q, r = f / g
+            f = g
+            g = r
+        if f.polynomials_int[-1] !=1:
+            g = Polynom(f.gfpoly_makemonic())
+        return g
 
