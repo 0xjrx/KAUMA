@@ -548,6 +548,8 @@ class Polynom:
         result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in result])
         return result_poly
     def derivative(self):
+        if len(self.polynomials_int) == 1:
+            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
         
         derivative = []
         base_poly = self.polynomials_int
@@ -559,6 +561,7 @@ class Polynom:
                 derivative.append(coeff)
         derivative.pop(0)
         result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in derivative])
+        result_poly._normalize()
         return result_poly
 
 

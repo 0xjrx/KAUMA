@@ -416,6 +416,24 @@
           "UnderstaaaaaaaaaaaaanQ=="
         ]
       }
+    },
+    "gfpoly_diff_lead0": {
+      "action": "gfpoly_diff",
+      "arguments": {
+        "F": [
+          "IJustWannaTellYouAAAAA==",
+          "5TxUxLHO1lHE/rSFquKIAg==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "0DEUJYdHlmd4X7nzzIdcCA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "PKUa1+JHTxHE8y3LbuKIIA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA=="
+          ]
+      }
     }
   }
 }
