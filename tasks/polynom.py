@@ -116,16 +116,33 @@ class FieldElement:
         return FieldElement(gcm_encoded_product)
     
     def __add__(self, other: 'FieldElement'):
+        """
+        This function adds to FieldElements. Addititon in GF2^128 is defined as XOR.
+
+        Args:
+            self: Instance of a field element
+            other: Another instance of a field element
+        Returns:
+            FieldElement(xor): The result of the addition as a field element instance
+        """
         xor = int(self) ^ int(other)    
         return FieldElement(xor)
         
-    def _sqmul(self, divisor):
-        base = divisor
+    def invert(self, divisor):
+        """
+        This function calculates the inverse of a FielElement instance
+        through exponentiation by 2^128 -2
         
+        """
+        base = divisor
+        # Set the exponent
         exponent = (1 << 128) - 2
         
+        # Set our result 
         res = int(FieldElement(1))
         result = FieldElement(self.gcm_sem(res))
+        
+        # Use square multiply
         while exponent > 0:
             if exponent & 1:
                 result = result * base
@@ -133,20 +150,33 @@ class FieldElement:
             exponent >>= 1
         
         return result
+    
     def __truediv__(self, other):
+        """
+        Divides a FieldElement by another FieldElement using inversion
+        as the division is multiplication by the inverted element.
+        """
+
         if int(other) == 0:
             raise ValueError("Division by zero")
         dividend = self 
-        inverse = self._sqmul(other)
+        inverse = self.invert(other)
         result = dividend * inverse
         return result
+    
     def sqrt(self):
+        """
+        Calculates the squareroot of a FieldElement. In GF2^128 the sqrt is defined as
+        the FieldElement^2^m-1, whith m as the order of the field, so 128
+        """
         base = self
         result = FieldElement(0)
         exponent = (1 << 127)
         
         res = int(FieldElement(1))
         result = FieldElement(self.gcm_sem(res))
+        
+        # Take the FieldElement to the power of 2^127
         while exponent > 0:
             if exponent & 1:
                 result = result * base
@@ -158,11 +188,40 @@ class FieldElement:
         return self.element
 
 class Polynom:
+    """
+    Represents polynomials over GF(2^128) with coefficients encoded in base64.
+    
+    This class implements polynomial arithmetic operations where each coefficient
+    is a field element in GF(2^128). The polynomials are represented as lists
+    of base64-encoded coefficients, where each coefficient is a 16-byte value.
+    
+    The class supports standard polynomial operations including addition,
+    multiplication, division, and modular exponentiation, all performed
+    according to finite field arithmetic rules.
+    """
+
     def __init__(self, polynomials: list):
+        """
+        Initialize a polynomial from a list of base64-encoded coefficients.
+        
+        Args:
+            polynomials: List of base64 strings representing coefficients
+        """
         self.polynomials = polynomials
+        # Store coefficients as integers for efficient computation
         self.polynomials_int = self._base64poly_to_int()
+        # Store coefficients as integers in converted from gcm semantic
         self.polynomials_int_gcm = self._base64poly_to_int_gcm()
     def _base64poly_to_int_gcm(self):
+        """
+        Convert base64-encoded coefficients to integers in GCM semantic.
+        
+        Transforms each coefficient into the bit representation required
+        for GCM's field arithmetic implementation.
+        
+        Returns:
+            List of integers representing coefficients in GCM semantic
+        """
         integer_list = []
         field_element = FieldElement(0)  # Create a FieldElement instance to use gcm_sem
     
@@ -175,6 +234,12 @@ class Polynom:
         return integer_list
     
     def _base64poly_to_int(self):
+        """
+        Convert base64-encoded coefficients to integers.
+        
+        Returns:
+            List of integers representing polynomial coefficients
+        """
         integer_list = []
         for b46str in self.polynomials:
             bytes = base64.b64decode(b46str)
@@ -182,15 +247,34 @@ class Polynom:
         return integer_list
 
     def _normalize(self):
-        # Only remove trailing zeros, not leading zeros
+        """
+        Remove trailing zero coefficients from the polynomial.
+        
+        Updates both the integer and base64 representations of the polynomial.
+        Preserves leading zeros as they represent significant terms.
+        """
         while self.polynomials_int and self.polynomials_int[-1] == 0:
-            self.polynomials_int.pop()  # Remove trailing zeros
+            self.polynomials_int.pop()
         self.polynomials = [
             base64.b64encode(int.to_bytes(val, 16, "little")).decode()
             for val in self.polynomials_int
         ]
 
     def __add__(self, other):
+        """
+        Add two polynomials in GF(2^128).
+        
+        Addition in GF(2^128) is performed coefficient-wise using XOR.
+        Special cases:
+        - Adding identical polynomials results in zero
+        - Adding zero to a polynomial returns the original polynomial
+        
+        Args:
+            other: Another Polynom instance
+            
+        Returns:
+            New Polynom instance representing the sum
+        """
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
@@ -209,10 +293,22 @@ class Polynom:
         return result    
 
     def __mul__(self, other):
+        """
+        Multiply two polynomials in GF(2^128).
+        
+        Implements standard polynomial multiplication where coefficient
+        multiplication is performed in GF(2^128) using FieldElement class.
+        
+        Args:
+            other: Another Polynom instance
+            
+        Returns:
+            New Polynom instance representing the product
+        """
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
-        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
-        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
 
         for i, a in enumerate(self.polynomials_int):
@@ -223,6 +319,16 @@ class Polynom:
         return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
     
     def __pow__(self, exponent):
+        """
+        Raise polynomial to a non-negative integer power.
+        
+        Args:
+            exponent: Non-negative integer power
+            
+        Returns:
+            New Polynom instance representing the result of exponentiation
+        """
+
         if exponent ==0:
             neutral_field_element = FieldElement(1)
             gcm_semantic_neutral = neutral_field_element.gcm_sem(neutral_field_element.element)
@@ -240,9 +346,26 @@ class Polynom:
         return result
      
     def display_polys(self):
+        """Display the polynomial's coefficients in base64 representation."""
         print(self.polynomials)
 
     def __truediv__(self, divisor):
+        """
+        Divide polynomial by another polynomial using polynomial long division.
+        
+        Implements polynomial long division in GF(2^128), returning both
+        quotient and remainder.
+        
+        Args:
+            divisor: Polynom instance to divide by
+            
+        Returns:
+            Tuple of (quotient, remainder) as Polynom instances
+            
+        Raises:
+            ValueError: If divisor is zero
+        """
+
         # Check for division by zero
         if divisor.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
             return Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="]), self
@@ -326,7 +449,18 @@ class Polynom:
         return quotient, remainder
 
     def poly_powmod(self, modulus, exponent):
-
+        """
+        Compute polynomial exponentiation modulo another polynomial.
+        
+        Uses square-and-multiply algorithm for efficient modular exponentiation.
+        
+        Args:
+            modulus: Polynom instance to use as modulus
+            exponent: Integer exponent
+            
+        Returns:
+            Polynom instance representing result of modular exponentiation
+        """
         if exponent == 0:
             return Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
             
@@ -351,6 +485,15 @@ class Polynom:
             
         return result
     def gfpoly_sort(self, *others):
+        """
+        Sort polynomials by degree and coefficient values.
+        
+        Args:
+            *others: Additional Polynom instances to sort with self
+            
+        Returns:
+            List of Polynom instances sorted by degree and coefficient values
+        """
         all_poly = [self] + list(others)
         
         def compare_polys(poly):
@@ -369,6 +512,13 @@ class Polynom:
         return sorted_polys
 
     def gfpoly_makemonic(self):
+        """
+        Convert polynomial to monic form by dividing all coefficients
+        by the leading coefficient.
+        
+        Returns:
+            List of base64-encoded coefficients representing monic polynomial
+        """
         highest_coefficient = FieldElement(self.polynomials_int[-1])
         new_poly = []
         for coeff in self.polynomials_int :
@@ -379,6 +529,15 @@ class Polynom:
         result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
         return result_poly
     def sqrt(self):
+        """
+        Compute the square root of the polynomial.
+        
+        Computes square root by taking square root of coefficients
+        at odd-numbered positions.
+        
+        Returns:
+            New Polynom instance representing square root
+        """
         result = []
         for degree, coeff in enumerate(self.polynomials_int):
             if (degree+1)%2:
