@@ -1,7 +1,8 @@
+
 # KAUMA (Kryptoanalysis und Methoden Audit)
 
-This is my submission for the KAUMA labwork assignment at DHBW Mannheim. This tool implements various cryptographic operations and functions.
-The tool processes JSON-formatted input files, performs the requested cryptographic operations and returns standardized results. 
+This is my submission for the KAUMA labwork assignment at DHBW Mannheim. This tool implements various cryptographic operations and functions.  
+The tool processes JSON-formatted input files, performs the requested cryptographic operations, and returns standardized results. 
 
 ## Features
 
@@ -11,7 +12,8 @@ KAUMA implements several cryptographic operations and methods:
   - Comprehensive arithmetic in GF(2^128)
   - Conversion between polynomial and block representations
   - Support for both standard and GCM semantics
-
+  - Derivative calculation for polynomials (removes even-degree terms and 0-degree term)
+  - GCD calculation for two polynomials
 - **Cryptographic Primitives**
   - SEA-128 encryption and decryption
   - Galois Field multiplication
@@ -23,8 +25,7 @@ KAUMA implements several cryptographic operations and methods:
 
 - **PKCS#7 Padding Cracking via Padding Oracle Attack**
   - Retrieve plaintext by cracking its PKCS#7 padding given a vulnerable server
-  - Note: This implementation uses a specific binary protocol to communicate. If you want to use it with your
-  server you have to adjust the communication
+  - Note: This implementation uses a specific binary protocol to communicate. If you want to use it with your server, you have to adjust the communication.
 
 ## Installation
 
@@ -44,7 +45,6 @@ poetry install
 # Activate the virtual environment
 poetry shell
 ```
-
 ## Usage
 
 ### Basic Usage
@@ -116,7 +116,9 @@ sqrt_result = a.sqrt() # Square root
   - Modular exponentiation
   - Sorting polynomials by degree and coefficient values
   - Converting polynomials to monic form
-
+  - Derivatives: Removes even-degree terms and 0-degree term (implemented in `derivative` method)
+  - GCM: Calculates the greatest common divisor of two polynoms
+  
 Example usage:
 ```python
 # Create polynomials with base64-encoded coefficients
@@ -130,10 +132,14 @@ sum_poly = p1 + p2    # Polynomial addition
 prod_poly = p1 * p2   # Polynomial multiplication
 quotient, remainder = p1 / p2  # Polynomial division
 exp_poly = p1 ** 3    # Polynomial exponentiation
+p1.gcd(p2)
 monic_coeffs = p1.gfpoly_makemonic()  # Convert to monic form
 
 # Sort multiple polynomials
 sorted_polys = p1.gfpoly_sort(p2, p3)
+
+# Derivative of polynomial
+derivative_poly = p1.derivative()  # Remove even-degree terms and 0-degree term
 ```
 
 #### GCM Semantic
@@ -226,4 +232,5 @@ Create unit test in common/tests.py with test cases to verify functionality, the
 ```bash
 bash tests
 ```
+
 
