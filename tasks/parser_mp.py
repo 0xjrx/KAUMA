@@ -10,6 +10,7 @@ from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt, GCM_encrypt_sea, GCM_decrypt, GCM_decrypt_sea
 from tasks.padding_oracle_crack import padding_oracle_crack
 from tasks.polynom import FieldElement, Polynom
+from tasks.gcm_pwn import sff
 import time, base64
 
 def process_test_case(test_case, test_case_id):    
@@ -57,6 +58,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_diff(arguments)
             case "gfpoly_gcd":
                 result = handle_gfpoly_gcd(arguments)
+            case "gfpoly_factor_sff":
+                result = handle_gfpoly_factor_sff(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -220,6 +223,11 @@ def handle_gfpoly_gcd(arguments):
     g = Polynom(arguments["B"])
     result = f.gcd(g)
     return {"G": result.polynomials}
+def handle_gfpoly_factor_sff(arguments):
+    f = Polynom(arguments["F"])
+    result = {"factors": sff(f)}
+    return result
+    
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename

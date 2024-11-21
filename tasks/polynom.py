@@ -2,12 +2,6 @@
 import base64
 
 
-from common.common import stderr_write
-
-
-
-
-
 class FieldElement:
     """
     Represents a field element for its base64 representation.
@@ -57,13 +51,12 @@ class FieldElement:
         Returns:
             transformed element
         """
-        # Pad the the base64 string if necessary
         element = element.to_bytes(16, 'little') 
         reversed_bytes = [self.reverse_bit(bytes([byte])) for byte in element]
         reversed_bytes_arr = bytes(reversed_bytes)
         return int.from_bytes(reversed_bytes_arr, 'little')
     
-    def __mul__(self, other):
+    def __mul__(self, other) -> 'FieldElement':
         """
         Multiply two field elements in GF(2^128).
 
@@ -115,7 +108,7 @@ class FieldElement:
         gcm_encoded_product = self.gcm_sem(product)
         return FieldElement(gcm_encoded_product)
     
-    def __add__(self, other: 'FieldElement'):
+    def __add__(self, other: 'FieldElement') -> 'FieldElement':
         """
         This function adds to FieldElements. Addititon in GF2^128 is defined as XOR.
 
@@ -128,7 +121,7 @@ class FieldElement:
         xor = int(self) ^ int(other)    
         return FieldElement(xor)
         
-    def invert(self, divisor):
+    def invert(self, divisor) -> 'FieldElement':
         """
         This function calculates the inverse of a FielElement instance
         through exponentiation by 2^128 -2
@@ -151,7 +144,7 @@ class FieldElement:
         
         return result
     
-    def __truediv__(self, other):
+    def __truediv__(self, other) -> 'FieldElement':
         """
         Divides a FieldElement by another FieldElement using inversion
         as the division is multiplication by the inverted element.
@@ -164,7 +157,7 @@ class FieldElement:
         result = dividend * inverse
         return result
     
-    def sqrt(self):
+    def sqrt(self) -> 'FieldElement':
         """
         Calculates the squareroot of a FieldElement. In GF2^128 the sqrt is defined as
         the FieldElement^2^m-1, whith m as the order of the field, so 128
@@ -228,7 +221,7 @@ class Polynom:
         for b46str in self.polynomials:
             bytes_val = base64.b64decode(b46str)
             int_val = int.from_bytes(bytes_val, 'little')
-            # Convert to GCM semantic using the FieldElement's gcm_sem method
+                # Convert to GCM semantic using the FieldElement's gcm_sem method
             gcm_val = field_element.gcm_sem(int_val)
             integer_list.append(gcm_val)
         return integer_list
@@ -318,7 +311,7 @@ class Polynom:
                 result_poly[i+j] ^= (fe_a * fe_b).element
         return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
     
-    def __pow__(self, exponent):
+    def __pow__(self, exponent) -> 'Polynom':
         """
         Raise polynomial to a non-negative integer power.
         
@@ -345,10 +338,6 @@ class Polynom:
             exponent -=1
         return result
      
-    def display_polys(self):
-        """Display the polynomial's coefficients in base64 representation."""
-        print(self.polynomials)
-
     def __truediv__(self, divisor):
         """
         Divide polynomial by another polynomial using polynomial long division.
@@ -448,7 +437,7 @@ class Polynom:
             remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
         return quotient, remainder
 
-    def poly_powmod(self, modulus, exponent):
+    def poly_powmod(self, modulus: 'Polynom', exponent) -> 'Polynom':
         """
         Compute polynomial exponentiation modulo another polynomial.
         
@@ -484,6 +473,7 @@ class Polynom:
             exponent >>= 1
             
         return result
+
     def gfpoly_sort(self, *others):
         """
         Sort polynomials by degree and coefficient values.
@@ -511,7 +501,7 @@ class Polynom:
         sorted_polys = sorted(all_poly, key=compare_polys)
         return sorted_polys
 
-    def gfpoly_makemonic(self):
+    def gfpoly_makemonic(self) -> list:
         """
         Convert polynomial to monic form by dividing all coefficients
         by the leading coefficient.
@@ -528,7 +518,8 @@ class Polynom:
 
         result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
         return result_poly
-    def sqrt(self):
+
+    def sqrt(self) -> 'Polynom':
         """
         Compute the square root of the polynomial.
         
@@ -547,7 +538,8 @@ class Polynom:
 
         result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in result])
         return result_poly
-    def derivative(self):
+
+    def derivative(self) -> 'Polynom':
         """
         Calculates the derivative of a given polynomial in GF(2^128)
 
@@ -572,7 +564,7 @@ class Polynom:
         result_poly._normalize()
         return result_poly
 
-    def gcd(self, other):
+    def gcd(self, other) -> 'Polynom':
         """
         Calculates the greates common divisor for two given polynomials in GF(2^128)
 
@@ -597,4 +589,3 @@ class Polynom:
         if f.polynomials_int[-1] !=1:
             g = Polynom(f.gfpoly_makemonic())
         return g
-

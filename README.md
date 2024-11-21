@@ -117,7 +117,7 @@ sqrt_result = a.sqrt() # Square root
   - Sorting polynomials by degree and coefficient values
   - Converting polynomials to monic form
   - Derivatives: Removes even-degree terms and 0-degree term (implemented in `derivative` method)
-  - GCM: Calculates the greatest common divisor of two polynoms
+  - GCD: Calculates the greatest common divisor of two polynoms
   
 Example usage:
 ```python
