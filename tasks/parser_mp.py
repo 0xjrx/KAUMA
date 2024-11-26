@@ -60,8 +60,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_gcd(arguments)
             case "gfpoly_factor_sff":
                 result = handle_gfpoly_factor_sff(arguments)
-            #case "gfpoly_factor_ddf":
-                #result = handle_gfpoly_factor_ddf(arguments)
+            case "gfpoly_factor_ddf":
+                result = handle_gfpoly_factor_ddf(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -72,20 +72,16 @@ def process_test_case(test_case, test_case_id):
     
 def handle_p2b(arguments):
     if arguments["semantic"] == "xex":
-        coefficients = arguments["coefficients"]
-        p2b = poly2block(coefficients)
-        block = p2b.p2b()
-        return {"block": block}
+        result = poly2block(arguments["coefficients"]) 
+        return {"block": result}
     if arguments["semantic"] == "gcm":
         coefficients = arguments["coefficients"]
         block = poly2block_gcm(coefficients)
         return {"block": block}
 def handle_b2p(arguments):
     if arguments["semantic"] == "xex":
-        block = arguments["block"]
-        b2p = block2poly(block)
-        poly = b2p.b2p()
-        return {"coefficients":list(poly)}
+        result = block2poly(arguments["block"])
+        return {"coefficients":result}
     if arguments["semantic"] == "gcm":
         block = arguments["block"]
         poly = block2poly_gcm(block)
@@ -229,7 +225,7 @@ def handle_gfpoly_factor_sff(arguments):
     f = Polynom(arguments["F"])
     result = {"factors": sff(f)}
     return result
-#def handle_gfpoly_factor_ddf(arguments):
+def handle_gfpoly_factor_ddf(arguments):
     f = Polynom(arguments["F"])
     result = {"factors": ddf(f)}
     return result

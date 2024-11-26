@@ -33,22 +33,26 @@ def sff(polynom: 'Polynom'):
                 "exponent": 2 * x["exponent"]            
             })
     
-    return sort_polynomials_with_exponents(factors)  
+    return sort_polynomials_with_key(factors, "exponent")  
 
 
-def sort_polynomials_with_exponents(data):
-    polynom_objects = [Polynom(item["factor"]) for item in data]
+def sort_polynomials_with_key(data, key):
+    polys_obj = [Polynom(item["factor"]) for item in data]
     
-    sorted_polys = polynom_objects[0].gfpoly_sort(*polynom_objects[1:])
+    sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
+    
     
     sorted_data = []
-    for poly in sorted_polys:
-
-        poly_factors = poly.polynomials 
+    for poly in sorted_polynomials:
+        poly_factors = poly.polynomials
         for item in data:
             if item["factor"] == poly_factors:
-                sorted_data.append(item)
+                sorted_data.append({
+                    "factor": item["factor"],
+                    key: item[key]
+                })
                 break  
+    
     return sorted_data
 
 def ddf(polynom: 'Polynom'):
@@ -76,4 +80,4 @@ def ddf(polynom: 'Polynom'):
             "factor": f_.polynomials,
             "degree":len(f_.polynomials)
         })
-    return z
+    return sort_polynomials_with_key(z, "degree")

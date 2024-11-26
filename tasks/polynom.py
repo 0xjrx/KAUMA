@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import base64
 
+from tasks.poly import BIT_REVERSE_TABLE
+
 
 class FieldElement:
+    
     """
     Represents a field element for its base64 representation.
 
@@ -18,25 +21,8 @@ class FieldElement:
             element: int representing the field element
         """
         self.element = element    
-    
-    def reverse_bit(self,byte: bytes) -> int:
-        """
-        Reverses the bits of a given byte.
-
-        This is required for GCM's bit representation in Galois Field operations, which differ from 
-        the standard representation.
-
-        Args:
-            byte: Single byte to reverse
-
-        Returns:
-            Integer representing the byte with reversed bit order
-        """
-        result = 0
-        for _ in range(8):
-            result = (result << 1) | (byte[0] & 1)
-            byte = bytes([byte[0] >> 1])
-        return result
+    _IRR_POLY = base64.b64decode("hwAAAAAAAAAAAAAAAAAAAAE=")
+    _REDUCTION_POLYNOMIAL = int.from_bytes(_IRR_POLY, byteorder='little')
 
     def gcm_sem(self, element) -> int:
         """ 
@@ -52,10 +38,9 @@ class FieldElement:
             transformed element
         """
         element = element.to_bytes(16, 'little') 
-        reversed_bytes = [self.reverse_bit(bytes([byte])) for byte in element]
-        reversed_bytes_arr = bytes(reversed_bytes)
-        return int.from_bytes(reversed_bytes_arr, 'little')
-    
+        reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
+        return int.from_bytes(reversed_element, 'little')
+
     def __mul__(self, other) -> 'FieldElement':
         """
         Multiply two field elements in GF(2^128).
@@ -70,7 +55,6 @@ class FieldElement:
             New FieldElementGCM instance representing the product of the multiplication
         """
         # irreducible polynomial for GF(2^128)
-        IRR_POLY = b"hwAAAAAAAAAAAAAAAAAAAAE="
     
         # Convert our operants to GCM's semantic
         multiplicant = self.gcm_sem(int(self))
@@ -78,36 +62,28 @@ class FieldElement:
         multiplier = self.gcm_sem(int(other))
         
         # Convert the reduction polynomial
-        poly_bytes = base64.b64decode(IRR_POLY)
-        reduction_polynomial = int.from_bytes(poly_bytes, byteorder='little')
+        reduction_polynomial = self._REDUCTION_POLYNOMIAL
 
         product = 0
 
-        # We handle the first bit of the loop outside
-        if multiplier & 1:
-            product ^= multiplicant
-        multiplier >>= 1
-
-        # Main multiplication loop
-        for _ in range((multiplier.bit_length() * 8) - 1):    
-            # Left shift as equivalent of multiplication by x
-            multiplicant <<= 1
-
-            # Reduction of the polynomial if it becomes too large
-            if multiplicant.bit_length() >= 129:
-                multiplicant ^= reduction_polynomial
-        
-            # Add to result if the corresponding bit in second element is 1 
+        while multiplier:
+            # If least significant bit is 1, XOR with current multiplicant
             if multiplier & 1:
                 product ^= multiplicant
             
-            # Right shift to process next bit
+            # Left shift multiplicant (equivalent to multiplication by x)
+            multiplicant <<= 1
+            
+            # Polynomial reduction if bit length exceeds 128
+            if multiplicant.bit_length() >= 129:
+                multiplicant ^= reduction_polynomial
+            
+            # Right shift multiplier
             multiplier >>= 1
         
-        # Convert the result back to normal semantic
-        gcm_encoded_product = self.gcm_sem(product)
-        return FieldElement(gcm_encoded_product)
-    
+        # Convert result back to normal semantic
+        return FieldElement(self.gcm_sem(product))    
+
     def __add__(self, other: 'FieldElement') -> 'FieldElement':
         """
         This function adds to FieldElements. Addititon in GF2^128 is defined as XOR.
@@ -132,14 +108,13 @@ class FieldElement:
         exponent = (1 << 128) - 2
         
         # Set our result 
-        res = int(FieldElement(1))
-        result = FieldElement(self.gcm_sem(res))
+        result = FieldElement(self.gcm_sem(1))
         
         # Use square multiply
-        while exponent > 0:
+        while exponent:
             if exponent & 1:
-                result = result * base
-            base = base * base
+                result *= base
+            base *= base
             exponent >>= 1
         
         return result
@@ -152,10 +127,7 @@ class FieldElement:
 
         if int(other) == 0:
             raise ValueError("Division by zero")
-        dividend = self 
-        inverse = self.invert(other)
-        result = dividend * inverse
-        return result
+        return self * self.invert(other)
     
     def sqrt(self) -> 'FieldElement':
         """
@@ -166,14 +138,13 @@ class FieldElement:
         result = FieldElement(0)
         exponent = (1 << 127)
         
-        res = int(FieldElement(1))
-        result = FieldElement(self.gcm_sem(res))
+        result = FieldElement(self.gcm_sem(1))
         
         # Take the FieldElement to the power of 2^127
-        while exponent > 0:
+        while exponent:
             if exponent & 1:
-                result = result * base
-            base = base * base
+                result *= base
+            base *= base
             exponent >>= 1
         return result   
 
@@ -469,7 +440,7 @@ class Polynom:
                 
             base = base * base
             _, base = base / modulus
-                
+            #print(base.polynomials_int) 
             exponent >>= 1
             
         return result

@@ -28,15 +28,9 @@ def gfmul(element_1: str, element_2: str) -> str:
     
     # To be able to easily work with these values and do such things as bit shifts
     # we need to convert the base64 string to its byte representation and then into an integer
-    first = base64.b64decode(element_1)
-    multiplicant = int.from_bytes(first, byteorder = 'little')
-    
-    second = base64.b64decode(element_2)
-    multiplier = int.from_bytes(second, byteorder = 'little')
-    
-    # We also need to decode the irreducible polynomial as its needed for reduction
-    poly_bytes = base64.b64decode(IRR_POLY)
-    reduction_polynomial = int.from_bytes(poly_bytes, byteorder = 'little')
+    multiplicant = int.from_bytes(base64.b64decode(element_1), byteorder='little')
+    multiplier = int.from_bytes(base64.b64decode(element_2), byteorder='little')
+    reduction_polynomial = int.from_bytes(base64.b64decode(IRR_POLY), byteorder='little')
 
     # We need to initialize our result
     product = 0
@@ -47,7 +41,7 @@ def gfmul(element_1: str, element_2: str) -> str:
     multiplier>>=1
 
     # Main multiplication loop
-    for _ in range((len(second)*8)-1):    
+    for _ in range(127):    
         # Left shift as equivalent of multiplication by x
         multiplicant<<=1
 
@@ -64,5 +58,5 @@ def gfmul(element_1: str, element_2: str) -> str:
     
     # Convert the result back to base64
     product_bytes = product.to_bytes(16, byteorder = 'little')
-    encoded_product = base64.b64encode(product_bytes).decode('ascii')
-    return(encoded_product)
+    return base64.b64encode(product_bytes).decode()
+

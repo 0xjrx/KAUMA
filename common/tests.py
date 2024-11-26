@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+import pstats, os
+import cProfile
 import base64
 from tasks.gfmul import gfmul
 from tasks.poly import block2poly, poly2block, poly2block_gcm, block2poly_gcm
@@ -19,8 +20,7 @@ def test_gfmul() -> None:
 def test_poly2block() -> None:
     coefficients = [12, 127, 9, 0]
     result = "ARIAAAAAAAAAAAAAAAAAgA=="
-    p2b_instance = poly2block(coefficients)
-    res = p2b_instance.p2b()
+    res = poly2block(coefficients)
     assert res == result
     print(f"Poly2block test result is: {res}")
 
@@ -35,8 +35,7 @@ def test_poly2block_gcm() -> None:
 def test_block2poly() -> None:
     block = "ARIAAAAAAAAAAAAAAAAAgA=="
     result = [0, 9, 12, 127]
-    b2p_instance = block2poly(block)
-    res = b2p_instance.b2p()
+    res = block2poly(block)
     assert res == result
     print(f"Block2poly test result is: {res}")
 
@@ -468,7 +467,14 @@ def tests_run() -> None:
     test_gfpoly_gcd()
     test_gfpoly_factor_sff()
 
-def main():
-    tests_run()
 if __name__ == "__main__":
-   tests_run() 
+    profiler = cProfile.Profile()
+    profiler.enable()
+    tests_run()
+    profiler.disable()
+    include_paths = ["common", "tasks"]
+    stats = pstats.Stats(profiler)
+    ##stats.strip_dirs()
+    stats.sort_stats("time")
+    stats.print_stats("tests.py")
+
