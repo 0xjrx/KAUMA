@@ -1,4 +1,6 @@
-from tasks.polynom import Polynom
+from tasks.polynom import Polynom,FieldElement
+import base64
+from tasks.poly import poly2block_gcm
 
 def sff(polynom: 'Polynom'):
     f_ = polynom.derivative()
@@ -31,5 +33,47 @@ def sff(polynom: 'Polynom'):
                 "exponent": 2 * x["exponent"]            
             })
     
-    # Random hacky sorting using my gfpoly_sort to sort it the correct way
-    return sorted(factors, key=lambda x: polynom.gfpoly_sort(Polynom(x["factor"]))[0].polynomials_int_gcm, reverse=True)
+    return sort_polynomials_with_exponents(factors)  
+
+
+def sort_polynomials_with_exponents(data):
+    polynom_objects = [Polynom(item["factor"]) for item in data]
+    
+    sorted_polys = polynom_objects[0].gfpoly_sort(*polynom_objects[1:])
+    
+    sorted_data = []
+    for poly in sorted_polys:
+
+        poly_factors = poly.polynomials 
+        for item in data:
+            if item["factor"] == poly_factors:
+                sorted_data.append(item)
+                break  
+    return sorted_data
+
+def ddf(polynom: 'Polynom'):
+
+    q = 1<<128
+    z = []
+    d = 1
+    f_ = polynom
+    while len(f_.polynomials_int)>=2*d:
+       # #poly2block_gcm([1])  
+        X = Polynom([base64.b64encode(int.to_bytes(FieldElement(0).element, 16, 'little')).decode(), poly2block_gcm([1])])
+
+        h_ = X.poly_powmod(f_, (q**d))
+        h = h_+X
+        g = h.gcd(f_)
+        if g.polynomials_int_gcm != [1]:
+            z.append({
+                "factor":g.polynomials,
+                "degree": d
+            })
+            f_,_ = f_/g
+        d +=1
+    if f_.polynomials_int_gcm != [1]:
+        z.append({
+            "factor": f_.polynomials,
+            "degree":len(f_.polynomials)
+        })
+    return z

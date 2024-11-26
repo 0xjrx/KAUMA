@@ -482,6 +482,46 @@
           "gAAAAAAAAAAAAAAAAAAAAA=="
         ]
       }
+    },
+    "gfpoly_sort_tob": {
+      "action": "gfpoly_sort",
+      "arguments": {
+        "polys": [
+          [
+            "AQAAAAAAAAAAAAAAAAAAAA==",
+            "AgAAAAAAAAAAAAAAAAAAAA==",
+            "AwAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AQAAAAAAAAAAAAAAAAAAAA==",
+            "AgAAAAAAAAAAAAAAAAAAAA==",
+            "BAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AQAAAAAAAAAAAAAAAAAAAA==",
+            "AgAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          [
+            "AQAAAAAAAAAAAAAAAAAAAA==",
+            "AwAAAAAAAAAAAAAAAAAAAA=="
+          ]
+        ]
+      }
+    },
+    "gfpoly_factor_ddf": {
+      "action": "gfpoly_factor_ddf",
+      "arguments": {
+        "F": [
+          "tpkgAAAAAAAAAAAAAAAAAA==",
+          "m6MQAAAAAAAAAAAAAAAAAA==",
+          "8roAAAAAAAAAAAAAAAAAAA==",
+          "3dUAAAAAAAAAAAAAAAAAAA==",
+          "FwAAAAAAAAAAAAAAAAAAAA==",
+          "/kAAAAAAAAAAAAAAAAAAAA==",
+          "a4AAAAAAAAAAAAAAAAAAAA==",
+          "gAAAAAAAAAAAAAAAAAAAAA=="
+        ]
+      }
     }
   }
 }
