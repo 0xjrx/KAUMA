@@ -522,6 +522,60 @@
           "gAAAAAAAAAAAAAAAAAAAAA=="
         ]
       }
+    },
+    "gfpoly_pow_sff": {
+      "action": "gfpoly_pow",
+      "arguments": {
+        "A":["yWtPcBL5y5G+x6mhORBbJw==", "qAbS5GJdhMTFEDZo+/Zdag==", "3oJB7poPqDEjMTXti25HWA==", "RMn/Zdhf8ep6m+Mr3JhinA==", "gAAAAAAAAAAAAAAAAAAAAA=="],
+        "k": 4
+      }
+    },
+    "sff_error": {
+      "action": "gfpoly_factor_sff",
+      "arguments": {
+        "F":[
+        "y2yJgdbIbpyw4lmeM2cMLw==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "fgfvHpZ0oOBfFhHLy2JwUg==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "7S1oSq2cnGCb0lxNmeHCLQ==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "aSMg1AcIcRye39E38SNoVw==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "gAAAAAAAAAAAAAAAAAAAAA=="
+      ]}      
+    },
+    "gfpoly_diff_empty": {
+      "action": "gfpoly_diff",
+      "arguments": {
+        "F":[
+        "y2yJgdbIbpyw4lmeM2cMLw==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "fgfvHpZ0oOBfFhHLy2JwUg==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "7S1oSq2cnGCb0lxNmeHCLQ==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "aSMg1AcIcRye39E38SNoVw==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "AAAAAAAAAAAAAAAAAAAAAA==",
+        "gAAAAAAAAAAAAAAAAAAAAA=="
+      ]      }
+    }
     }
   }
-}
+

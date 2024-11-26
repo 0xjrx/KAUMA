@@ -41,7 +41,7 @@ def gfmul(element_1: str, element_2: str) -> str:
     multiplier>>=1
 
     # Main multiplication loop
-    for _ in range(127):    
+    while multiplier:    
         # Left shift as equivalent of multiplication by x
         multiplicant<<=1
 

@@ -8,7 +8,7 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea
 from tasks.polynom import FieldElement, Polynom
-from tasks.gcm_pwn import sff
+from tasks.gcm_pwn import sff, ddf
 
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
@@ -438,7 +438,42 @@ def test_gfpoly_factor_sff():
     }
     assert res == result
     print(f"SFF works, result is: {result}\n")
-    
+   
+def test_gfpoly_factor_ddf():
+    f = Polynom([
+"tpkgAAAAAAAAAAAAAAAAAA==",
+"m6MQAAAAAAAAAAAAAAAAAA==",
+"8roAAAAAAAAAAAAAAAAAAA==",
+"3dUAAAAAAAAAAAAAAAAAAA==",
+"FwAAAAAAAAAAAAAAAAAAAA==",
+"/kAAAAAAAAAAAAAAAAAAAA==",
+"a4AAAAAAAAAAAAAAAAAAAA==",
+"gAAAAAAAAAAAAAAAAAAAAA=="
+])
+    result = {"factors":ddf(f)}
+    res = {"factors": [{
+"factor": [
+"q4AAAAAAAAAAAAAAAAAAAA==",
+"gAAAAAAAAAAAAAAAAAAAAA=="
+],
+"degree": 1
+},
+{
+"factor": [
+"mmAAAAAAAAAAAAAAAAAAAA==",
+"AbAAAAAAAAAAAAAAAAAAAA==",
+"zgAAAAAAAAAAAAAAAAAAAA==",
+"FwAAAAAAAAAAAAAAAAAAAA==",
+"AAAAAAAAAAAAAAAAAAAAAA==",
+"wAAAAAAAAAAAAAAAAAAAAA==",
+"gAAAAAAAAAAAAAAAAAAAAA=="
+],
+"degree": 3
+}
+]
+}    
+    assert res == result
+    print(f"SFF works, result is: {result}\n")
 def tests_run() -> None:
     test_block2poly()
     test_poly2block()
@@ -466,7 +501,7 @@ def tests_run() -> None:
     test_gfpoly_diff()
     test_gfpoly_gcd()
     test_gfpoly_factor_sff()
-
+    test_gfpoly_factor_ddf()
 if __name__ == "__main__":
     profiler = cProfile.Profile()
     profiler.enable()

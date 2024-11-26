@@ -4,6 +4,8 @@ from tasks.poly import poly2block_gcm
 
 def sff(polynom: 'Polynom'):
     f_ = polynom.derivative()
+    if f_.polynomials ==[]:
+        f_ = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
     c = polynom.gcd(f_)
     f, _ = polynom / c
     factors = []
@@ -19,7 +21,6 @@ def sff(polynom: 'Polynom'):
                     "factor": x.polynomials,
                     "exponent": e
                 })
-        
         f = y
         c, _ = c/y
         e += 1

@@ -119,6 +119,20 @@ class FieldElement:
         
         return result
     
+    def inv(self, Element):
+        mod = self._REDUCTION_POLYNOMIAL
+        a = self.gcm_sem(int(Element))
+        u, v = a, mod
+        g1, g2 = 1,0
+        while u!=1:
+            if u.bit_length()<v.bit_length():
+                u,v = v,u
+                g1, g2 = g2, g1
+            shift = u.bit_length()-v.bit_length()
+            u^=v<<shift
+            g1 ^=g2<<shift
+        return FieldElement(self.gcm_sem(g1))
+
     def __truediv__(self, other) -> 'FieldElement':
         """
         Divides a FieldElement by another FieldElement using inversion
@@ -127,7 +141,7 @@ class FieldElement:
 
         if int(other) == 0:
             raise ValueError("Division by zero")
-        return self * self.invert(other)
+        return self * self.inv(other)
     
     def sqrt(self) -> 'FieldElement':
         """
@@ -480,16 +494,22 @@ class Polynom:
         Returns:
             List of base64-encoded coefficients representing monic polynomial
         """
-        highest_coefficient = FieldElement(self.polynomials_int[-1])
-        new_poly = []
-        for coeff in self.polynomials_int :
-            coeff = FieldElement(coeff)
-            res = coeff / highest_coefficient
-            new_poly.append(res.element)
-
-        result_poly = [base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in new_poly] 
-        return result_poly
-
+        highest_coefficient = int(FieldElement(self.polynomials_int[-1]))
+    
+        # Preallocate list to avoid repeated list resizing
+        new_poly = [0] * len(self.polynomials_int)
+        
+        # Use list comprehension with direct division for efficiency
+        for i, coeff in enumerate(self.polynomials_int):
+            # Perform field division directly
+            res = int(FieldElement(coeff) / FieldElement(highest_coefficient))
+            new_poly[i] = res
+        
+        # Combine encoding in a single list comprehension
+        return [
+            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() 
+            for coeff in new_poly
+        ]
     def sqrt(self) -> 'Polynom':
         """
         Compute the square root of the polynomial.
