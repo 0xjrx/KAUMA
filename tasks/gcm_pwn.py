@@ -1,3 +1,5 @@
+import random, base64
+from common.common import stderr_write
 from tasks.polynom import Polynom,FieldElement
 from tasks.poly import poly2block, poly2block_gcm
 
@@ -87,4 +89,45 @@ def sort_polynomials_with_key(data, key):
                 break  
     
     return sorted_data
+def rand_poly(bound):
+    rand_elements = []
+    magic_value = 340282366920938463463374607431768211455
+    bound_rand = random.randint(0, bound-1)
+    for _ in range(bound_rand):
+        rand_elements.append(base64.b64encode(int.to_bytes((random.randint(0,magic_value)), 16, 'little')).decode())
+    return Polynom(rand_elements)
+        
+
+def edf(polynom: 'Polynom', d: int) -> list:
+    # d is degree val
+    # polynom is corresponding poly
+    # This is  garbage
+    f = polynom
+    q = 1<<128
+    n = len(polynom.polynomials)-1/d
+    z = []
+    z.append(f.polynomials)
+    stderr_write(f"q: {q}")
+    while len(z)<n:
+        h = rand_poly(d)
+        g_ = ((q**d)-1)//3
+        g = h.poly_powmod(f, g_)
+        stderr_write(f"g_: {g_} ")
+
+        for u in z.copy():
+            u_pol = Polynom(u)
+            if len(u_pol.polynomials)-1>d:
+                
+                j = u_pol.gcd(g)
+                #print(j.polynomials)
+                stderr_write(f"J: {j.polynomials}")
+                if j.polynomials_int_gcm != [1] and j != u_pol:
+                    z.remove(u)
+                    z.append(j.polynomials)
+                    u_div_j,_ = u_pol/j
+                    z.append(u_div_j.polynomials)
+    return z
+
+        
+
 

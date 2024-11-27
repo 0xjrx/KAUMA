@@ -10,7 +10,7 @@ from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt,  GCM_decrypt
 from tasks.padding_oracle_crack import padding_oracle_crack
 from tasks.polynom import FieldElement, Polynom
-from tasks.gcm_pwn import sff, ddf
+from tasks.gcm_pwn import sff, ddf, edf
 import time, base64
 from argparse import ArgumentParser
 
@@ -65,6 +65,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_factor_sff(arguments)
             case "gfpoly_factor_ddf":
                 result = handle_gfpoly_factor_ddf(arguments)
+            #case "gfpoly_factor_edf":
+                #result = handle_gfpoly_factor_edf(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -232,7 +234,12 @@ def handle_gfpoly_factor_ddf(arguments):
     f = Polynom(arguments["F"])
     result = {"factors": ddf(f)}
     return result
-    
+#def handle_gfpoly_factor_edf(arguments):
+    f = Polynom(arguments["F"])
+    d = arguments["d"]
+    result = edf(f,d)
+    return {"factors": result}
+
 class ParseJson:
     def __init__(self, filename):
         self.filename = filename
@@ -278,7 +285,7 @@ class ParseJson:
         ordered_results = {}
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"gfpoly_factor_sff", "gfpoly_factor_ddf"}:
+            if test_case.get("action") in {"gfpoly_pow, gfpoly_sqrt, gfpoly_gcd, gfpoly_factor_sff", "gfpoly_factor_ddf"}:
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))
