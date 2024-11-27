@@ -4,7 +4,7 @@ import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
 from tasks.polynom import FieldElement
-
+from common import slice_input
 """
 Galois Counter Mode (GCM) Encryption implementation
 
@@ -24,21 +24,6 @@ Key components:
 
  
 
-def _slice_input(input) -> list:
-    """
-    Slice input data into 16-byte blocks for cipher operation.
-
-    Args:
-        input: Base64 encoded input
-    
-    Returns:
-        List of 16-byte blocks
-    """
-    bytes = base64.b64decode(input)
-    input_block = []
-    for i in range (0, len(bytes), 16):        
-        input_block.append(bytes[i:i + 16])
-    return input_block
 
 def ghash_associated_data(associated_data_blocks, h_field_elem):
     """
@@ -61,9 +46,9 @@ def ghash_associated_data(associated_data_blocks, h_field_elem):
     return ghash_result
 
 
-def GCM_encrypt(nonce, key, plaintext, associated_data):
+def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
     """
-    Perform GCM encryption using AES as the underlying block cipher.
+    Perform GCM encryption using AES or SEA as the underlying block cipher.
 
     Args:
         nonce: Base64 encoded nonce (should be kept unique for each encryption)
@@ -74,17 +59,21 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     Returns:
         Dictionary containing ciphertext, authentication tag, length field and Authentication Key H
     """
-    plaintext_blocks = _slice_input(plaintext)
+    plaintext_blocks = slice_input(plaintext)
     nonce_bytes = base64.b64decode(nonce)
     key_bytes = base64.b64decode(key)
     associated_data_bytes = base64.b64decode(associated_data)
     ciphertext = bytearray()
-    
-    # Generate the authentication key H = AES_K(0)
-    cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
-    encryptor = cipher.encryptor()
     null_array = bytes(16)
-    auth_key = encryptor.update(null_array) + encryptor.finalize()
+
+
+    # Generate the authentication key H = AES_K(0)
+    if mode =="aes":
+        cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
+        encryptor = cipher.encryptor()
+        auth_key = encryptor.update(null_array) + encryptor.finalize()
+    else:
+        auth_key = base64.b64decode(sea_enc(key, base64.b64encode(null_array).decode('utf-8')))
     h_field_elem = FieldElement(int.from_bytes(auth_key, 'little'))
    
     # Process associated data
@@ -103,12 +92,14 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
         
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
-        
-        # Encrypt Y
-        cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
-        encryptor = cipher.encryptor()
-        encrypted_Y = encryptor.update(Y) + encryptor.finalize()
-        
+        if mode =="aes": 
+            # Encrypt Y
+            cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
+            encryptor = cipher.encryptor()
+            encrypted_Y = encryptor.update(Y) + encryptor.finalize()
+        else:
+             encrypted_Y = sea_enc(key, base64.b64encode(Y).decode('utf-8'))
+             encrypted_Y = base64.b64decode(encrypted_Y)
         # XOR with plaintext
         ct = bytes(a ^ b for a, b in zip(encrypted_Y[:len(block)], block))
         ciphertext.extend(ct)
@@ -127,91 +118,24 @@ def GCM_encrypt(nonce, key, plaintext, associated_data):
     len_a = len(associated_data_bytes) * 8
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
-    #print(base64.b64encode(L).decode())
     l_fe = FieldElement(int.from_bytes(L, 'little'))
     ghash_result = (ghash_result + l_fe)* h_field_elem   
 
     # Generate Authentication Tag
     y_0 = nonce_bytes + b'\x00\x00\x00\x01'
-    cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
-    encryptor = cipher.encryptor()
-    tag_bytes = encryptor.update(y_0) + encryptor.finalize()
-    tag_b64 = FieldElement(int.from_bytes(tag_bytes, 'little'))
+    if mode == "aes":
+        cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
+        encryptor = cipher.encryptor()
+        y_0_enc = encryptor.update(y_0) + encryptor.finalize()
+    else:
+        y_0_enc = base64.b64decode(sea_enc(key, base64.b64encode(y_0).decode()))
+    
+    tag_b64 = FieldElement(int.from_bytes(y_0_enc, 'little'))
     tag = (tag_b64 + ghash_result)
-    
-    return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":base64.b64encode(int.to_bytes(tag.element,16, 'little')).decode(),"L":base64.b64encode(int.to_bytes(l_fe.element,16, 'little')).decode(),"H":base64.b64encode(int.to_bytes(h_field_elem.element,16, 'little')).decode()}
-
-def GCM_encrypt_sea(nonce, key, plaintext, associated_data):
-    """
-    Perform GCM Encryption using SEA (Simple Encryption Algorithm) as the block cipher.
-
-    Implementation follows the same structure as standard GCM but uses SEA128
-    instead of AES128 for encryption.
-
-    Args and return match those of GCM_encrypt().
-    """
-    plaintext_blocks = _slice_input(plaintext)
-    nonce_bytes = base64.b64decode(nonce)
-    associated_data_bytes = base64.b64decode(associated_data)
-    ciphertext = bytearray()
-    
-    # Generate H using SEA128
-    null_array = bytes(16)
-    h = sea_enc(key, base64.b64encode(null_array).decode('utf-8'))
-    h_field_elem = FieldElement(int.from_bytes(base64.b64decode(h), 'little'))
    
-    # Process associated data
-    associated_data_blocks = []
-    for i in range(0, len(associated_data_bytes), 16):
-        block = associated_data_bytes[i:i + 16]
-        if len(block) < 16:
-            block = block + b'\x00' * (16 - len(block))
-        associated_data_blocks.append(block)
-    
-    
-    ghash_result = ghash_associated_data(associated_data_blocks, h_field_elem) 
-    
-    # encrypt using counter initialized at 2
-    ctr = 2
-    ghash_blocks = []
-    for block in plaintext_blocks:
-        
-        counter = ctr.to_bytes(4, 'big')
-        Y = nonce_bytes + counter
-        
-        # Encrypt Y
-        encrypted_Y = sea_enc(key, base64.b64encode(Y).decode('utf-8'))
-        encrypted_Y_bytes = base64.b64decode(encrypted_Y)
-        
-        ct = bytes(a ^ b for a, b in zip(encrypted_Y_bytes[:len(block)], block))
-        ciphertext.extend(ct)
-
-        if len(ct) < 16:
-            ct = ct + b'\x00' * (16 - len(ct))
-        ghash_blocks.append(ct)
-        ctr += 1
-    
-    # Update GHASH with ciphertext
-    for ct_block in ghash_blocks:
-        ct_fe = FieldElement(int.from_bytes(ct_block, 'little'))
-        ghash_result =(ghash_result + ct_fe) * h_field_elem
-    
-    # Add length block
-    len_a = len(associated_data_bytes) * 8
-    len_b = len(ciphertext) * 8
-    L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
-    l_fe = FieldElement(int.from_bytes(L, 'little'))
-    ghash_result = (ghash_result + l_fe)* h_field_elem   
-    
-    # Generate Tag
-    y_0 = nonce_bytes + b'\x00\x00\x00\x01'
-    y_0_enc = sea_enc(key, base64.b64encode(y_0).decode('utf-8'))
-    tag_fe = FieldElement(int.from_bytes(base64.b64decode(y_0_enc), 'little'))
-    tag = (tag_fe + ghash_result)
-
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":base64.b64encode(int.to_bytes(tag.element,16, 'little')).decode(),"L":base64.b64encode(int.to_bytes(l_fe.element,16, 'little')).decode(),"H":base64.b64encode(int.to_bytes(h_field_elem.element,16, 'little')).decode()}
 
-def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
+def GCM_decrypt(nonce, key, ciphertext, associated_data, tag, mode):
     """
     Decrypt GCM ciphertext and verify the authentication tag using AES.
 
@@ -225,7 +149,7 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
     Returns:
         Dictionary containing authentication status and decrypted plaintext    
     """
-    ciphertext_blocks = _slice_input(ciphertext)
+    ciphertext_blocks = slice_input(ciphertext)
     nonce_bytes = base64.b64decode(nonce)
     key_bytes = base64.b64decode(key)
     plaintext = bytearray()
@@ -237,12 +161,14 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
     for block in ciphertext_blocks:
         counter = ctr.to_bytes(4, 'big')
         Y = nonce_bytes + counter
-        
-        # Encrypt Y
-        cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
-        encryptor = cipher.encryptor()
-        encrypted_Y = encryptor.update(Y) + encryptor.finalize()
-        
+        if mode =="aes":
+            # Encrypt Y
+            cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
+            encryptor = cipher.encryptor()
+            encrypted_Y = encryptor.update(Y) + encryptor.finalize()
+        else: 
+            encrypted_Y = base64.b64decode(sea_enc(key, base64.b64encode(Y).decode('utf-8')))
+
         # XOR with ciphertext
         ct = bytes(a ^ b for a, b in zip(encrypted_Y, block))
         
@@ -250,7 +176,11 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag):
         ctr += 1
     
     # Check authenticity of tag
-    computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data)
+    if mode =="aes":
+        computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data, "aes")
+    else:
+        computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data, "sea")
+
     computed_tag = computed_tag["tag"]
     if computed_tag == tag:
         return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}
@@ -264,7 +194,7 @@ def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
 
     Args and Returns match those of GCM_decrypt().
     """
-    ciphertext_blocks = _slice_input(ciphertext)
+    ciphertext_blocks = slice_input(ciphertext)
     nonce_bytes = base64.b64decode(nonce)
     plaintext = bytearray()
     
@@ -285,7 +215,7 @@ def GCM_decrypt_sea(nonce, key, ciphertext, associated_data, tag):
         ctr += 1
 
     # Check authenticity
-    computed_tag =  GCM_encrypt_sea(nonce, key, base64.b64encode(plaintext), associated_data)
+    computed_tag =  GCM_encrypt(nonce, key, base64.b64encode(plaintext), associated_data, "sea")
     computed_tag = computed_tag["tag"]
     if computed_tag == tag:
         return {"authentic": True,"plaintext":base64.b64encode(plaintext).decode('utf-8')}

@@ -138,7 +138,6 @@ class FieldElement:
         Divides a FieldElement by another FieldElement using inversion
         as the division is multiplication by the inverted element.
         """
-
         if int(other) == 0:
             raise ValueError("Division by zero")
         return self * self.inv(other)

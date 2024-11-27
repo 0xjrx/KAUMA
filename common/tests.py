@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-import pstats, os
+import pstats
 import cProfile
 import base64
 from tasks.gfmul import gfmul
 from tasks.poly import block2poly, poly2block, poly2block_gcm, block2poly_gcm
 from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
-from tasks.gcm import GCM_encrypt, GCM_decrypt, GCM_encrypt_sea
+from tasks.gcm import GCM_encrypt, GCM_decrypt
 from tasks.polynom import FieldElement, Polynom
 from tasks.gcm_pwn import sff, ddf
 
@@ -91,7 +91,7 @@ def test_gcm_enc() -> None:
     plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
     ad = "QUQtRGF0ZW4="
     result = {"ciphertext": "ET3RmvH/Hbuxba63EuPRrw==","tag": "Mp0APJb/ZIURRwQlMgNN/w==","L": "AAAAAAAAAEAAAAAAAAAAgA==","H": "Bu6ywbsUKlpmZXMQyuGAng=="}
-    assert GCM_encrypt(nonce, key, plaintext,ad) == result
+    assert GCM_encrypt(nonce, key, plaintext,ad, "aes") == result
     print("AES GCM encryption successful")
 def test_gcm_enc_sea() -> None:
     nonce = "4gF+BtR3ku/PUQci"
@@ -99,7 +99,8 @@ def test_gcm_enc_sea() -> None:
     plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
     ad = "QUQtRGF0ZW4="
     result = {"ciphertext": "0cI/Wg4R3URfrVFZ0hw/vg==","tag": "ysDdzOSnqLH0MQ+Mkb23gw==","L": "AAAAAAAAAEAAAAAAAAAAgA==","H": "xhFcAUT66qWIpYz+Ch5ujw=="}
-    assert GCM_encrypt_sea(nonce, key, plaintext,ad) == result
+    print(GCM_encrypt(nonce, key, plaintext,ad,"sea"))
+    assert GCM_encrypt(nonce, key, plaintext,ad,"sea") == result
     print("AES GCM sea encryption successful")
 def test_gcm_dec() -> None:
     nonce = "4gF+BtR3ku/PUQci"
@@ -108,7 +109,7 @@ def test_gcm_dec() -> None:
     ad = "QUQtRGF0ZW4="
     tag = "Mp0APJb/ZIURRwQlMgNN/w=="
     result = {"authentic": True, "plaintext":"RGFzIGlzdCBlaW4gVGVzdA=="}
-    assert GCM_decrypt(nonce, key, ciphertext,ad, tag) == result
+    assert GCM_decrypt(nonce, key, ciphertext,ad, tag,"aes" ) == result
     print("AES GCMdecryption successful")
 def test_gcm_enc_ad() -> None:
     nonce = "yv66vvrO263eyviI"
@@ -116,7 +117,7 @@ def test_gcm_enc_ad() -> None:
     plaintext = "2TEyJfiEBuWlWQnFr/UmmoanqVMVNPfaLkwwPYoxinIcPAyVlWgJUy/PDiRJprUlsWrt9aoN5le6Y3s5"
     ad = "/u36zt6tvu/+7frO3q2+76ut2tI="
     result = {"ciphertext": "QoMewiF3dCRLciG3hNDUnOOqIS8sAqTgNcF+IymsoS4h1RSyVGaTHH2PalqshKoFG6MLOWoKrJc9WOCR","tag": "W8lPvDIhpduU+ula5xIaRw==","L": "AAAAAAAAAKAAAAAAAAAB4A==","H": "uDtTNwi/U10KpuUpgNU7eA=="}
-    assert GCM_encrypt(nonce, key, plaintext, ad) == result
+    assert GCM_encrypt(nonce, key, plaintext, ad, "aes") == result
     print("GCM Edge case successful\n")
 
 def test_gfpoly_add():

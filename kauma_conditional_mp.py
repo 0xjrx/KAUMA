@@ -15,6 +15,7 @@ import time, base64
 from argparse import ArgumentParser
 
 
+
 def process_test_case(test_case, test_case_id):    
     action = test_case.get("action")
     arguments = test_case.get("arguments")
@@ -70,8 +71,8 @@ def process_test_case(test_case, test_case_id):
     
     except Exception as e:
         stderr_write(f"Error processing test case {test_case_id}: {str(e)}")
-        return test_case_id, {"error": str(e)}
-    
+        return test_case_id, {"error": str(e)}    
+
 def handle_p2b(arguments):
     if arguments["semantic"] == "xex":
         result = poly2block(arguments["coefficients"]) 
@@ -237,69 +238,69 @@ class ParseJson:
         self.filename = filename
         self.results = {"responses":{}}
         self.timing_info = {}
+
     def parse(self):
         try:
-                total_start = time.time()
-                
-                file_start = time.time()
-                with open(self.filename, 'r') as file:
-                    data = json.load(file)
-                file_time = time.time() - file_start
-                
-                process_start = time.time()
-                if len(data["testcases"]) < 20:
-                    processing_method = "sequential"
-                    self._parse_sequential(data)
-                else:
-                    processing_method = "parallel"
-                    self._parse_parallel(data)
-                process_time = time.time() - process_start
-                
-                total_time = time.time() - total_start
-                
-
-                stderr_write("\nTiming Information:")
-                stderr_write(f"Total Execution Time: {total_time:.3f} seconds")
-                stderr_write(f"File Loading Time: {file_time:.3f} seconds")
-                stderr_write(f"Processing Time: {process_time:.3f} seconds")
-                stderr_write(f"Processing Method: {processing_method}")
-                stderr_write(f"Number of Test Cases: {len(data['testcases'])}\n")
-                
-                print(json.dumps(self.results))   
+            total_start = time.time()
+            
+            file_start = time.time()
+            with open(self.filename, 'r') as file:
+                data = json.load(file)
+            file_time = time.time() - file_start
+            
+            process_start = time.time()
+            processing_method = "conditional"
+            self._parse_parallel(data)
+            process_time = time.time() - process_start
+            
+            total_time = time.time() - total_start
+            
+            stderr_write("\nTiming Information:")
+            stderr_write(f"Total Execution Time: {total_time:.3f} seconds")
+            stderr_write(f"File Loading Time: {file_time:.3f} seconds")
+            stderr_write(f"Processing Time: {process_time:.3f} seconds")
+            stderr_write(f"Processing Method: {processing_method}")
+            stderr_write(f"Number of Test Cases: {len(data['testcases'])}\n")
+            
+            print(json.dumps(self.results))   
 
         except KeyError as e:
             stderr_write(f"Missing key in given Testfile {e}")
         except json.JSONDecodeError:
             stderr_write("Error: Failed to decode the file given")
     
-    def _parse_sequential(self, data):
-        stderr_write("Used sequential processing")
-        for test_case_id, test_case in data["testcases"].items():
-            test_case_id, result = process_test_case(test_case, test_case_id)
-            self.results["responses"][test_case_id] = result
-    
     def _parse_parallel(self, data):
-        stderr_write("Used parallel processing")
-        # Create workers
-        num_cores = mp.cpu_count()
-        pool = mp.Pool(processes=num_cores)
-        # Process test cases in parallel
-        test_cases = [
-                (test_case, test_case_id)
-                for test_case_id, test_case in data["testcases"].items()
-                ]
-        # Map processing functions to all test cases
-        results = pool.starmap(
-            process_test_case,
-            test_cases
-                )
-                
-        # Closse pool and wait for process completion
-        pool.close()
-        pool.join()
-        # Collect all results
-        for test_case_id, result in results:
-            self.results["responses"][test_case_id] = result            
+        stderr_write("Used conditional parallel processing")
+        
+        # Separate test cases that need multiprocessing
+        parallel_cases = []
+        sequential_cases = []
+        ordered_results = {}
+
+        for test_case_id, test_case in data["testcases"].items():
+            if test_case.get("action") in {"gfpoly_factor_sff", "gfpoly_factor_ddf"}:
+                parallel_cases.append((test_case, test_case_id))
+            else:
+                sequential_cases.append((test_case, test_case_id))
+        
+        # Process parallel cases using multiprocessing
+        if parallel_cases:
+            num_cores = mp.cpu_count()
+            pool = mp.Pool(processes=num_cores)
+            results = pool.starmap(process_test_case, parallel_cases)
+            pool.close()
+            pool.join()
+            for test_case_id, result in results:
+                ordered_results[test_case_id] = result
+        
+        # Process sequential cases
+        for test_case, test_case_id in sequential_cases:
+            test_case_id, result = process_test_case(test_case, test_case_id)
+            ordered_results[test_case_id] = result
+        
+        # Collect results in the order of the input file
+        for test_case_id in data["testcases"]:
+            self.results["responses"][test_case_id] = ordered_results[test_case_id]
 
 def get_args():
     parser = ArgumentParser()
@@ -311,11 +312,8 @@ def main():
         args = get_args()
         parser = ParseJson(args.file)
         parser.parse()
-
     except ValueError as e:
         stderr_write(f"Error: {e}")
-
-
 
 if __name__ == "__main__":
     mp.set_start_method('spawn')
