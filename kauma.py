@@ -247,7 +247,7 @@ class ParseJson:
                 file_time = time.time() - file_start
                 
                 process_start = time.time()
-                if len(data["testcases"]) < 20:
+                if len(data["testcases"]) < 10:
                     processing_method = "sequential"
                     self._parse_sequential(data)
                 else:
