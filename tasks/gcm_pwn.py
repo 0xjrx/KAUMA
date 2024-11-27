@@ -62,7 +62,7 @@ def ddf(polynom: 'Polynom'):
     z = []
     d = 1
     f_ = polynom
-    while len(f_.polynomials_int)>=2*d:
+    while len(f_.polynomials_int)>=d:
        # #poly2block_gcm([1])  
         X = Polynom([base64.b64encode(int.to_bytes(FieldElement(0).element, 16, 'little')).decode(), poly2block_gcm([1])])
 
