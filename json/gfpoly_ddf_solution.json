@@ -1,0 +1,53 @@
+{
+  "responses": {
+        "gfpoly_ddf_test_11": {
+      "factors": [
+        {
+          "factor": [
+            "URs4nPMrWOxT1bZlv5VcnQ==",
+            "lupqZNMSfrvovWmMGUBqcA==",
+            "Bm5eFuZzDgL86aEAwfnE2w==",
+            "ucZrISP2oK0iD4M8OFbyrg==",
+            "gAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          "degree": 2
+        },
+        {
+          "factor": [
+            "JLHMAkb08tvvbLHATwkdVg==",
+            "DKF0GCB5TB/Sgo0qwFKxBg==",
+            "MGAMD0k26EzlSvktZy8/tA==",
+            "SWK+9uGg8GiW1iRKcgy8Dg==",
+            "5yZHX7DlDP1JWY4U6uGWLg==",
+            "gAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          "degree": 1
+        },
+        {
+          "factor": [
+            "QkM776t/laUe5mkP32L76g==",
+            "JBQbhYmiTh1UMeHDlYDy0w==",
+            "ap4NzEA1fP/T9KuZMjH1fw==",
+            "J/nk5MvdesIc40lGhmWF+g==",
+            "8kUCTcHDQ33w9mcf7nwX3w==",
+            "gAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          "degree": 5
+        },
+        {
+          "factor": [
+            "7gHP5/W70bxDoqBFVMty6g==",
+            "xW6ThboeKIt4EZ5rpE+UBA==",
+            "fCo20pfUwr5r0t+SUBuKXw==",
+            "/mciOqATej1MMFJY1G1sfw==",
+            "L3s92Z12Q108kN6PkUjgSw==",
+            "93XwvdeoGZUAm1Jffq57jA==",
+            "1JdapJuG39soswxl/lNlTg==",
+            "itzj/+fDTayh18PYlBgdYQ==",
+            "gAAAAAAAAAAAAAAAAAAAAA=="
+          ],
+          "degree": 4
+        }
+      ]
+    }  }
+}

@@ -1,0 +1,30 @@
+{
+    "testcases": { 
+        "gfdiv_test": {
+                        "action": "gfdiv",
+                        "arguments": {
+                                "a": "JAAAAAAAAAAAAAAAAAAAAA==",
+                                "b": "wAAAAAAAAAAAAAAAAAAAAA=="
+                        }
+                },
+"test_gfdiv_self": {
+        "action": "gfdiv",
+        "arguments": {
+                "a": "AQAAAAAAAAAAAAAAAAAAAA==",
+                "b": "AQAAAAAAAAAAAAAAAAAAAA=="
+        }
+},
+"test_gfdiv_one": {
+        "action": "gfdiv",
+        "arguments": {
+                "a": "NeverGonnaGiveYouUpAAA==",
+                "b": "gAAAAAAAAAAAAAAAAAAAAA=="
+        }
+},
+"test_gfdiv_zero": {
+        "action": "gfdiv",
+        "arguments": {
+                "a": "AQAAAAAAAAAAAAAAAAAAAA==",
+                "b": "AAAAAAAAAAAAAAAAAAAAAA=="
+        }
+}}}

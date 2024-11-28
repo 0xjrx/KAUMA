@@ -18,7 +18,6 @@ from argparse import ArgumentParser
 def process_test_case(test_case, test_case_id):    
     action = test_case.get("action")
     arguments = test_case.get("arguments")
-    
     result = {}
     try:        
         match action:
@@ -280,9 +279,11 @@ class ParseJson:
     
     def _parse_parallel(self, data):
         stderr_write("Used parallel processing")
+        
         # Create workers
         num_cores = mp.cpu_count()
         pool = mp.Pool(processes=num_cores)
+        
         # Process test cases in parallel
         test_cases = [
                 (test_case, test_case_id)

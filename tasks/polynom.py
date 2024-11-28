@@ -20,7 +20,10 @@ class FieldElement:
         Args:
             element: int representing the field element
         """
-        self.element = element    
+        self.element = element
+
+    #FIX: Remove magiv value, replace with bitshift
+
     _IRR_POLY = base64.b64decode("hwAAAAAAAAAAAAAAAAAAAAE=")
     _REDUCTION_POLYNOMIAL = int.from_bytes(_IRR_POLY, byteorder='little')
 
@@ -54,7 +57,6 @@ class FieldElement:
         Returns:
             New FieldElementGCM instance representing the product of the multiplication
         """
-        # irreducible polynomial for GF(2^128)
     
         # Convert our operants to GCM's semantic
         multiplicant = self.gcm_sem(int(self))
@@ -252,21 +254,31 @@ class Polynom:
         Returns:
             New Polynom instance representing the sum
         """
+        
         if self.polynomials == other.polynomials:
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        
+        #FIX: Remove magiv value, replace with poly2block
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
             return other
+        
+        #FIX: Remove magiv value, replace with poly2block
         if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
             return self
+        
         max_len = max(len(self.polynomials_int), len(other.polynomials_int))
+        
         self_int = self.polynomials_int + [0] * (max_len - len(self.polynomials_int))
+        
         other_int = other.polynomials_int + [0] * (max_len - len(other.polynomials_int))
 
         result_poly = [s ^ o for s, o in zip(self_int, other_int)]
+        
         result = Polynom(
             [base64.b64encode(int.to_bytes(res, 16, "little")).decode() for res in result_poly]
         )
         result._normalize()
+        
         return result    
 
     def __mul__(self, other):
@@ -283,8 +295,12 @@ class Polynom:
             New Polynom instance representing the product
         """
         result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
+        
+        #FIX: Remove magiv value, replace with poly2block
         if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        
+        #FIX: Remove magiv value, replace with poly2block
         if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
 
@@ -317,7 +333,7 @@ class Polynom:
         base = self
         result = base
         exponent -=1
-        while exponent>0:
+        while exponent:
             result = result * base
             exponent -=1
         return result
@@ -340,6 +356,9 @@ class Polynom:
         """
 
         # Check for division by zero
+        
+        #FIX: Remove magiv value, replace with poly2block
+
         if divisor.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
             return Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="]), self
             
@@ -417,6 +436,9 @@ class Polynom:
             base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode()
             for coeff in quotient_coeffs
         ])
+        
+        #FIX: Remove magiv value, replace with poly2block
+
         if remainder.polynomials ==[]:
             remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
         return quotient, remainder
@@ -434,9 +456,13 @@ class Polynom:
         Returns:
             Polynom instance representing result of modular exponentiation
         """
+        #FIX: Remove magiv value, replace with poly2block
+
         if exponent == 0:
             return Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
-            
+        
+        #FIX: Remove magiv value, replace with poly2block
+
         if exponent == 1:
             result, remainder = self / modulus
             return remainder
@@ -448,12 +474,11 @@ class Polynom:
         
         while exponent > 0:
             if exponent & 1:
-                result = result * base
+                result *= base
                 _, result = result / modulus
                 
-            base = base * base
-            _, base = base / modulus
-            #print(base.polynomials_int) 
+            base *= base
+            _, base = base/ modulus
             exponent >>= 1
             
         return result
@@ -469,7 +494,7 @@ class Polynom:
             List of Polynom instances sorted by degree and coefficient values
         """
         all_poly = [self] + list(others)
-        
+
         def compare_polys(poly):
             # We need degree as primary sorting factor
             key = []
@@ -478,7 +503,7 @@ class Polynom:
             for item in poly.polynomials_int_gcm[::-1]:
                 key.append(item)
             key_tuple = tuple(key)
-            
+
             # Pack our values into a tuple and let python handle the rest 
             return key_tuple
         # Sort our polynomials based on all criteria
@@ -579,3 +604,4 @@ class Polynom:
         if f.polynomials_int[-1] !=1:
             g = Polynom(f.gfpoly_makemonic())
         return g
+    

@@ -8,7 +8,7 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt, GCM_decrypt
 from tasks.polynom import FieldElement, Polynom
-from tasks.gcm_pwn import sff, ddf
+from tasks.gcm_pwn import sff, ddf, edf
 
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
@@ -474,7 +474,39 @@ def test_gfpoly_factor_ddf():
 ]
 }    
     assert res == result
-    print(f"SFF works, result is: {result}\n")
+    print(f"DDF works, result is: {result}\n")
+
+def test_gfpoly_factor_edf()-> None:
+    d = 3
+    F = Polynom([
+          "mmAAAAAAAAAAAAAAAAAAAA==",
+          "AbAAAAAAAAAAAAAAAAAAAA==",
+          "zgAAAAAAAAAAAAAAAAAAAA==",
+          "FwAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
+          "gAAAAAAAAAAAAAAAAAAAAA=="])
+    res = edf(F,d)
+    result = {
+    "factors": [
+    [
+    "iwAAAAAAAAAAAAAAAAAAAA==",
+    "CAAAAAAAAAAAAAAAAAAAAA==",
+    "AAAAAAAAAAAAAAAAAAAAAA==",
+    "gAAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    [
+    "kAAAAAAAAAAAAAAAAAAAAA==",
+    "CAAAAAAAAAAAAAAAAAAAAA==",
+    "wAAAAAAAAAAAAAAAAAAAAA==",
+    "gAAAAAAAAAAAAAAAAAAAAA=="
+    ]
+    ]
+    }
+    assert res == result
+
+    print(f"EDF works, result is: {res}\n")
+
 def tests_run() -> None:
     test_block2poly()
     test_poly2block()

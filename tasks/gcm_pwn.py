@@ -5,6 +5,8 @@ from tasks.poly import poly2block, poly2block_gcm
 def sff(polynom: 'Polynom'):
     f_ = polynom.derivative()
     if f_.polynomials ==[]:
+        
+        #FIX: Remove magiv value, replace with poly2block
         f_ = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
     c = polynom.gcd(f_)
     f, _ = polynom / c
@@ -35,7 +37,6 @@ def sff(polynom: 'Polynom'):
             })
     
     return sort_polynomials_with_key(factors, "exponent")  
-
 
 
 def ddf(polynom: 'Polynom'):
@@ -88,9 +89,10 @@ def sort_polynomials_with_key(data, key):
                 break  
     
     return sorted_data
+
 def rand_poly(bound):
     rand_elements = []
-    magic_value = 340282366920938463463374607431768211455
+    magic_value = 1<<128-1
     bound_rand = random.randint(1, bound-1)
     for _ in range(bound_rand):
         rand_elements.append(base64.b64encode(int.to_bytes((random.randint(0,magic_value)), 16, 'little')).decode())
@@ -114,11 +116,11 @@ def edf(polynom: 'Polynom', d: int) -> list:
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_) + Polynom([poly2block_gcm([0])])
         
-        for u in z:
+        for u in z.copy():
             u_ = Polynom(u)
             
             if (len(u_.polynomials_int)-1)>d:
-                j = g.gcd(u_)
+                j = u_.gcd(g)
                 
                 
                 if (j.polynomials_int_gcm != [1]) and (j != u_):

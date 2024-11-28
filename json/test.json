@@ -483,32 +483,7 @@
         ]
       }
     },
-    "gfpoly_sort_tob": {
-      "action": "gfpoly_sort",
-      "arguments": {
-        "polys": [
-          [
-            "AQAAAAAAAAAAAAAAAAAAAA==",
-            "AgAAAAAAAAAAAAAAAAAAAA==",
-            "AwAAAAAAAAAAAAAAAAAAAA=="
-          ],
-          [
-            "AQAAAAAAAAAAAAAAAAAAAA==",
-            "AgAAAAAAAAAAAAAAAAAAAA==",
-            "BAAAAAAAAAAAAAAAAAAAAA=="
-          ],
-          [
-            "AQAAAAAAAAAAAAAAAAAAAA==",
-            "AgAAAAAAAAAAAAAAAAAAAA=="
-          ],
-          [
-            "AQAAAAAAAAAAAAAAAAAAAA==",
-            "AwAAAAAAAAAAAAAAAAAAAA=="
-          ]
-        ]
-      }
-    },
-    "gfpoly_factor_ddf": {
+      "gfpoly_factor_ddf": {
       "action": "gfpoly_factor_ddf",
       "arguments": {
         "F": [
@@ -523,86 +498,19 @@
         ]
       }
     },
-    "gfpoly_pow_sff": {
-      "action": "gfpoly_pow",
+    "gfpoly_factor_edf": {
+      "action": "gfpoly_factor_edf",
       "arguments": {
-        "A": [
-          "yWtPcBL5y5G+x6mhORBbJw==",
-          "qAbS5GJdhMTFEDZo+/Zdag==",
-          "3oJB7poPqDEjMTXti25HWA==",
-          "RMn/Zdhf8ep6m+Mr3JhinA==",
+        "F": [
+          "mmAAAAAAAAAAAAAAAAAAAA==",
+          "AbAAAAAAAAAAAAAAAAAAAA==",
+          "zgAAAAAAAAAAAAAAAAAAAA==",
+          "FwAAAAAAAAAAAAAAAAAAAA==",
+          "AAAAAAAAAAAAAAAAAAAAAA==",
+          "wAAAAAAAAAAAAAAAAAAAAA==",
           "gAAAAAAAAAAAAAAAAAAAAA=="
         ],
-        "k": 4
-      }
-    },
-    "sff_error": {
-      "action": "gfpoly_factor_sff",
-      "arguments": {
-        "F": [
-          "y2yJgdbIbpyw4lmeM2cMLw==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "fgfvHpZ0oOBfFhHLy2JwUg==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "7S1oSq2cnGCb0lxNmeHCLQ==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "aSMg1AcIcRye39E38SNoVw==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "gAAAAAAAAAAAAAAAAAAAAA=="
-        ]
-      }
-    },
-    "gfpoly_diff_empty": {
-      "action": "gfpoly_diff",
-      "arguments": {
-        "F": [
-          "y2yJgdbIbpyw4lmeM2cMLw==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "fgfvHpZ0oOBfFhHLy2JwUg==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "7S1oSq2cnGCb0lxNmeHCLQ==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "aSMg1AcIcRye39E38SNoVw==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "AAAAAAAAAAAAAAAAAAAAAA==",
-          "gAAAAAAAAAAAAAAAAAAAAA=="
-        ]
-      }
-    },
-    "dff_err": {
-      "action": "gfpoly_factor_ddf",
-      "arguments": {
-        "F": [
-          "zfrKQff9ZzXTxdSOo3LIvw==",
-          "fv3Mhvg5rsBtBW3qToMcXg==",
-          "FPJ/e6tScmUb7zhJAy3KOg==",
-          "1Kge3x1e8xc8kjSPjWDYoQ==",
-          "Z/mw97q7MNtgo5cCWVJrEQ==",
-          "5GISF9aVJCzAIj+YzYx1Zw==",
-          "dBgxEvvoJ+y8U+Zz2hEzHw==",
-          "gAAAAAAAAAAAAAAAAAAAAA=="
-        ]
-      }
-    },
-    "dff_err1": {
-      "action": "gfpoly_factor_ddf",
-      "arguments": {
-        "F": ["uOBt/qZ1YeLDDGlJS4hMAQ==", "hkyXBxT7A1mwEZsZkwtkOg==", "owPVtICVps1Whh19xA2rVw==", "RUVG0q0Bgie8aBLrPicXNQ==", "jiURWx2ytWH0gvy32R1r5g==", "r1nRAcBEXWQEC/TaR9tMsg==", "e0D/fTg37NyfEcO7DmPHlQ==", "gAAAAAAAAAAAAAAAAAAAAA=="]
+        "d": 3
       }
     }
   }

@@ -14,8 +14,6 @@ from tasks.gcm_pwn import sff, ddf, edf
 import time, base64
 from argparse import ArgumentParser
 
-
-
 def process_test_case(test_case, test_case_id):    
     action = test_case.get("action")
     arguments = test_case.get("arguments")
@@ -285,7 +283,7 @@ class ParseJson:
         ordered_results = {}
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"padding_oracle, gfpoly_factor_sff", "gfpoly_factor_ddf, gfpoly_factor_edf"}:
+            if test_case.get("action") in {"padding_oracle, gfpoly_pow, gfpoly_factor_sff", "gfpoly_factor_ddf, gfpoly_factor_edf"}:
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))

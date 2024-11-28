@@ -1,0 +1,94 @@
+{
+    "testcases": {
+        "padding_oracle_test_0": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "mt1FC60mHE+RkASJBMNuM8qBxmvRQ+hPJYKskEo+Vegma5IKeu+D71ZP3u/8SC4zyv98tFHS2u4LjR0MSsAIosNJE/45duoT52MAOeZapWSK3zc2Y6GSnIs7irNEulH9NG7lVNTcQ7GrgE6zbTHqsEHPYAFULQ13Kxtc6AiwQj6BIqeF5gnUwRDD8dByI6n0ZPIqCv/ZPxPYD0EfLhMA1MbWyKR9yQ/rTVLckoa6Mm9x/8zn0FmqSW/PpeuSTlB52tdcEDGDZKujsDUh+ux1Kq3hN9lg3fS3vuLcAV3S6d0Vfsg0aTeBtPV8ZYKex+TP",
+                "hostname": "127.0.0.1",
+                "iv": "Y9bnVui4X1xgVQoxAbxO9A==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_1": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "7qyRtl63Jhg418SMrixZqRASzpRZ5fgUVeDL5SNWWxzcwhfhXbPX7kjpEyNa4pPsrgadLrM7YpIMUvbVvDx/RnsJs43FWjeftqf/08nbjX32lXYuvdQXrQueACCxs7VW+GFJZaHGubnTlQkJ1o7EbVhYIl2CzzifVjDR2tlSisuO1TQtevAfoM5GKDafZPAAnHo+fdOTKZK+zbv/gbPaGZC/ye6BwRb7+nevbdMYG5WuvrH1h/cyIUrJUIUOXEnCnMP8vuaykVmOr2Y7g/uUV9+h5VCshfwKYRRi2OsUmg6N2jCdsOdQ2Oo93niya1duJQUVunukD+821CCe8ntg5aiMS46UNiEcl61WDOAx8sJ3077JQsvEKmMYb2rLmpZKHvEK0kLzNKJBpFsWp69XEzNs7QHo4vN93/XIEOsVnl80OoceUhyVNiesxZnkrEqY3/VfFSZwStMxTHtMT1X2GXhiVsTSoVBCKg/NY8Y72gHIf0C+Lp2LN0YWV60ZjMxeheEutV+hben8Cmi1RJxpSJkAW6vFcxW1MS7f8FHUd50uzCUx3M6h5ZVz6ewhkwY5PEXpo1ZTRI6uzbR+iRChPf6gi3jqC3L5/sDmaC5JzppNV+JhymbKME2psjhQ6oUwHjB+oNp4MAf5V63XeP0J1R8eiNbPC+Ziy8XcMWRox4R4A87bRKdjkZEjHATZmJYxjgDLS/9mZBRlFqBlt0MfuQn4Mf9CLpAFhWEEMt7iTsONAdD+k/1Nm6JuQJYkPuBdwkOhT/87yk0wXbEZp3X+YcNmyChl8tf2M25CodqlhBlgMLUW7/i8FWF+WtSkPX3/rU21JRitxloLw4OtWePVOCuAhluBPlVBh3TdjUzWTnkqDv8vrHzGBs60+BoEr9eV/R4HPkOoqPSqbf6R7B/zZp4h+kxGXsR20Jl/+vyaYM8rp/lYLCajS62iFma4gXhhkAGil88GXdGw2CzSwpmzACIIIszbtfLxSNHxJ568f2f6j+nBpLX53GwczF2AOAFQldF9BWlX130kGpcDdOmfqqvuCIx5Wtt+JhuXBHLsm7E=",
+                "hostname": "127.0.0.1",
+                "iv": "uK8/37m9KbkHYMMh5lsoow==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_2": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "awLWCxJ47MlzhM/plMg6eLW36gD7zTU+QEkl+JlqOn54EiALThRgmd7iyB1LDsrDDOGda9eVPsRrIQJcrbsMwUJePBMZHyF8e2KCTE9QHZmjFZAXEH2s1dqZAtkWpjzCDMewGR0ZKQXmpG9HKFYhusmg7rdiSExDiizBtnHbq9acaG4j8SpLe4TT5FjaIqI+PHZu2Cfd+r3HRvARkQRKUxJb6+lbkss88JLJTCaaYzHTGFoYHOUwHE/5Yz4q5L+BxvQb0DtVb3TXHUsBtqbhVoZvcQltmb9aFj6jAG3pQ9Mtaebar1n33FBAEQQbHHqXPHv1zrpP4MRJWgoYBgJllw==",
+                "hostname": "127.0.0.1",
+                "iv": "IJUsyabq0kA1vALhs5Bpsg==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_3": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "eQH5+ROEkaYWRf6/O4WVpg8jaxaIQOdH6m2hngtT4uxiJNX2n0WbMpEqw/5ggDRWXRGqVrqD/ZQFtozLub6U8VeCtDvNgOHy1SNEg1Y1WdNEFLfSQ+SWiFV3cTzKi0gkM51suveZwf4Tj47Svd1UsvmapVdiFD8E/9E/MxdB2vryXqqL+u8qaBZSBu7U0daOLlHR0hnEvYyTeCvMGnXRKnqIHFv1TcGF7/U8TUXlj+FsJEwU+JFypx7aX2L+XGatk8ejg5QP4NbnSxVDT6Dsrh8NZDfT9bRxLUonUQW62sSpekFqM+vrxRweh76IFbyL6e/nD9jl5mtONnRsLVYKJSa24kmqV/lkCu0v6XvRxzSwmN200Yey3GrPUEi1GjCNUpmxDIz+8ekweiw3FbSlbTolQIOP4NK78GhkCgIh/nOZVgTObtdxmesBqAw0SdzCF/voKHWySKbejJTuMW+GrEk+CZKHbAjNaI6ZXpwpF+bduUj/iM1rJvXPKf4wBthvjF50SesgQWgDAMc60MGRnfxb6c6yLNHJNlcYJlSVflj/Sg9dbCWqe9JYdsIQEvd5fnOp9teSS2xaF91QUEiMk3Mnr2ECnW75x5hxjqkRsGGcSLbTz6vwkjeNW9Gkj0EsTopGRAKkoWO/du7RwY870n3HVpM79xbE/l+Eh+dmMtP1wCAeSD7bxstQuDW7BgbT6nar85SxPzr4FNKaUGUmizRW690LM1oNfJiEwz6uWAfmZcjZF3ndPPVyDsEwEm0JXCPN5VvKLDqGezWx1ud9j7YMNfAMdMP46aWT6sBFgaApFL657svzhBVxsat5Righ2E9N/+wbL9jtABg/XOaMC/NXez6lZd1zLVqUwpBXxKGsX75dm1lOY1A0a7bPb4plywIuy5hCrbkzZZwfIeAkrjx7V6s3oq6uAn4x/5tWb673BeGia+3+ugAupfSQFm0jleZ2WXKkP44yMoy0BGsRMAPK6QrA1RzwVQgrNbjjwdEh6EcV1JkjrCEIyt9F3jKHOHTCP0F6hOBUfgPMJngmyZf8uttALM+WBB1rIW7Pzs/n15igLuqtS04bQ3B9Ba+ajq0nyyh2+uK8lErggAM6FT621rRyV4kXc5V3MgnEtO0Wn+fsZMwWyezoSJphOCUiQLhRC0oykh5NUQ6ZStAVeiGn8IwpMvNpyYJbuha/ymW6PAP01lFWMrS75ZzyBXZ57qM4iiCh/LfZwG2jZq2CZrd76FsOUAWIVn6Q3Kfgu3c=",
+                "hostname": "127.0.0.1",
+                "iv": "kgDJm+HYRAYXBunQzZtOIw==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_4": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "6sBx6tbFXS1qQLkbULLQbgyFUtgTRMga+EMrzJgeNHDHqxcw3APsiwjdx8mvHfKthKbiAiaBOP7ShTUBFoketqvI9MhkOAQoSC2qU/Mat/MiRm3ChIrK2hGXMpb2Cn72pR5XBdyxwbFaiUwrx2/RkJQUet1gtJF4S4+och04iu2DBOt94jHL0IoC5zyohQvrkE+Zmv/EfB+9mmP5vCNHv96nBA1q3OrjxQ+WTFa1r0aiUkRnx95E5ZhebFQuhGj3sX6hbdtZHM48Vs1T7cVpukc2nUQCQQKzfLgKggcBw1Pw964SETXanq4jwhvDDaDO63wzTtZIVi2QIJWX8Akmjb2c662wKuDfyTF3MslfjGU+NlkbaBL2z4JapIYmwsQjcVYGrIgZIazfVcjLnRWYdn/XdopUo1GBWiXITa6NmdvQt4DD/0ttFvinEV5laQ6mrbzQ+TEBndr0NTwfgko1nxvB2HNVBMu+QqEzZXUlMRMTrd0dtQIWIpsS+eICAQHF4aOVgtjWbaKff3l2I0g+TdiG+NW8MnPhs9eluGbx1/cpgkfnMZIl52KQ9UuYMBmaibIn4H1DP6JWSTWw9R0fjvXoyJCWhegJ0BANOB8u+eayLdip9XKaFd5PHwYjvfuaUb+2zWQy2VUbF2xOBvdvOHnJOZUUC33oP9mfbRe9eFGF7oQ2MKlI3Fz8znyYP+HDHtJQ8JoEaJYV9WhAcpwf40vRgXvXI6H1qxzqu68vuFcSxxtNulYY0feG1tyO9c4VjXL1oKuWRXsEiCnMGnsuzU/JJgi7TF+YVXjehtJxKJ13E/8nVCBqh/9XsMazWFm/YDdAy9kRnbgZZ0OXrRyjCO/8E4s/maQdhdln28sFqgfXJMFKdUFHeaYBVpT6+ezQcuDU8f14DVSnSPHJsy5umwilVMcFsC8yNXt0ck1s40DSL/X9oFa1Ft+8BFYDjGUa6OVHKA8MSfALudrDW7e36s1+FeLZ264rbUWChtz+KDxcWxYxwW7u+ll9yMwSQMq1bLBdGZOhKwgr56Dt61b1xFZ02PQ2q9UN0TTL/uJc/tA=",
+                "hostname": "127.0.0.1",
+                "iv": "GOlzLAYLCF0dvQkPuy9B+g==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_5": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "FLOYcI3bEF/aLbZ3RcbIHGKcrY6VjPuMPg284miBsWK/DOPi7GLsN4ykNCQ73qRiTKxIlDsohSNiK2elFEc1+qkqVHJSJbH8MOx1vCVdNjrwVSMtgIR/bJigv9kqTzIVfqygjXtyJeRMTheISjeHVGBcMPgKecHB5rcih5vqQJlWlTPz7J3mwPDDKIuaWUrOO4/AzdCIValHVqJABHV4ZD7ftcfE3ieoTjNmOGFCt8cnPo/qXn4Ilk3D06wwbUT7VQsaJPalBkVf1h6GNeJnxDMhafDnxUTQ0esmlp7HqjgwEM4UdfZtTDH2d+WLdGpZQQ+TJ76n/ve/mRjPo0zfxiRhytbp1jAiU4Lk7mg1JJvv9eEDx8MuERh2yDOa46zYcK+Dv+avXhtIj4rzuv9vbFceQ/ZCotPUIbdpa7vGWlQKRs9gvDnsh9d+S6/dmTpKlS8WQBkHHfFR30OW4xwTScHNg7UGlUPcFwr/YrDwSsH+kwjb6sw9hJAApJ6kkTOaoj0UmJWLg8S/Gs+IHlrfHczJ+YZpk+HCDx1DTIvV+9NINcY5XFHGre39oXMyIv03IIpLxxJD3+uVYD0U815gEFFJmPyKHb0wr8jklQ2cWKSBgc3lWU5Ae3tbXk8chAPTdjPo5gIt2slGiupy+HTdcxMypQ6JKjRaHcb797VkEhNMyTqBY+xfbwJxPEnmxPVcv+Q8cHsdoYU1rr8zXPuMpyOGOMEanHXYu7WMfqF5EidK6j2HxeicZQYGW+dYlha4uEEPu6eKgg43baSKH/8Bpoet6K7VTfPOdGARAOQLhPTz3fcWnXOshYp7F0x9laQt/SE2rRBdfE8qWgs/hvLpr/ttii9Gt2gxK62j/NzV1Tm0CQM5hQUFWlfQe04oDe/1hWOx25eH+r0lH5pW7+fzZX0T1HBvHXIQFAqMt1a8S6mltTA+BMMFMpp3vM2kd/4pdP88FI+NYUPMfHM41I7M4I77BjuVTidzzOJynUn8LNNRQFJUiA1yW0zng2gdfJRtzCFZXYAGeF5I4IVpHX+WcA==",
+                "hostname": "127.0.0.1",
+                "iv": "++E1AGhDD+gqqRCCTLg2Zw==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_6": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "mSxczwHC8gK2DuH0AgRNH4R5DVEnOm1uTdGyAdT9cXNeG5iteOy5kHeQ6Tw12SxWdOC6oYSlKza3Kq85eo8lNcBUihOzsMtAy7PmdK87ReyhOaV+SsI4QoHY/rhC6k55YCz4mCfye/KMPhtaxP9Skvi58/LyaDG2mV64u8ltiFy4lW6ZENRsI6iDUKkuDy/MFXryBYzD8QeUMe0d74js1M5pjHhuE9KLRP9KNseivgy4j9lo95hKHoz49oCumyQFrUbjYPN6o2zJyhQNJOMJVl4P/fgXio6UIaQgELy2tYknMTqper38r//QUpKPF+3eesIxGzwRsp5ONHUT6QX0/jcBeuZZ8POJ7z/IKfmF6kA8fu6QsYtPw/vZ33BW5K4dPW0H/Ppyjf8wJdotpJRMjZM4r55XVY6jO3zr6QVuhNYxOSUzkgoxGdS8Wq3GGn5Bon/lLFafMiHfn+WZLgZIENGtdHjA+GlGthW1SOWtoHc/In685LUT6yQGDqA8gkhxa24U8zNMJLX/1ZobDHliZMR/iObLk9MvzB3nowuNpNYIjSnMPynpeM/xamXNpzisDleXx9OWGGYkBXuP5PzMLA66jwkozaPOiLxW/tdl+zRLTM8hzSdhUcif/te9Wx5TZuzmjBeKvczmTfRyHUPVhdqudloOR0uHleOOucNEkWWwsczspQpTwpBFL/bkC7766Xwf6gzpPONo21gnnVu7WKLxdheK/HydUU01+y/JOZouXS7kuFTy0kmNOhd2C/yZ5Q2HaUxpOTjCKizZ86O1szPfeySnhwUzo39J9sk2OipKAzw3J085lF96Zp238sEJXgjBk7Q3GtBWXmVEb6qHE6DFo3UtEfo1RCbNUnKRMNawb4mvVawgUPYARVL6lqQBML5qnmOZckYN/quG7Q1QtSpyrbBwsIdhGwtkokvyNBkTzB8ClBk19yk8KLSn4PY516sqZGIQdzg6wTBzeMfq5mheofW0tW9L94kpIrtDZxFhV4AjCfov6Xhq8PSS/BXohWMyAqQkdjkNMWr2Rk9ZMItUqNycNkSuGn5LgiWinLBc49vnajVx0floA4iad8jqMsFOQ/zvnILBoJOwhKgkPPUzp1c97NH+HDCZ82QQ66YLSctONOba+hk2nvNlEui6",
+                "hostname": "127.0.0.1",
+                "iv": "1b6kK+eBvz6v7zlY8wvOBg==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_7": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "CdTTU8qXXtPZhxvm1CDKUb3hUuA4gwcbrA7mJYspUAZJUq1T+tUoehvAL63mbtwWB2HMhHlvFuuuhlIzr2eKktA/32QsPlUyD7bYFvQ+MguSJIaeEOZU8oViiLQibUHL0GwPN6GCDCzxzI6JcZIV09RrD42eiFVyfWqbwpKPyATFVhIMzbO2ti1PFhUN+DG9ZxqlNfgLr4m5fXRuz0VHAgc5OT4iNNNwW7whnb3w5oBHcHCCZSXKOo9MnsPfsO1NzDCjrxS02o0P8gRrOg/f1v5mHiOqrxDkvakza8gGyzLEXufL7r8rVDp60tENEUm5RSk8wqrbj3lp+TkCQ3qJNZa50aZMs2AcmFW8ihS/iOsqTjEoAWVMM+WBPmO6opqsiTWV/izEeLHAvqTGNZy7wiDGcxVtYMoZYcHgj5PzV7ULPxHhdgVmUhYbFox4GEddIglH6RiBQ/e4zUI2JdrrFT/yiMg4eWqnnM8KpzaY1Fsp69ZcaTDJq6wzMyR5YVs2qkzyib5fngOMVENip7ynFcCfTT+O6YNMtmA9/XsT0FFzR3wGq0UaKyip8xxJuEnELPLIBfY/YTqdYy8QicQdNp319dPUJPIxR01VBQqwLAc9lPtib3Gp/rHmbjhWbdWA8CZVegiwHHqFU7MhDBbEluVv6v+2AQAEQAXTLUhEfrPyHNhtHJ2Hi2F+TmzDX/ZjoCi937LWMQFL0wRsIbynfPF/klzoD4tO4uO7rCY0W2LHarDL5zS/5JajT7hpHxuu9Dote2dF33MZSHM52RWPctw6293kbweRHSdemZtINuC+1U8E0RKPB1+T/A9QWo9A2Ojf8M1JOa51Nx0/OQSuxuliqzHM8qh26jK+uXm6dDkgUc1Sz98E3JKbfVjMxS/E4sYX+e6e4SHLP3zjYq+ipyhafzyCrM6eJfiotfqLBjIdxchz6EtiMMr1pL7wgg4l",
+                "hostname": "127.0.0.1",
+                "iv": "IYbeXA9M0+ps1ggn3nH4gw==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_8": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "uPTAiANRgMFx6GlhUiHSrangnv5N9/zGmOA2VIz9SpUwlxtfjjftqSSNyK8F7xPGTMS9D+5NHG5MALfWgJFkl0pl1zbD0u+2L4wiGXU7P04R68SJFt/jtS2NIh5zPjtV",
+                "hostname": "127.0.0.1",
+                "iv": "jg3XlfL1caKhsfN7Xzoztw==",
+                "port": 42069
+            }
+        },
+        "padding_oracle_test_9": {
+            "action": "padding_oracle",
+            "arguments": {
+                "ciphertext": "6wTga4hckogypo6tHJ+Z9qc/FeANKG2kcwpFD5/2ReFsGPouItEn11vuHmzglPW+bp3fd5ObC05ockZ5uzB5AKa/W2kRG3QpgrOLEXBr6UtDzsNJthOMBXyfMpaHpfEQQbwT0kAdTFm2TdXt1LTYN+8POrWm3LLH35fna/W8kP8De2UAAgG7OlanVRFKq6YEwvskc1ypjo7t2qZAZ4kJuHH2KHhWoIaJ69+iQ2WICac=",
+                "hostname": "127.0.0.1",
+                "iv": "apXY1Gn8WRYG/yelEapt5g==",
+                "port": 42069
+            }
+        }
+    }
+}
