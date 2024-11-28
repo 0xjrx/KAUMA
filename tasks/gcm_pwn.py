@@ -102,6 +102,7 @@ def edf(polynom: 'Polynom', d: int) -> list:
     # d is degree val
     # polynom is corresponding poly
     # This is  garbage
+    stderr_write(f"d: {d}")
     f = polynom
     q = 1<<128
     n = len(polynom.polynomials)-1/d
@@ -109,23 +110,26 @@ def edf(polynom: 'Polynom', d: int) -> list:
     z.append(f.polynomials)
     stderr_write(f"q: {q}")
     while len(z)<n:
-        h = rand_poly(d)
+        h = rand_poly(len(f.polynomials)-1)
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_)
         stderr_write(f"g_: {g_} ")
 
-        for u in z.copy():
+        for u in z:
             u_pol = Polynom(u)
-            if len(u_pol.polynomials)-1>d:
+            stderr_write(f"U_poly: {u_pol.polynomials}")
+
+            if (len(u_pol.polynomials)-1)>d:
                 
                 j = u_pol.gcd(g)
                 #print(j.polynomials)
                 stderr_write(f"J: {j.polynomials}")
                 if j.polynomials_int_gcm != [1] and j != u_pol:
-                    z.remove(u)
                     z.append(j.polynomials)
                     u_div_j,_ = u_pol/j
                     z.append(u_div_j.polynomials)
+                    z.remove(u)
+
     return z
 
         

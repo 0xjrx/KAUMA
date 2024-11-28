@@ -285,7 +285,7 @@ class ParseJson:
         ordered_results = {}
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"gfpoly_pow, gfpoly_sqrt, gfpoly_gcd, gfpoly_factor_sff", "gfpoly_factor_ddf"}:
+            if test_case.get("action") in {"padding_oracle, gfpoly_factor_sff", "gfpoly_factor_ddf"}:
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))
