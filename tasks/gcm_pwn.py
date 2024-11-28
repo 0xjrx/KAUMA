@@ -1,6 +1,5 @@
 import random, base64
-from common.common import stderr_write
-from tasks.polynom import Polynom,FieldElement
+from tasks.polynom import Polynom
 from tasks.poly import poly2block, poly2block_gcm
 
 def sff(polynom: 'Polynom'):
@@ -92,7 +91,7 @@ def sort_polynomials_with_key(data, key):
 def rand_poly(bound):
     rand_elements = []
     magic_value = 340282366920938463463374607431768211455
-    bound_rand = random.randint(0, bound-1)
+    bound_rand = random.randint(1, bound-1)
     for _ in range(bound_rand):
         rand_elements.append(base64.b64encode(int.to_bytes((random.randint(0,magic_value)), 16, 'little')).decode())
     return Polynom(rand_elements)
@@ -101,36 +100,39 @@ def rand_poly(bound):
 def edf(polynom: 'Polynom', d: int) -> list:
     # d is degree val
     # polynom is corresponding poly
-    # This is  garbage
-    stderr_write(f"d: {d}")
+    # This is  garbage <- Not anymore
+    
     f = polynom
     q = 1<<128
-    n = len(polynom.polynomials)-1/d
+    n = (len(polynom.polynomials)-1)/d
     z = []
     z.append(f.polynomials)
-    stderr_write(f"q: {q}")
+    
     while len(z)<n:
+
         h = rand_poly(len(f.polynomials)-1)
         g_ = ((q**d)-1)//3
-        g = h.poly_powmod(f, g_)
-        stderr_write(f"g_: {g_} ")
-
+        g = h.poly_powmod(f, g_) + Polynom([poly2block_gcm([0])])
+        
         for u in z:
-            u_pol = Polynom(u)
-            stderr_write(f"U_poly: {u_pol.polynomials}")
-
-            if (len(u_pol.polynomials)-1)>d:
+            u_ = Polynom(u)
+            
+            if (len(u_.polynomials_int)-1)>d:
+                j = g.gcd(u_)
                 
-                j = u_pol.gcd(g)
-                #print(j.polynomials)
-                stderr_write(f"J: {j.polynomials}")
-                if j.polynomials_int_gcm != [1] and j != u_pol:
+                
+                if (j.polynomials_int_gcm != [1]) and (j != u_):
+                    
                     z.append(j.polynomials)
-                    u_div_j,_ = u_pol/j
+                    u_div_j,_ = u_/j
                     z.append(u_div_j.polynomials)
                     z.remove(u)
-
-    return z
+    
+    polys_obj = [Polynom(group) for group in z]
+    sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
+    z_sorted = [p.polynomials for p in sorted_polynomials]
+    
+    return z_sorted
 
         
 

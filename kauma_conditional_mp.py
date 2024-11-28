@@ -65,8 +65,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_factor_sff(arguments)
             case "gfpoly_factor_ddf":
                 result = handle_gfpoly_factor_ddf(arguments)
-            #case "gfpoly_factor_edf":
-                #result = handle_gfpoly_factor_edf(arguments)
+            case "gfpoly_factor_edf":
+                result = handle_gfpoly_factor_edf(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -234,7 +234,7 @@ def handle_gfpoly_factor_ddf(arguments):
     f = Polynom(arguments["F"])
     result = {"factors": ddf(f)}
     return result
-#def handle_gfpoly_factor_edf(arguments):
+def handle_gfpoly_factor_edf(arguments):
     f = Polynom(arguments["F"])
     d = arguments["d"]
     result = edf(f,d)
@@ -285,7 +285,7 @@ class ParseJson:
         ordered_results = {}
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"padding_oracle, gfpoly_factor_sff", "gfpoly_factor_ddf"}:
+            if test_case.get("action") in {"padding_oracle, gfpoly_factor_sff", "gfpoly_factor_ddf, gfpoly_factor_edf"}:
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))
