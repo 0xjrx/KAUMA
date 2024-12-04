@@ -92,8 +92,8 @@ def sort_polynomials_with_key(data, key):
 
 def rand_poly(bound):
     rand_elements = []
-    magic_value = 1<<128-1
-    bound_rand = random.randint(1, bound)
+    magic_value = (1<<128)-1
+    bound_rand = random.randint(1, bound-1)
     for _ in range(bound_rand):
         rand_elements.append(base64.b64encode(int.to_bytes((random.randint(0,magic_value)), 16, 'little')).decode())
     return Polynom(rand_elements)
