@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import base64
 
-from tasks.poly import BIT_REVERSE_TABLE
+BIT_REVERSE_TABLE = [int('{:08b}'.format(i)[::-1], 2) for i in range(256)]
 
 
 class FieldElement:
@@ -22,7 +22,6 @@ class FieldElement:
         """
         self.element = element
 
-    #FIX: Remove magiv value, replace with bitshift
 
     _IRR_POLY = base64.b64decode("hwAAAAAAAAAAAAAAAAAAAAE=")
     _REDUCTION_POLYNOMIAL = int.from_bytes(_IRR_POLY, byteorder='little')
@@ -59,9 +58,9 @@ class FieldElement:
         """
     
         # Convert our operants to GCM's semantic
-        multiplicant = self.gcm_sem(int(self))
+        multiplicant = int(self) #.gcm_sem(int(self))
         
-        multiplier = self.gcm_sem(int(other))
+        multiplier = int(other) #.gcm_sem(int(other))
         
         # Convert the reduction polynomial
         reduction_polynomial = self._REDUCTION_POLYNOMIAL
@@ -84,7 +83,7 @@ class FieldElement:
             multiplier >>= 1
         
         # Convert result back to normal semantic
-        return FieldElement(self.gcm_sem(product))    
+        return FieldElement(product)    
 
     def __add__(self, other: 'FieldElement') -> 'FieldElement':
         """
@@ -99,31 +98,10 @@ class FieldElement:
         xor = int(self) ^ int(other)    
         return FieldElement(xor)
         
-    def invert(self, divisor) -> 'FieldElement':
-        """
-        This function calculates the inverse of a FielElement instance
-        through exponentiation by 2^128 -2
-        
-        """
-        base = divisor
-        # Set the exponent
-        exponent = (1 << 128) - 2
-        
-        # Set our result 
-        result = FieldElement(self.gcm_sem(1))
-        
-        # Use square multiply
-        while exponent:
-            if exponent & 1:
-                result *= base
-            base *= base
-            exponent >>= 1
-        
-        return result
     
     def inv(self, Element):
         mod = self._REDUCTION_POLYNOMIAL
-        a = self.gcm_sem(int(Element))
+        a = int(Element)
         u, v = a, mod
         g1, g2 = 1,0
         while u!=1:
@@ -133,7 +111,7 @@ class FieldElement:
             shift = u.bit_length()-v.bit_length()
             u^=v<<shift
             g1 ^=g2<<shift
-        return FieldElement(self.gcm_sem(g1))
+        return FieldElement(g1)
 
     def __truediv__(self, other) -> 'FieldElement':
         """
@@ -153,7 +131,7 @@ class FieldElement:
         result = FieldElement(0)
         exponent = (1 << 127)
         
-        result = FieldElement(self.gcm_sem(1))
+        result = FieldElement(1)
         
         # Take the FieldElement to the power of 2^127
         while exponent:
@@ -186,44 +164,11 @@ class Polynom:
         Args:
             polynomials: List of base64 strings representing coefficients
         """
-        self.polynomials = polynomials
+        self.int = polynomials
         # Store coefficients as integers for efficient computation
-        self.polynomials_int = self._base64poly_to_int()
         # Store coefficients as integers in converted from gcm semantic
-        self.polynomials_int_gcm = self._base64poly_to_int_gcm()
-    def _base64poly_to_int_gcm(self):
-        """
-        Convert base64-encoded coefficients to integers in GCM semantic.
-        
-        Transforms each coefficient into the bit representation required
-        for GCM's field arithmetic implementation.
-        
-        Returns:
-            List of integers representing coefficients in GCM semantic
-        """
-        integer_list = []
-        field_element = FieldElement(0)  # Create a FieldElement instance to use gcm_sem
-    
-        for b46str in self.polynomials:
-            bytes_val = base64.b64decode(b46str)
-            int_val = int.from_bytes(bytes_val, 'little')
-                # Convert to GCM semantic using the FieldElement's gcm_sem method
-            gcm_val = field_element.gcm_sem(int_val)
-            integer_list.append(gcm_val)
-        return integer_list
-    
-    def _base64poly_to_int(self):
-        """
-        Convert base64-encoded coefficients to integers.
-        
-        Returns:
-            List of integers representing polynomial coefficients
-        """
-        integer_list = []
-        for b46str in self.polynomials:
-            bytes = base64.b64decode(b46str)
-            integer_list.append(int.from_bytes(bytes, 'little'))
-        return integer_list
+    def degree(self):
+        return len(self.int)-1
 
     def _normalize(self):
         """
@@ -232,13 +177,9 @@ class Polynom:
         Updates both the integer and base64 representations of the polynomial.
         Preserves leading zeros as they represent significant terms.
         """
-        while self.polynomials_int and self.polynomials_int[-1] == 0:
-            self.polynomials_int.pop()
-        self.polynomials = [
-            base64.b64encode(int.to_bytes(val, 16, "little")).decode()
-            for val in self.polynomials_int
-        ]
-
+        while self.int and self.int[-1] == 0:
+            self.int.pop()
+        return Polynom(self.int)
     def __add__(self, other):
         """
         Add two polynomials in GF(2^128).
@@ -255,27 +196,25 @@ class Polynom:
             New Polynom instance representing the sum
         """
         
-        if self.polynomials == other.polynomials:
-            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if self.int == other.int:
+            return Polynom([0])
         
-        #FIX: Remove magiv value, replace with poly2block
-        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+        if self.degree() == 0:
             return other
         
-        #FIX: Remove magiv value, replace with poly2block
-        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
+        if other.degree == 0:
             return self
         
-        max_len = max(len(self.polynomials_int), len(other.polynomials_int))
+        max_len = max(len(self.int), len(other.int))
         
-        self_int = self.polynomials_int + [0] * (max_len - len(self.polynomials_int))
+        self_int = self.int + [0] * (max_len - len(self.int))
         
-        other_int = other.polynomials_int + [0] * (max_len - len(other.polynomials_int))
+        other_int = other.int + [0] * (max_len - len(other.int))
 
         result_poly = [s ^ o for s, o in zip(self_int, other_int)]
         
         result = Polynom(
-            [base64.b64encode(int.to_bytes(res, 16, "little")).decode() for res in result_poly]
+            [res for res in result_poly]
         )
         result._normalize()
         
@@ -294,22 +233,20 @@ class Polynom:
         Returns:
             New Polynom instance representing the product
         """
-        result_poly = [0] * (len(self.polynomials_int) + len(other.polynomials_int) - 1)
+        result_poly = [0] * (len(self.int) + len(other.int) - 1)
         
-        #FIX: Remove magiv value, replace with poly2block
-        if self.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
+        if len(self.int) == 0: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
         
-        #FIX: Remove magiv value, replace with poly2block
-        if other.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]: # Zero polynomial
+        if len(other.int) == 0: # Zero polynomial
             return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
 
-        for i, a in enumerate(self.polynomials_int):
-            for j,b in enumerate(other.polynomials_int):
+        for i, a in enumerate(self.int):
+            for j,b in enumerate(other.int):
                 fe_a = FieldElement(a)
                 fe_b = FieldElement(b)
                 result_poly[i+j] ^= (fe_a * fe_b).element
-        return Polynom([base64.b64encode(int.to_bytes(res, 16, 'little')).decode() for res in result_poly])
+        return Polynom([res for res in result_poly])
     
     def __pow__(self, exponent) -> 'Polynom':
         """
@@ -325,7 +262,7 @@ class Polynom:
         if exponent ==0:
             neutral_field_element = FieldElement(1)
             gcm_semantic_neutral = neutral_field_element.gcm_sem(neutral_field_element.element)
-            neutral_polynom = Polynom([base64.b64encode(int.to_bytes(gcm_semantic_neutral, 16, 'little')).decode()])
+            neutral_polynom = Polynom([gcm_semantic_neutral])
             return neutral_polynom
         if exponent ==1:
             return self
@@ -357,38 +294,37 @@ class Polynom:
 
         # Check for division by zero
         
-        #FIX: Remove magiv value, replace with poly2block
 
-        if divisor.polynomials == ["AAAAAAAAAAAAAAAAAAAAAA=="]:
-            return Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="]), self
+        if len(divisor.int) == 0:
+            return Polynom([0]), self
             
         # If dividend is zero, return zero
-        if len(self.polynomials_int) == 0 or (len(self.polynomials_int) == 1 and self.polynomials_int[0] == 0):
+        if len(self.int) == 0 or len(self.int) == 1 and self.int[0] == 0:
             return (
-                Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()]),
-                Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+                Polynom([0]),
+                Polynom([0]),
             )
         
         # Create a copy of the dividend
-        remainder = Polynom(self.polynomials.copy())
-        remainder.polynomials_int = self.polynomials_int.copy()
+        remainder = Polynom(self.int.copy())
+        remainder.int = self.int.copy()
         
         # Get the degrees
-        dividend_degree = len(self.polynomials_int) - 1
-        divisor_degree = len(divisor.polynomials_int) - 1
+        dividend_degree = self.degree()
+        divisor_degree = divisor.degree()
         
         # If dividend degree is less than divisor degree, quotient is 0 and remainder is dividend
         if dividend_degree < divisor_degree:
-            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()]), remainder
+            return Polynom([0]), remainder
         
         # Initialize quotient coefficients with zeros
         quotient_coeffs = [0] * (dividend_degree - divisor_degree + 1)
         
         # Create working copy to preserve zero coefficients
-        work_remainder = remainder.polynomials_int.copy()
+        work_remainder = remainder.int.copy()
         
         # Continue as there arre emough terms
-        while len(work_remainder) >= len(divisor.polynomials_int):
+        while len(work_remainder) >= len(divisor.int):
             # Skip if leading coefficient is zero
             if work_remainder[-1] == 0:
                 work_remainder.pop()
@@ -396,11 +332,11 @@ class Polynom:
                 
             # Calculate degrees for current step
             curr_remainder_degree = len(work_remainder) - 1
-            curr_divisor_degree = len(divisor.polynomials_int) - 1
+            curr_divisor_degree = len(divisor.int) - 1
             
             # Calculate quotient coefficient
             lead_remainder = FieldElement(work_remainder[-1])
-            lead_divisor = FieldElement(divisor.polynomials_int[-1])
+            lead_divisor = FieldElement(divisor.int[-1])
             curr_quotient = lead_remainder / lead_divisor
             
             # Store quotient coefficient
@@ -409,7 +345,7 @@ class Polynom:
             
             # Create subtrahend with preserved zeros
             subtrahend_coeffs = [0] * pos
-            for coeff in divisor.polynomials_int:
+            for coeff in divisor.int:
                 mult_result = int(FieldElement(coeff) * curr_quotient)
                 subtrahend_coeffs.append(mult_result)
                 
@@ -423,24 +359,19 @@ class Polynom:
                 
             # Remove leading zero while preserving internal zeros
             while work_remainder and work_remainder[-1] == 0:
-                work_remainder.pop()
-        
+                work_remainder.pop()        
         # Create remainder polynomial preserving zero coefficients
-        remainder = Polynom([
-            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode()
+        remainder = Polynom([coeff
             for coeff in work_remainder
         ])
         
         # Create quotient polynomial
-        quotient = Polynom([
-            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode()
+        quotient = Polynom([coeff
             for coeff in quotient_coeffs
         ])
-        
-        #FIX: Remove magiv value, replace with poly2block
+        if remainder.int ==[]:
 
-        if remainder.polynomials ==[]:
-            remainder = Polynom(["AAAAAAAAAAAAAAAAAAAAAA=="])
+            remainder = Polynom([0])
         return quotient, remainder
 
     def poly_powmod(self, modulus: 'Polynom', exponent) -> 'Polynom':
@@ -456,31 +387,26 @@ class Polynom:
         Returns:
             Polynom instance representing result of modular exponentiation
         """
-        #FIX: Remove magiv value, replace with poly2block
 
         if exponent == 0:
-            return Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
+            return Polynom([1])
         
-        #FIX: Remove magiv value, replace with poly2block
 
         if exponent == 1:
             result, remainder = self / modulus
             return remainder
             
-        result = Polynom(["gAAAAAAAAAAAAAAAAAAAAA=="])
+        result = Polynom([1])
         base = self
-        
         _, base = base / modulus
         
         while exponent > 0:
             if exponent & 1:
                 result *= base
                 _, result = result / modulus
-                
             base *= base
             _, base = base/ modulus
             exponent >>= 1
-            
         return result
 
     def gfpoly_sort(self, *others):
@@ -498,9 +424,9 @@ class Polynom:
         def compare_polys(poly):
             # We need degree as primary sorting factor
             key = []
-            key.append(len(poly.polynomials_int_gcm) - 1)
+            key.append(poly.degree())
             
-            for item in poly.polynomials_int_gcm[::-1]:
+            for item in poly.int[::-1]:
                 key.append(item)
             key_tuple = tuple(key)
 
@@ -518,21 +444,21 @@ class Polynom:
         Returns:
             List of base64-encoded coefficients representing monic polynomial
         """
-        highest_coefficient = int(FieldElement(self.polynomials_int[-1]))
+        highest_coefficient = int(FieldElement(self.int[-1]))
     
         # Preallocate list to avoid repeated list resizing
-        new_poly = [0] * len(self.polynomials_int)
+        new_poly = [0] * len(self.int)
         
         # Use list comprehension with direct division for efficiency
-        for i, coeff in enumerate(self.polynomials_int):
+        for i, coeff in enumerate(self.int):
             # Perform field division directly
             res = int(FieldElement(coeff) / FieldElement(highest_coefficient))
+
             new_poly[i] = res
         
         # Combine encoding in a single list comprehension
         return [
-            base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() 
-            for coeff in new_poly
+        coeff   for coeff in new_poly
         ]
     def sqrt(self) -> 'Polynom':
         """
@@ -545,13 +471,13 @@ class Polynom:
             New Polynom instance representing square root
         """
         result = []
-        for degree, coeff in enumerate(self.polynomials_int):
+        for degree, coeff in enumerate(self.int):
             if (degree+1)%2:
                 coeff_fe = FieldElement(coeff)
                 sqrt_coeff = coeff_fe.sqrt()
                 result.append(sqrt_coeff.element)
 
-        result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in result])
+        result_poly = Polynom([coeff for coeff in result])
         return result_poly
 
     def derivative(self) -> 'Polynom':
@@ -563,11 +489,11 @@ class Polynom:
         Returns:
             New polynom instance representing the derivative
         """
-        if len(self.polynomials_int) == 1:
-            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if self.degree() == 1:
+            return Polynom([0])
         
         derivative = []
-        base_poly = self.polynomials_int
+        base_poly = self.int
         for degree, coeff in enumerate(base_poly):
             if (degree+1)%2:
                 coeff = 0
@@ -575,7 +501,7 @@ class Polynom:
             else:
                 derivative.append(coeff)
         derivative.pop(0)
-        result_poly = Polynom([base64.b64encode(int.to_bytes(coeff, 16, 'little')).decode() for coeff in derivative])
+        result_poly = Polynom([coeff for coeff in derivative])
         result_poly._normalize()
         return result_poly
 
@@ -591,17 +517,22 @@ class Polynom:
         """
         f = self
         g = other
-        if len(other.polynomials_int_gcm)>len(self.polynomials_int_gcm):
+        if len(other.int)>len(self.int):
             f,g = g,f
-        if self.polynomials_int[0] == 0:
+        if self.int[0] == [0]:
             return other
-        if other.polynomials_int[0] == 0:
+        if other.int[0] == [0]:
             return self
-        while g.polynomials_int_gcm != [0]:
+        while g.int != [0]:
             q, r = f / g
             f = g
             g = r
-        if f.polynomials_int[-1] !=1:
-            g = Polynom(f.gfpoly_makemonic())
-        return g
-    
+        if f.int[-1] !=1:
+            f = Polynom(f.gfpoly_makemonic())
+        return f
+
+    def __int__(self):
+        return self.int
+
+
+

@@ -9,7 +9,7 @@ from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt, GCM_decrypt
 from tasks.polynom import FieldElement, Polynom
 from tasks.gcm_pwn import sff, ddf, edf
-
+from kauma_conditional_mp import _base64_to_poly, poly_to_b64
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
     element_2 = "AgAAAAAAAAAAAAAAAAAAAA=="
@@ -91,6 +91,7 @@ def test_gcm_enc() -> None:
     plaintext = "RGFzIGlzdCBlaW4gVGVzdA=="
     ad = "QUQtRGF0ZW4="
     result = {"ciphertext": "ET3RmvH/Hbuxba63EuPRrw==","tag": "Mp0APJb/ZIURRwQlMgNN/w==","L": "AAAAAAAAAEAAAAAAAAAAgA==","H": "Bu6ywbsUKlpmZXMQyuGAng=="}
+    print(GCM_encrypt(nonce, key, plaintext,ad, "aes"))
     assert GCM_encrypt(nonce, key, plaintext,ad, "aes") == result
     print("AES GCM encryption successful")
 def test_gcm_enc_sea() -> None:
@@ -131,9 +132,9 @@ def test_gfpoly_add():
     "KryptoanalyseAAAAAAAAA==",
     "DHBWMannheimAAAAAAAAAA=="
     ]    
-    a_poly = Polynom(a)
-    b_poly = Polynom(b)
-    res = {"S":(a_poly + b_poly).polynomials}
+    a_poly = _base64_to_poly(a)
+    b_poly = _base64_to_poly(b)
+    res = {"S":poly_to_b64((a_poly + b_poly).int)}
     result = {"S":[
     "H1d3GuyA9/0OxeYouUpAAA==",
     "OZuIncPAGEp4tYouDownAA==",
@@ -153,9 +154,9 @@ def test_gfpoly_mul():
     "0AAAAAAAAAAAAAAAAAAAAA==",
     "IQAAAAAAAAAAAAAAAAAAAA=="
     ]
-    a_poly = Polynom(a)
-    b_poly = Polynom(b)
-    res = {"P":(a_poly * b_poly).polynomials}
+    a_poly = _base64_to_poly(a)
+    b_poly = _base64_to_poly(b)
+    res = {"P":poly_to_b64((a_poly * b_poly).int)}
     result = {"P": [
     "MoAAAAAAAAAAAAAAAAAAAA==",
     "sUgAAAAAAAAAAAAAAAAAAA==",
@@ -171,9 +172,9 @@ def test_gfpoly_pow():
     "wAAAAAAAAAAAAAAAAAAAAA==",
     "ACAAAAAAAAAAAAAAAAAAAA=="
     ]    
-    a_poly = Polynom(a)
+    a_poly = _base64_to_poly(a)
     k = 3
-    res =  {"Z":(a_poly**k).polynomials}
+    res =  {"Z":poly_to_b64((a_poly**k).int)}
     result = {
     "Z": [
     "AkkAAAAAAAAAAAAAAAAAAA==",
@@ -191,27 +192,30 @@ def test_gfpoly_pow():
 def test_gfdiv():
     a = "JAAAAAAAAAAAAAAAAAAAAA=="
     b = "wAAAAAAAAAAAAAAAAAAAAA=="
-    a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
-    b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
-    c = a_fe / b_fe
-    res = {"q": base64.b64encode(int.to_bytes(int(c), 16, 'little')).decode('utf-8')}
+    x = FieldElement(0)
+    a_fe = x.gcm_sem(int.from_bytes(base64.b64decode(a), 'little'))
+    b_fe = x.gcm_sem(int.from_bytes(base64.b64decode(b), 'little'))
+    c = FieldElement(a_fe) / FieldElement(b_fe)
+    c_ = x.gcm_sem(c.element)
+    res = {"q": base64.b64encode(int.to_bytes(c_, 16, 'little')).decode('utf-8')}
     result = {
     "q": "OAAAAAAAAAAAAAAAAAAAAA=="
     }
     assert res ==result
     print(f"Gfiv successful, result is: {res}\n")
+
 def test_gfpoly_divmod():
-    A = Polynom([
+    A = _base64_to_poly([
     "JAAAAAAAAAAAAAAAAAAAAA==",
     "wAAAAAAAAAAAAAAAAAAAAA==",
     "ACAAAAAAAAAAAAAAAAAAAA=="
     ])
-    B = Polynom([
+    B = _base64_to_poly([
     "0AAAAAAAAAAAAAAAAAAAAA==",
     "IQAAAAAAAAAAAAAAAAAAAA=="
     ])
     quotient, remainder = A/B
-    res = {"Q": quotient.polynomials, "R": remainder.polynomials}
+    res = {"Q": poly_to_b64(quotient.int), "R": poly_to_b64(remainder.int)}
     result = {
     "Q": [
     "nAIAgCAIAgCAIAgCAIAgCg==",
@@ -225,18 +229,18 @@ def test_gfpoly_divmod():
     print(f"Gfpoly_divmod successful, result is: {res}\n")
 
 def test_gfpoly_powmod():
-    A = Polynom([
+    A = _base64_to_poly([
     "JAAAAAAAAAAAAAAAAAAAAA==",
     "wAAAAAAAAAAAAAAAAAAAAA==",
     "ACAAAAAAAAAAAAAAAAAAAA=="
     ])
-    B = Polynom([
+    B = _base64_to_poly([
     "KryptoanalyseAAAAAAAAA==",
     "DHBWMannheimAAAAAAAAAA=="
     ])
     k = 1000
     re = A.poly_powmod(B, k)
-    res =  {"Z":re.polynomials}
+    res =  {"Z":poly_to_b64(re.int)}
     result = {
     "Z": [
     "oNXl5P8xq2WpUTP92u25zg=="
@@ -263,9 +267,9 @@ def test_gfpoly_sort():
     "NeverGonnaTellALieAAAA==",
     "AndHurtYouAAAAAAAAAAAA=="
     ]]
-    polys_obj = [Polynom(group) for group in polys]
+    polys_obj = [_base64_to_poly(group) for group in polys]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
-    sorted_polynomials_representation = [p.polynomials for p in sorted_polynomials]
+    sorted_polynomials_representation = [poly_to_b64(p.int) for p in sorted_polynomials]
     res = {"sorted_polys": sorted_polynomials_representation}
     result = {
     "sorted_polys": [
@@ -292,14 +296,14 @@ def test_gfpoly_sort():
     print(f"Polysort successful, result is: {res}\n")
 
 def test_gfpoly_makemonic():
-    poly = Polynom([
+    poly = _base64_to_poly([
     "NeverGonnaGiveYouUpAAA==",
     "NeverGonnaLetYouDownAA==",
     "NeverGonnaRunAroundAAA==",
     "AndDesertYouAAAAAAAAAA=="
     ])
     monic_poly = poly.gfpoly_makemonic()
-    res = {"A*": monic_poly}
+    res = {"A*": poly_to_b64(monic_poly)}
     result = {
     "A*": [
     "edY47onJ4MtCENDTHG/sZw==",
@@ -312,7 +316,7 @@ def test_gfpoly_makemonic():
     print(f"Makemonic successful, result is: {res}\n")
 
 def test_gfpoly_sqrt():
-    poly = Polynom([
+    poly = _base64_to_poly([
     "5TxUxLHO1lHE/rSFquKIAg==",
     "AAAAAAAAAAAAAAAAAAAAAA==",
     "0DEUJYdHlmd4X7nzzIdcCA==",
@@ -322,7 +326,7 @@ def test_gfpoly_sqrt():
     "Ds96KiAKKoigKoiKiiKAiA=="
     ])
     poly_sqrt = poly.sqrt()
-    res = {"S": poly_sqrt.polynomials}
+    res = {"S": poly_to_b64(poly_sqrt.int)}
     result = {
     "S": [
     "NeverGonnaGiveYouUpAAA==",
@@ -335,14 +339,14 @@ def test_gfpoly_sqrt():
     print(f"Sqrt successful, result is: {res}\n")
 
 def test_gfpoly_diff():
-    poly = Polynom([
+    poly = _base64_to_poly([
     "IJustWannaTellYouAAAAA==",
     "HowImFeelingAAAAAAAAAA==",
     "GottaMakeYouAAAAAAAAAA==",
     "UnderstaaaaaaaaaaaaanQ=="
     ])
     derivative = poly.derivative()
-    res = {"F'": derivative.polynomials}
+    res = {"F'": poly_to_b64(derivative.int)}
     result = {
     "F'": [
     "HowImFeelingAAAAAAAAAA==",
@@ -354,7 +358,7 @@ def test_gfpoly_diff():
     print(f"Poly diff successful, result is: {res}\n")
 
 def test_gfpoly_gcd():
-    f = Polynom([
+    f = _base64_to_poly([
     "DNWpXnnY24XecPa7a8vrEA==",
     "I8uYpCbsiPaVvUznuv1IcA==",
     "wsbiU432ARWuO93He3vbvA==",
@@ -363,7 +367,7 @@ def test_gfpoly_gcd():
     "wACd0e6u1ii4AAAAAAAAAA==",
     "ACAAAAAAAAAAAAAAAAAAAA=="
     ])
-    g = Polynom([
+    g = _base64_to_poly([
     "I20VjJmlSnRSe88gaDiLRQ==",
     "0Cw5HxJm/pfybJoQDf7/4w==",
     "8ByrMMf+vVj5r3YXUNCJ1g==",
@@ -374,7 +378,7 @@ def test_gfpoly_gcd():
     "AhCEAAAAAAAAAAAAAAAAAA=="
     ])
     re = f.gcd(g)
-    res = {"G": re.polynomials}
+    res = {"G": poly_to_b64(re.int)}
     result = {
     "G": [
     "NeverGonnaMakeYouCryAA==",

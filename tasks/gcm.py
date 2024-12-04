@@ -3,8 +3,176 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
-from tasks.polynom import FieldElement
 from common import slice_input
+
+from tasks.poly import BIT_REVERSE_TABLE
+
+#FIX:THIS IS TEMPORARY------------->
+
+class FieldElement:
+    
+    """
+    Represents a field element for its base64 representation.
+
+    This class provides arithmetic operations (addition and multiplication)
+    for field elements, with automatic modular reduction using GCM's
+    irreducible polynomial.
+    """
+    def __init__(self, element: int):
+        """
+        Initialize a field element from an integer
+
+        Args:
+            element: int representing the field element
+        """
+        self.element = element
+
+
+    _IRR_POLY = base64.b64decode("hwAAAAAAAAAAAAAAAAAAAAE=")
+    _REDUCTION_POLYNOMIAL = int.from_bytes(_IRR_POLY, byteorder='little')
+
+    def gcm_sem(self, element) -> int:
+        """ 
+        Transform a field element to GCM's semantic.
+
+        Performs bit reversal on individual bytes as required by GCM's
+        field arithmetic implementation
+
+        Args:
+            element: Field element as int
+
+        Returns:
+            transformed element
+        """
+        element = element.to_bytes(16, 'little') 
+        reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
+        return int.from_bytes(reversed_element, 'little')
+
+    def __mul__(self, other) -> 'FieldElement':
+        """
+        Multiply two field elements in GF(2^128).
+
+        Implements russian peasant multiplication algorithm with
+        modular reduction using GCM's irreducible polynomial.
+
+        Args:
+            other: Another field element instance
+
+        Returns:
+            New FieldElementGCM instance representing the product of the multiplication
+        """
+    
+        # Convert our operants to GCM's semantic
+        multiplicant = self.gcm_sem(int(self))
+        
+        multiplier = self.gcm_sem(int(other))
+        
+        # Convert the reduction polynomial
+        reduction_polynomial = self._REDUCTION_POLYNOMIAL
+
+        product = 0
+
+        while multiplier:
+            # If least significant bit is 1, XOR with current multiplicant
+            if multiplier & 1:
+                product ^= multiplicant
+            
+            # Left shift multiplicant (equivalent to multiplication by x)
+            multiplicant <<= 1
+            
+            # Polynomial reduction if bit length exceeds 128
+            if multiplicant.bit_length() >= 129:
+                multiplicant ^= reduction_polynomial
+            
+            # Right shift multiplier
+            multiplier >>= 1
+        
+        # Convert result back to normal semantic
+        return FieldElement(self.gcm_sem(product))    
+
+    def __add__(self, other: 'FieldElement') -> 'FieldElement':
+        """
+        This function adds to FieldElements. Addititon in GF2^128 is defined as XOR.
+
+        Args:
+            self: Instance of a field element
+            other: Another instance of a field element
+        Returns:
+            FieldElement(xor): The result of the addition as a field element instance
+        """
+        xor = int(self) ^ int(other)    
+        return FieldElement(xor)
+        
+    def invert(self, divisor) -> 'FieldElement':
+        """
+        This function calculates the inverse of a FielElement instance
+        through exponentiation by 2^128 -2
+        
+        """
+        base = divisor
+        # Set the exponent
+        exponent = (1 << 128) - 2
+        
+        # Set our result 
+        result = FieldElement(self.gcm_sem(1))
+        
+        # Use square multiply
+        while exponent:
+            if exponent & 1:
+                result *= base
+            base *= base
+            exponent >>= 1
+        
+        return result
+    
+    def inv(self, Element):
+        mod = self._REDUCTION_POLYNOMIAL
+        a = self.gcm_sem(int(Element))
+        u, v = a, mod
+        g1, g2 = 1,0
+        while u!=1:
+            if u.bit_length()<v.bit_length():
+                u,v = v,u
+                g1, g2 = g2, g1
+            shift = u.bit_length()-v.bit_length()
+            u^=v<<shift
+            g1 ^=g2<<shift
+        return FieldElement(self.gcm_sem(g1))
+
+    def __truediv__(self, other) -> 'FieldElement':
+        """
+        Divides a FieldElement by another FieldElement using inversion
+        as the division is multiplication by the inverted element.
+        """
+        if int(other) == 0:
+            raise ValueError("Division by zero")
+        return self * self.inv(other)
+    
+    def sqrt(self) -> 'FieldElement':
+        """
+        Calculates the squareroot of a FieldElement. In GF2^128 the sqrt is defined as
+        the FieldElement^2^m-1, whith m as the order of the field, so 128
+        """
+        base = self
+        result = FieldElement(0)
+        exponent = (1 << 127)
+        
+        result = FieldElement(self.gcm_sem(1))
+        
+        # Take the FieldElement to the power of 2^127
+        while exponent:
+            if exponent & 1:
+                result *= base
+            base *= base
+            exponent >>= 1
+        return result   
+
+    def __int__(self):
+        return self.element
+
+#FIX: THIS IS TEMPORARY------------->
+
+
 """
 Galois Counter Mode (GCM) Encryption implementation
 
@@ -187,5 +355,6 @@ def GCM_decrypt(nonce, key, ciphertext, associated_data, tag, mode):
 
     else:
         return {"authentic":False, "plaintext":base64.b64encode(plaintext).decode('utf-8')}
+
 
 

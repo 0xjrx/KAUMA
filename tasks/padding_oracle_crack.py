@@ -31,7 +31,6 @@ def padding_oracle_crack(host, port, iv, ciphertext):
         current_plaintext = bytearray([0]*16)  
         s.connect((host, port))
             
-        counter = 256
         s.sendall(block)
    
         # Iterate through the ciphertext block from right to left

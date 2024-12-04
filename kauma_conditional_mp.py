@@ -9,10 +9,13 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt,  GCM_decrypt
 from tasks.padding_oracle_crack import padding_oracle_crack
-from tasks.polynom import FieldElement, Polynom
+from tasks.polynom import FieldElement
 from tasks.gcm_pwn import sff, ddf, edf
 import time, base64
 from argparse import ArgumentParser
+from common import _base64_to_poly, poly_to_b64, transform_sort
+
+
 
 def process_test_case(test_case, test_case_id):    
     action = test_case.get("action")
@@ -163,77 +166,99 @@ def handle_po(arguments):
     ct = base64.b64decode(arguments["ciphertext"])
     result = padding_oracle_crack(hostname, port, iv, ct)
     return {"plaintext": result}
+
 def handle_gfpoly_add(arguments):
-    a = arguments["A"]
-    b = arguments["B"]
-    a_poly = Polynom(a)
-    b_poly = Polynom(b)
-    res = (a_poly + b_poly).polynomials
+    a = _base64_to_poly(arguments["A"])
+    b = _base64_to_poly(arguments["B"])
+    res = poly_to_b64((a + b).int)
     return {"S":res}
+
 def handle_gfpoly_mul(arguments):
-    a = arguments["A"] 
-    b = arguments["B"] 
-    a_poly = Polynom(a)
-    b_poly = Polynom(b)
-    res = (a_poly * b_poly).polynomials
+    a = _base64_to_poly(arguments["A"] )
+    b = _base64_to_poly(arguments["B"] )
+    res = poly_to_b64((a * b).int)
     return {"P":res}
+
 def handle_gfpoly_pow(arguments):
-    a = arguments["A"]
-    a_poly = Polynom(a)
+    a = _base64_to_poly(arguments["A"])
     k = arguments["k"]
-    res = (a_poly**k).polynomials
+    res = poly_to_b64((a**k).int)
     return {"Z": res}
+
 def handle_gfdiv(arguments):
-    a = arguments["a"]
-    b = arguments["b"]
-    a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
-    b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
-    c = a_fe / b_fe
-    return {"q": base64.b64encode(int.to_bytes(int(c), 16, 'little')).decode('utf-8')}
+    a = int.from_bytes(base64.b64decode(arguments["a"]), 'little')
+    b = int.from_bytes(base64.b64decode(arguments["b"]), 'little')
+    x = FieldElement(0)
+    a_ = x.gcm_sem(a)
+    b_ = x.gcm_sem(b)
+    c = FieldElement(a_)/FieldElement(b_)
+    c_ = c.gcm_sem(c.element)
+    return {"q": base64.b64encode(int.to_bytes(c_, 16, 'little')).decode('utf-8')}
+
 def handle_gfpoly_divmod(arguments):
-    A = Polynom(arguments["A"])
-    B = Polynom(arguments["B"])
+    A = _base64_to_poly(arguments["A"])
+    B = _base64_to_poly(arguments["B"])
     quotient, remainder = A/B
-    return {"Q": quotient.polynomials, "R": remainder.polynomials}
+    res = poly_to_b64(quotient.int)
+    res_ = poly_to_b64(remainder.int)
+    return {"Q": res, "R": res_}
+
 def handle_gfpoly_powmod(arguments):
-    A = Polynom(arguments["A"])
-    B = Polynom(arguments["M"])
+    A = _base64_to_poly(arguments["A"])
+    B = _base64_to_poly(arguments["M"])
     k = arguments["k"]
-    result = A.poly_powmod(B, k)
-    return {"Z":result.polynomials}
+    result = poly_to_b64((A.poly_powmod(B, k)).int)
+    return {"Z":result}
+
 def handle_gfpoly_sort(arguments):
     polys = arguments["polys"]
-    polys_obj = [Polynom(group) for group in polys]
+    polys_obj = [_base64_to_poly(group) for group in polys]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
-    sorted_polynomials_representation = [p.polynomials for p in sorted_polynomials]
+    sorted_polynomials_representation = [poly_to_b64(p.int) for p in sorted_polynomials]
     return {"sorted_polys": sorted_polynomials_representation}
+
 def handle_gfpoly_makemonic(arguments):
-    poly = Polynom(arguments["A"])
+    poly = _base64_to_poly(arguments["A"])
     monic_poly = poly.gfpoly_makemonic()
-    return {"A*": monic_poly}
+    res = poly_to_b64(monic_poly)
+    return {"A*": res}
+
 def handle_gfpoly_sqrt(arguments):
-    poly = Polynom(arguments["Q"])
+    poly = _base64_to_poly(arguments["Q"])
     poly_sqrt = poly.sqrt()
-    return {"S": poly_sqrt.polynomials}
+    res = poly_to_b64(poly_sqrt.int)
+    return {"S": res}
+
 def handle_gfpoly_diff(arguments):
-    poly = Polynom(arguments["F"])
+    poly = _base64_to_poly(arguments["F"])
     derivative = poly.derivative()
-    return {"F'": derivative.polynomials}
+    res = poly_to_b64(derivative.int)
+    return {"F'": res}
+
 def handle_gfpoly_gcd(arguments):
-    f = Polynom(arguments["A"])
-    g = Polynom(arguments["B"])
-    result = f.gcd(g)
-    return {"G": result.polynomials}
+    f = _base64_to_poly(arguments["A"])
+    g = _base64_to_poly(arguments["B"])
+    res_ = (f.gcd(g).int)
+    result = poly_to_b64(res_)
+    return {"G": result}
+
+
+
 def handle_gfpoly_factor_sff(arguments):
-    f = Polynom(arguments["F"])
-    result = {"factors": sff(f)}
-    return result
+    f = _base64_to_poly(arguments["F"])
+    result = sff(f)
+    transformed_data = transform_sort(result, "exponent") 
+    return {"factors":transformed_data}
 def handle_gfpoly_factor_ddf(arguments):
-    f = Polynom(arguments["F"])
-    result = {"factors": ddf(f)}
+    f = _base64_to_poly(arguments["F"])
+    result = ddf(f)
+    transformed = transform_sort(result, "degree")
+    result = {"factors": transformed}
+    
     return result
+
 def handle_gfpoly_factor_edf(arguments):
-    f = Polynom(arguments["F"])
+    f = _base64_to_poly(arguments["F"])
     d = arguments["d"]
     result = edf(f,d)
     return {"factors": result}
