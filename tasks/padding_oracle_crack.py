@@ -27,6 +27,7 @@ def padding_oracle_crack(host, port, iv, ciphertext):
         iv = b'\x00'*16
     for block in ciphertext_blocks:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         intermediate = bytearray([0]*16)
         current_plaintext = bytearray([0]*16)  
         s.connect((host, port))
