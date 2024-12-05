@@ -85,8 +85,8 @@ def sort_polynomials_with_key(data, key):
     
 def rand_poly(bound):
     rand_elements = []
-    magic_value = 1<<128-1
-    bound_rand = random.randint(1, bound-1)
+    magic_value = (1<<128)-1
+    bound_rand = random.randint(0, bound-1)
     for _ in range(bound_rand):
         rand_elements.append(random.randint(0,magic_value))
     rand_elements.append(random.randint(1, magic_value))
@@ -106,7 +106,7 @@ def edf(polynom: 'Polynom', d: int) -> list:
     
     while len(z)<n:
 
-        h = rand_poly(f.degree()-1)
+        h = rand_poly(f.degree())
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_) + Polynom([1])
         
