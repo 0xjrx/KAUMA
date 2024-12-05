@@ -27,7 +27,7 @@ def _base64_to_poly(poly):
         for GCM's field arithmetic implementation.
         
         Returns:
-            List of integers representing coefficients in GCM semantic
+            Polynom instantiated on a list of integers representing coefficients in GCM semantic
         """
         integer_list = []
         field_element = FieldElement(0)  # Create a FieldElement instance to use gcm_sem

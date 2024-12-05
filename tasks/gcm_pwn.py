@@ -57,7 +57,7 @@ def ddf(polynom: 'Polynom'):
     if f_.int != [1]:
         z.append({
             "factor": f_.int,
-            "degree":f_.degree
+            "degree":f_.degree()
         })
     elif z == []:
         z.append({
