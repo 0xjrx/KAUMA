@@ -1,16 +1,14 @@
 from tasks.polynom import Polynom
 import random
-from common import poly_to_b64
+from common import poly_to_b64, transform_sort
 def sff(polynom: 'Polynom'):
     f_ = polynom.derivative()
     if f_.int ==[]:
-        f_ = Polynom([1])
-    
+        f_ = Polynom([0])
     c = polynom.gcd(f_)
     f, _ = polynom / c
     factors = []
     e = 1
-    
     while f.int != [1]:
         y = f.gcd(c)
         if y != f:
@@ -32,7 +30,7 @@ def sff(polynom: 'Polynom'):
 
                 "exponent": 2 * x["exponent"]            
             })
-    
+    print(transform_sort(factors, "exponent"))
     return sort_polynomials_with_key(factors, "exponent")  
 
 
