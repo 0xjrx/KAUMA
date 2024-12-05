@@ -199,10 +199,10 @@ class Polynom:
         if self.int == other.int:
             return Polynom([0])
         
-        if self.degree() == 0:
+        if self.int == [0]:
             return other
         
-        if other.degree == 0:
+        if other.int == [0]:
             return self
         
         max_len = max(len(self.int), len(other.int))
@@ -235,11 +235,11 @@ class Polynom:
         """
         result_poly = [0] * (len(self.int) + len(other.int) - 1)
         
-        if len(self.int) == 0: # Zero polynomial
-            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if self.int == [0]: # Zero polynomial
+            return Polynom([0])
         
-        if len(other.int) == 0: # Zero polynomial
-            return Polynom([base64.b64encode(int.to_bytes(0, 16, 'little')).decode()])
+        if other.int == [0]: # Zero polynomial
+            return Polynom([0])
 
         for i, a in enumerate(self.int):
             for j,b in enumerate(other.int):
@@ -260,10 +260,7 @@ class Polynom:
         """
 
         if exponent ==0:
-            neutral_field_element = FieldElement(1)
-            gcm_semantic_neutral = neutral_field_element.gcm_sem(neutral_field_element.element)
-            neutral_polynom = Polynom([gcm_semantic_neutral])
-            return neutral_polynom
+            return Polynom([1])
         if exponent ==1:
             return self
         

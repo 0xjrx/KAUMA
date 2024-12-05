@@ -13,7 +13,7 @@ from tasks.polynom import FieldElement
 from tasks.gcm_pwn import sff, ddf, edf
 import time, base64
 from argparse import ArgumentParser
-from common import _base64_to_poly, poly_to_b64, transform_sort
+from common import _base64_to_poly, poly_to_b64, transform_sort, gcm_sem
 
 
 
@@ -99,12 +99,12 @@ def handle_gfmul(arguments):
         res = gfmul(a,b)
         return {"product":res}
     if arguments["semantic"] == 'gcm':
-        a = arguments["a"]
-        b = arguments["b"]
-        a_fe = FieldElement(int.from_bytes(base64.b64decode(a), 'little'))
-        b_fe = FieldElement(int.from_bytes(base64.b64decode(b), 'little'))
-        res = (a_fe*b_fe).element
-        return {"product":base64.b64encode(int.to_bytes(res,16, 'little')).decode('utf-8')}
+        a = int.from_bytes(base64.b64decode(arguments["a"]), 'little')
+        b = int.from_bytes(base64.b64decode(arguments["b"]), 'little')
+        a_gcm, b_gcm = FieldElement(gcm_sem(a)), FieldElement(gcm_sem(b))
+        res = (a_gcm*b_gcm).element
+        res_gcm = gcm_sem(res)
+        return {"product":base64.b64encode(int.to_bytes(res_gcm,16, 'little')).decode('utf-8')}
 def handle_sea(arguments):
     if arguments["mode"] =='encrypt':
         key = arguments["key"]

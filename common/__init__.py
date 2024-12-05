@@ -80,3 +80,21 @@ def transform_sort(input, key):
      return [{"factor": poly_to_b64(item["factor"]), key: item[key]} for item in input 
 ]
 
+def gcm_sem(element) -> int:
+        """ 
+        Transform a field element to GCM's semantic.
+
+        Performs bit reversal on individual bytes as required by GCM's
+        field arithmetic implementation
+
+        Args:
+            element: Field element as int
+
+        Returns:
+            transformed element
+        """
+        
+        element = element.to_bytes(16, 'little') 
+        reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
+        return int.from_bytes(reversed_element, 'little')
+
