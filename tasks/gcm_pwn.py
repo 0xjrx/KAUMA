@@ -30,7 +30,6 @@ def sff(polynom: 'Polynom'):
 
                 "exponent": 2 * x["exponent"]            
             })
-    print(transform_sort(factors, "exponent"))
     return sort_polynomials_with_key(factors, "exponent")  
 
 
