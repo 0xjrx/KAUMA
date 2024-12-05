@@ -486,7 +486,7 @@ class Polynom:
         Returns:
             New polynom instance representing the derivative
         """
-        if self.degree() == 1:
+        if self.degree() == 0:
             return Polynom([0])
         
         derivative = []
