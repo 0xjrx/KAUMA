@@ -1,5 +1,89 @@
 #!/usr/bin/env python3
 import base64
+from cffi import FFI
+
+ffi = FFI()
+
+ffi.cdef("""
+    void gf2_128_mul(
+        const uint64_t a[2],
+        const uint64_t b[2],
+        const uint64_t reduction[2],
+        uint64_t result[2]
+    );
+""")
+
+lib = ffi.verify(r"""
+    #include <stdint.h>
+    #include <string.h>
+
+    // This function treats (a[0], a[1]) as a 128-bit number: a[1] is high 64 bits, a[0] is low 64 bits.
+    // Same for b, reduction, and result.
+    // The polynomial is GF(2^128) with a given reduction polynomial.
+    // We do bit operations as if we had a 128-bit integer split across two 64-bit words.
+    
+    static inline void shift_left_128(uint64_t out[2]) {
+        // Shift out by 1 bit to the left.
+        // out[1]: high 64 bits, out[0]: low 64 bits
+        uint64_t carry = out[0] >> 63; // bit that moves from low to high
+        out[0] <<= 1;
+        out[1] = (out[1] << 1) | carry;
+    }
+
+    static inline void shift_right_128(uint64_t out[2]) {
+        // Shift out by 1 bit to the right.
+        uint64_t carry = out[1] & 1; // bit that moves from high to low
+        out[1] >>= 1;
+        out[0] = (out[0] >> 1) | (carry << 63);
+    }
+
+    static inline void xor_128(uint64_t out[2], const uint64_t in[2]) {
+        out[0] ^= in[0];
+        out[1] ^= in[1];
+    }
+
+    static inline int get_lsb(const uint64_t x[2]) {
+        return (int)(x[0] & 1ULL);
+    }
+
+    static inline int overflow_bit(const uint64_t x[2]) {
+        // Check the MSB of the entire 128-bit value
+        // MSB is bit 127, which lives in x[1] at bit 63
+        return (x[1] & (1ULL << 63)) ? 1 : 0;
+    }
+
+    void gf2_128_mul(
+        const uint64_t a[2],
+        const uint64_t b[2],
+        const uint64_t reduction[2],
+        uint64_t result[2]
+    ) {
+        // Make local copies we can modify
+        uint64_t A[2], B[2], P[2];
+        A[0] = a[0]; A[1] = a[1];
+        B[0] = b[0]; B[1] = b[1];
+        P[0] = 0; P[1] = 0; // product
+
+        // Russian Peasant Multiplication in GF(2^128)
+        while (B[0] != 0 || B[1] != 0) {
+            if (get_lsb(B)) {
+                xor_128(P, A);
+            }
+
+            int ovf = overflow_bit(A);
+            shift_left_128(A);
+            if (ovf) {
+                // XOR with reduction polynomial
+                xor_128(A, reduction);
+            }
+
+            shift_right_128(B);
+        }
+
+        result[0] = P[0];
+        result[1] = P[1];
+    }
+""",extra_compile_args=["-O3", "-std=c99"])
 
 BIT_REVERSE_TABLE = [int('{:08b}'.format(i)[::-1], 2) for i in range(256)]
 
@@ -43,47 +127,24 @@ class FieldElement:
         reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
         return int.from_bytes(reversed_element, 'little')
 
-    def __mul__(self, other) -> 'FieldElement':
-        """
-        Multiply two field elements in GF(2^128).
+    def __mul__(self, other: 'FieldElement') -> 'FieldElement':
+        # Split into two 64-bit parts: low 64 bits and high 64 bits
+        def to_u64x2(x):
+            return (x & 0xFFFFFFFFFFFFFFFF, (x >> 64) & 0xFFFFFFFFFFFFFFFF)
 
-        Implements russian peasant multiplication algorithm with
-        modular reduction using GCM's irreducible polynomial.
+        a_lo, a_hi = to_u64x2(int(self))
+        b_lo, b_hi = to_u64x2(int(other))
+        r_lo, r_hi = to_u64x2(self._REDUCTION_POLYNOMIAL)
 
-        Args:
-            other: Another field element instance
+        a_arr = ffi.new("uint64_t[2]", [a_lo, a_hi])
+        b_arr = ffi.new("uint64_t[2]", [b_lo, b_hi])
+        r_arr = ffi.new("uint64_t[2]", [r_lo, r_hi])
+        p_arr = ffi.new("uint64_t[2]", [0, 0])
 
-        Returns:
-            New FieldElementGCM instance representing the product of the multiplication
-        """
-    
-        # Convert our operants to GCM's semantic
-        multiplicant = int(self) #.gcm_sem(int(self))
-        
-        multiplier = int(other) #.gcm_sem(int(other))
-        
-        # Convert the reduction polynomial
-        reduction_polynomial = self._REDUCTION_POLYNOMIAL
+        lib.gf2_128_mul(a_arr, b_arr, r_arr, p_arr)
 
-        product = 0
-
-        while multiplier:
-            # If least significant bit is 1, XOR with current multiplicant
-            if multiplier & 1:
-                product ^= multiplicant
-            
-            # Left shift multiplicant (equivalent to multiplication by x)
-            multiplicant <<= 1
-            
-            # Polynomial reduction if bit length exceeds 128
-            if multiplicant.bit_length() >= 129:
-                multiplicant ^= reduction_polynomial
-            
-            # Right shift multiplier
-            multiplier >>= 1
-        
-        # Convert result back to normal semantic
-        return FieldElement(product)    
+        product = p_arr[0] | (p_arr[1] << 64)
+        return FieldElement(product)
 
     def __add__(self, other: 'FieldElement') -> 'FieldElement':
         """
@@ -530,6 +591,7 @@ class Polynom:
 
     def __int__(self):
         return self.int
+
 
 
 
