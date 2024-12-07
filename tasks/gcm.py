@@ -3,174 +3,8 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
-from common import slice_input
-
-from tasks.poly import BIT_REVERSE_TABLE
-
-#FIX:THIS IS TEMPORARY------------->
-
-class FieldElement:
-    
-    """
-    Represents a field element for its base64 representation.
-
-    This class provides arithmetic operations (addition and multiplication)
-    for field elements, with automatic modular reduction using GCM's
-    irreducible polynomial.
-    """
-    def __init__(self, element: int):
-        """
-        Initialize a field element from an integer
-
-        Args:
-            element: int representing the field element
-        """
-        self.element = element
-
-
-    _IRR_POLY = base64.b64decode("hwAAAAAAAAAAAAAAAAAAAAE=")
-    _REDUCTION_POLYNOMIAL = int.from_bytes(_IRR_POLY, byteorder='little')
-
-    def gcm_sem(self, element) -> int:
-        """ 
-        Transform a field element to GCM's semantic.
-
-        Performs bit reversal on individual bytes as required by GCM's
-        field arithmetic implementation
-
-        Args:
-            element: Field element as int
-
-        Returns:
-            transformed element
-        """
-        element = element.to_bytes(16, 'little') 
-        reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
-        return int.from_bytes(reversed_element, 'little')
-
-    def __mul__(self, other) -> 'FieldElement':
-        """
-        Multiply two field elements in GF(2^128).
-
-        Implements russian peasant multiplication algorithm with
-        modular reduction using GCM's irreducible polynomial.
-
-        Args:
-            other: Another field element instance
-
-        Returns:
-            New FieldElementGCM instance representing the product of the multiplication
-        """
-    
-        # Convert our operants to GCM's semantic
-        multiplicant = self.gcm_sem(int(self))
-        
-        multiplier = self.gcm_sem(int(other))
-        
-        # Convert the reduction polynomial
-        reduction_polynomial = self._REDUCTION_POLYNOMIAL
-
-        product = 0
-
-        while multiplier:
-            # If least significant bit is 1, XOR with current multiplicant
-            if multiplier & 1:
-                product ^= multiplicant
-            
-            # Left shift multiplicant (equivalent to multiplication by x)
-            multiplicant <<= 1
-            
-            # Polynomial reduction if bit length exceeds 128
-            if multiplicant.bit_length() >= 129:
-                multiplicant ^= reduction_polynomial
-            
-            # Right shift multiplier
-            multiplier >>= 1
-        
-        # Convert result back to normal semantic
-        return FieldElement(self.gcm_sem(product))    
-
-    def __add__(self, other: 'FieldElement') -> 'FieldElement':
-        """
-        This function adds to FieldElements. Addititon in GF2^128 is defined as XOR.
-
-        Args:
-            self: Instance of a field element
-            other: Another instance of a field element
-        Returns:
-            FieldElement(xor): The result of the addition as a field element instance
-        """
-        xor = int(self) ^ int(other)    
-        return FieldElement(xor)
-        
-    def invert(self, divisor) -> 'FieldElement':
-        """
-        This function calculates the inverse of a FielElement instance
-        through exponentiation by 2^128 -2
-        
-        """
-        base = divisor
-        # Set the exponent
-        exponent = (1 << 128) - 2
-        
-        # Set our result 
-        result = FieldElement(self.gcm_sem(1))
-        
-        # Use square multiply
-        while exponent:
-            if exponent & 1:
-                result *= base
-            base *= base
-            exponent >>= 1
-        
-        return result
-    
-    def inv(self, Element):
-        mod = self._REDUCTION_POLYNOMIAL
-        a = self.gcm_sem(int(Element))
-        u, v = a, mod
-        g1, g2 = 1,0
-        while u!=1:
-            if u.bit_length()<v.bit_length():
-                u,v = v,u
-                g1, g2 = g2, g1
-            shift = u.bit_length()-v.bit_length()
-            u^=v<<shift
-            g1 ^=g2<<shift
-        return FieldElement(self.gcm_sem(g1))
-
-    def __truediv__(self, other) -> 'FieldElement':
-        """
-        Divides a FieldElement by another FieldElement using inversion
-        as the division is multiplication by the inverted element.
-        """
-        if int(other) == 0:
-            raise ValueError("Division by zero")
-        return self * self.inv(other)
-    
-    def sqrt(self) -> 'FieldElement':
-        """
-        Calculates the squareroot of a FieldElement. In GF2^128 the sqrt is defined as
-        the FieldElement^2^m-1, whith m as the order of the field, so 128
-        """
-        base = self
-        result = FieldElement(0)
-        exponent = (1 << 127)
-        
-        result = FieldElement(self.gcm_sem(1))
-        
-        # Take the FieldElement to the power of 2^127
-        while exponent:
-            if exponent & 1:
-                result *= base
-            base *= base
-            exponent >>= 1
-        return result   
-
-    def __int__(self):
-        return self.element
-
-#FIX: THIS IS TEMPORARY------------->
+from common import gcm_sem, slice_input
+from tasks.polynom import FieldElement
 
 
 """
@@ -191,26 +25,35 @@ Key components:
 
 
  
-
-
-def ghash_associated_data(associated_data_blocks, h_field_elem):
+def ghash(associated_data_blocks, h, l,ct_blocks):
     """
-    Calculate GHASH for associated data (authenticated but not encrypted data).
-    
-    Args:
-        associated_data_block: List of data blocks to authenticate
-        h_field_elem: Authentication key H as a field element
-
-    Returns:
-        FieldElementGCM representing the initial GHASH value
+    Calculate GHASH for aes_gcm
     """
+    #print(f"AD blocks: {associated_data_blocks}")
+    #print(f"h: {h.element}")
+    #print(f"L: {l.element}")
+    #print(f"ct_blocks: {ct_blocks}")
+    h = FieldElement(gcm_sem(h.element))
+    l = FieldElement(gcm_sem(l.element))
     bytes = bytearray(16)
     ghash_result = FieldElement(int.from_bytes(bytes, 'little'))
+    
     for block in associated_data_blocks:
         if len(block) < 16:  # Pad last block if necessary
             block = block + b'\x00' * (16 - len(block))
-        block_fe = FieldElement(int.from_bytes(block, 'little') )
-        ghash_result = (ghash_result + block_fe) * h_field_elem
+         
+        block_fe = gcm_sem(int.from_bytes(block, 'little') )
+        block_rev = FieldElement(block_fe)
+        ghash_result = (ghash_result + block_rev) * h
+    #print(f"Ghash res ad: {gcm_sem(ghash_result.element)}")
+    
+    for ct_block in ct_blocks:
+        ct_fe = gcm_sem(int.from_bytes(ct_block, 'little'))
+        ct_rev =  FieldElement(ct_fe)
+        ghash_result = (ghash_result +ct_rev) * h 
+    #print(f"ghash res CT: {gcm_sem(ghash_result.element)}") 
+    ghash_result = (ghash_result + l) * h
+    #print(f"Ghash res after add l: {gcm_sem(ghash_result.element)} ")
     return ghash_result
 
 
@@ -233,8 +76,6 @@ def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
     associated_data_bytes = base64.b64decode(associated_data)
     ciphertext = bytearray()
     null_array = bytes(16)
-
-
     # Generate the authentication key H = AES_K(0)
     if mode =="aes":
         cipher = Cipher(algorithms.AES(key_bytes), modes.ECB())
@@ -250,9 +91,10 @@ def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
         block = associated_data_bytes[i:i + 16]
         associated_data_blocks.append(block)
     
-    # Initial GHASH calculation with the associated data
-    ghash_result = ghash_associated_data(associated_data_blocks, h_field_elem)
 
+
+
+   
     # Encrypt using counter mode starting at 2 (1 is reserved for tag)
     ctr = 2
     ghash_blocks = []
@@ -277,17 +119,13 @@ def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
             ct = ct + b'\x00' * (16 - len(ct))
         ghash_blocks.append(ct)
         ctr += 1
-    # Update and calculate GHASH
-    for ct_block in ghash_blocks:
-        ct_fe = FieldElement(int.from_bytes(ct_block, 'little'))
-        ghash_result =(ghash_result + ct_fe) * h_field_elem
-
-    # Add length block to GHASH
     len_a = len(associated_data_bytes) * 8
     len_b = len(ciphertext) * 8
     L = len_a.to_bytes(8, 'big') + len_b.to_bytes(8, 'big')
     l_fe = FieldElement(int.from_bytes(L, 'little'))
-    ghash_result = (ghash_result + l_fe)* h_field_elem   
+    #print(f"L_fe: {l_fe.element}")
+    # Initial GHASH calculation with the associated data
+    ghash_result = ghash(associated_data_blocks, h_field_elem,l_fe,ghash_blocks)
 
     # Generate Authentication Tag
     y_0 = nonce_bytes + b'\x00\x00\x00\x01'
@@ -298,9 +136,10 @@ def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
     else:
         y_0_enc = base64.b64decode(sea_enc(key, base64.b64encode(y_0).decode()))
     
-    tag_b64 = FieldElement(int.from_bytes(y_0_enc, 'little'))
+    tag_b64 = gcm_sem(int.from_bytes(y_0_enc, 'little'))
+    tag_b64 = FieldElement(tag_b64)
     tag = (tag_b64 + ghash_result)
-   
+    tag = FieldElement(gcm_sem(tag.element)) 
     return {"ciphertext": base64.b64encode(ciphertext).decode('utf-8'),"tag":base64.b64encode(int.to_bytes(tag.element,16, 'little')).decode(),"L":base64.b64encode(int.to_bytes(l_fe.element,16, 'little')).decode(),"H":base64.b64encode(int.to_bytes(h_field_elem.element,16, 'little')).decode()}
 
 def GCM_decrypt(nonce, key, ciphertext, associated_data, tag, mode):
