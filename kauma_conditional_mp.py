@@ -302,13 +302,11 @@ class ParseJson:
     def _parse_parallel(self, data):
         stderr_write("Used conditional parallel processing")
         
-        # Separate test cases that need multiprocessing
         parallel_cases = []
         sequential_cases = []
-        ordered_results = {}
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"padding_oracle, gfpoly_pow, gfpoly_factor_sff", "gfpoly_factor_ddf, gfpoly_factor_edf"}:
+            if test_case.get("action") in {"padding_oracle", "gfpoly_pow", "gfpoly_factor_sff", "gfpoly_factor_ddf", "gfpoly_factor_edf"}:
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))
@@ -321,16 +319,13 @@ class ParseJson:
             pool.close()
             pool.join()
             for test_case_id, result in results:
-                ordered_results[test_case_id] = result
+                self.results["responses"][test_case_id] = result
         
         # Process sequential cases
         for test_case, test_case_id in sequential_cases:
             test_case_id, result = process_test_case(test_case, test_case_id)
-            ordered_results[test_case_id] = result
-        
-        # Collect results in the order of the input file
-        for test_case_id in data["testcases"]:
-            self.results["responses"][test_case_id] = ordered_results[test_case_id]
+            self.results["responses"][test_case_id] = result
+
 
 def get_args():
     parser = ArgumentParser()
