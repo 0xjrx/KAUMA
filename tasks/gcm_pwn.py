@@ -1,4 +1,4 @@
-from tasks.polynom import Polynom
+from tasks.polynom_perf import Polynom
 import random
 from common import poly_to_b64, transform_sort
 def sff(polynom: 'Polynom'):
@@ -126,7 +126,6 @@ def edf(polynom: 'Polynom', d: int) -> list:
     polys_obj = [Polynom(group) for group in z]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
     z_sorted = [poly_to_b64(p.int) for p in sorted_polynomials]
-    
     return z_sorted
 
         

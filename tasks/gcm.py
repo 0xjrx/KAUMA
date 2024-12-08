@@ -4,7 +4,7 @@ import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
 from common import gcm_sem, slice_input
-from tasks.polynom import FieldElement
+from tasks.polynom_perf import FieldElement
 
 
 """

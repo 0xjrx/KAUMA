@@ -1,5 +1,5 @@
 import base64 
-from tasks.polynom import FieldElement, Polynom
+from tasks.polynom_perf import FieldElement, Polynom
 def slice_input(input) -> list:
     """
     Slice input data into 16-byte blocks for cipher operation.

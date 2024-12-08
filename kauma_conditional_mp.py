@@ -9,7 +9,7 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt,  GCM_decrypt
 from tasks.padding_oracle_crack import padding_oracle_crack
-from tasks.polynom import FieldElement
+from tasks.polynom_perf import FieldElement
 from tasks.gcm_pwn import sff, ddf, edf
 import time, base64
 from argparse import ArgumentParser
