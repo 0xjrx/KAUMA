@@ -17,7 +17,7 @@ The implementation includes both standard AES-GCM and a variant using SEA (Simpl
 as the underlying block cipher.
 
 Key components:
-- Field Arithmetics in GF(2^128) using FieldElementGCM class 
+- Field Arithmetics in GF(2^128) using FieldElement class 
 - GHASH authentication
 - Counter mode encryption
 - Tag generation
@@ -29,10 +29,6 @@ def ghash(associated_data_blocks, h, l,ct_blocks):
     """
     Calculate GHASH for aes_gcm
     """
-    #print(f"AD blocks: {associated_data_blocks}")
-    #print(f"h: {h.element}")
-    #print(f"L: {l.element}")
-    #print(f"ct_blocks: {ct_blocks}")
     h = FieldElement(gcm_sem(h.element))
     l = FieldElement(gcm_sem(l.element))
     bytes = bytearray(16)
@@ -41,7 +37,7 @@ def ghash(associated_data_blocks, h, l,ct_blocks):
     for block in associated_data_blocks:
         if len(block) < 16:  # Pad last block if necessary
             block = block + b'\x00' * (16 - len(block))
-         
+        
         block_fe = gcm_sem(int.from_bytes(block, 'little') )
         block_rev = FieldElement(block_fe)
         ghash_result = (ghash_result + block_rev) * h

@@ -97,4 +97,27 @@ def gcm_sem(element) -> int:
         element = element.to_bytes(16, 'little') 
         reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
         return int.from_bytes(reversed_element, 'little')
+def pad_ad(ad):
+    ad_blocks = []
+    if not ad:  # If ad is empty, add a single block of zeros
+        ad_blocks.append(b'\x00' * 16)
+    else:
+        for i in range(0, len(ad), 16):
+            block = ad[i:i + 16]
+            if len(block) < 16:  # Pad last block if necessary
+                block = block + b'\x00' * (16 - len(block))
+            ad_blocks.append(block)
+    return ad_blocks
+
+def pad_slice_ct(ct):
+    ct = slice_input(ct)
+    for block in ct:
+        if len(block) <16:
+            block = block + b'\x00' *(16-len(block))
+    return ct
+def calc_l(ad, ct):
+    len_a = len(ad)*8
+    len_b = len(base64.b64decode(ct))*8
+    L = len_a.to_bytes(8, 'big')+ len_b.to_bytes(8, 'big')
+    return L
 

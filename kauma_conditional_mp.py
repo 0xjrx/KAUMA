@@ -9,8 +9,8 @@ from tasks.sea import sea_enc, sea_dec
 from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt,  GCM_decrypt
 from tasks.padding_oracle_crack import padding_oracle_crack
-from tasks.polynom_perf import FieldElement
-from tasks.gcm_pwn import sff, ddf, edf
+from tasks.polynom_perf import FieldElement, Polynom
+from tasks.gcm_pwn import constr_ghash_poly, sff, ddf, edf, constr_ghash_poly, gcm_crack
 import time, base64
 from argparse import ArgumentParser
 from common import _base64_to_poly, poly_to_b64, transform_sort, gcm_sem
@@ -68,6 +68,8 @@ def process_test_case(test_case, test_case_id):
                 result = handle_gfpoly_factor_ddf(arguments)
             case "gfpoly_factor_edf":
                 result = handle_gfpoly_factor_edf(arguments)
+            case "gcm_crack":
+                result = handle_gcm_crack(arguments)
             case _:
                 stderr_write(f"Unknown error for {action} with ID:{test_case_id}")
         return test_case_id, result
@@ -261,7 +263,53 @@ def handle_gfpoly_factor_edf(arguments):
     f = _base64_to_poly(arguments["F"])
     d = arguments["d"]
     result = edf(f,d)
-    return {"factors": result}
+    z_sorted = [poly_to_b64(p.int) for p in result]
+
+    return {"factors": z_sorted}
+
+
+def handle_gcm_crack(arguments):
+    x = FieldElement(0)
+    m1 = arguments.get('m1', {})
+     
+    # Index values for m1
+    m1_ciphertext = m1.get('ciphertext')
+    m1_associated_data = m1.get('associated_data')
+    m1_tag = m1.get('tag')
+    ghash_poly_m1 = constr_ghash_poly(m1_ciphertext, base64.b64decode(m1_associated_data), base64.b64decode(m1_tag))
+    
+    m2 = arguments.get('m2', {})
+    # Index values for m2
+    m2_ciphertext = m2.get('ciphertext')
+    m2_associated_data = m2.get('associated_data')
+    m2_tag = m2.get('tag')
+    ghash_poly_m2 = constr_ghash_poly(m2_ciphertext, base64.b64decode(m2_associated_data), base64.b64decode(m2_tag))
+    
+    m1_xex = []
+    m2_xex = []
+
+    m3 = arguments.get('m3', {})
+    m3_ct = m3.get('ciphertext')
+    m3_ad = m3.get('associated_data')
+    m3_tag = m3.get('tag')
+    
+    fg = arguments.get('forgery')
+    fg_ct = fg.get('ciphertext')
+    fg_ad = fg.get('associated_data')
+
+    for element in ghash_poly_m1.int:
+        m1_xex.append(x.gcm_sem(element))
+    for element in ghash_poly_m2.int:
+        m2_xex.append(x.gcm_sem(element))
+
+    forgery_tag, h, eky_0 = gcm_crack(Polynom(m1_xex), Polynom(m2_xex), base64.b64decode(m1_associated_data), m1_ciphertext, base64.b64decode(m1_tag), base64.b64decode(m3_ad), m3_ct, m3_tag, fg_ct, base64.b64decode(fg_ad))
+    forgery_tag = base64.b64encode(int.to_bytes(x.gcm_sem(forgery_tag.element), 16, 'little')).decode()
+    h = base64.b64encode(int.to_bytes((h.element), 16, 'little')).decode()
+    eky_0 = base64.b64encode(int.to_bytes(x.gcm_sem(eky_0.element), 16, 'little')).decode()
+
+    return {"tag": forgery_tag, "H": h, "mask":eky_0}
+
+
 
 class ParseJson:
     def __init__(self, filename):

@@ -1,0 +1,2326 @@
+{
+    "testcases": {
+        "gfpoly_ddf_test_0_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "y/+8z44p2zy2Qres388/Bw==",
+                    "xT+212smG52Fhh/OXiGRIw==",
+                    "Amuz0UcIPbKzBP6sCLyzxA==",
+                    "nRKV77sE+etHziJLOHTWbQ==",
+                    "YD3hE0qqfQg0JBrisSUugQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_0_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "1eRQeD1SEK88PzDvkvap3A==",
+                    "XAXcc2IysijgkoluB5EmSA==",
+                    "e3w/lbLXC266NerS8RWU3w==",
+                    "zt0FSN3KTGGpPOckWNmgjA==",
+                    "TPrwAQy3q8XKwFjy5O0k7Q==",
+                    "Cql5/Sl7Q61tGAksFN4DIA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_0_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "78s0oXHr6kSAS6EFB63CEg==",
+                    "VE/wXv+UE83oZn8YKZcBRw==",
+                    "qk+7D888pX2TwoBm7EUSDA==",
+                    "Eod/G+03nv4Mcy6gwtr6mw==",
+                    "jsLWNZ/VPHqiP9j1dajtwA==",
+                    "bJtbRNA+IC3Q6AgicGRqOw==",
+                    "TSVSwKwFv550MxHgolLErQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_10_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "etjWu3/043S08FbeIkk7Dw==",
+                    "WacTRp3/0+eHaGV1FKGXFA==",
+                    "/tWpq+vAE8kqGm4M7RfrMQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_10_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4rAOKiQ4q5pnMvfMdVQdeg==",
+                    "krETpZheHg8Zjv+MYyuijA==",
+                    "hmCOfKtLTosce5pEVRP28A==",
+                    "ISJxDuZpFYiHb5ZH1a1lvg==",
+                    "zbhqk11oeGsVUm+gHoGxIA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_10_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "I56MRYl1u1tm3CzcbhRcGg==",
+                    "ZVG4AE0a+tTxItIpoDa6MA==",
+                    "3eKsSDXVtihg34KyB6yUGw==",
+                    "zsLIKLsxTGPZoK/i6hJhpw==",
+                    "ouRPuULefIA+138HWDCBsg==",
+                    "1xGCr2ZyCoXCZD6y4waM5A==",
+                    "YXdc1uqqWbd4UjVMHjc/SQ==",
+                    "w+BnculuHxbagDAYC/t/VA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_11_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "L6kq4JJvDUk57PM/fd3nuw==",
+                    "9zQe7J2wZBu5HeVgTRE8Qg==",
+                    "lG42SgPRYutDD7o7nlt2fA==",
+                    "zcOJimGGvrbk/dzMF8MS2A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_11_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Xz8ScloJ2S03gkpTTNK73w==",
+                    "g/118N6q+whOjXELYwRtAA==",
+                    "Bslv0mGTCY9Eg/dcWR8JXA==",
+                    "JxcfgbUoBVUHhNnTYEtJhw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_11_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "8OtgNFJN1pp8dBFS5isXQQ==",
+                    "0FkobN3HwkD/PQULu6uBog==",
+                    "YqaVJm6jnTI3T/n0ledUlA==",
+                    "mt1ExWRpHHe4/+i3ocAwlA==",
+                    "CnBCQra+gIphtxHnItDaSQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_11_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "YQ3PPYWuXUMa+jGeOiMCSA==",
+                    "qV+cN9PCFYffu9EEWw9+ZA==",
+                    "cLkJZgPRYYsnLgD9vvEzZQ==",
+                    "8d1xezHqyGEUO5Kj9PIg1A==",
+                    "WnhzrevgxgsH9+McTVqK+A==",
+                    "HG9M10iQfCaogbFxdtoulw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_12_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "rFlmCpnGPOFk46NY6J2cLw==",
+                    "NOvkfKm80B8SMJDTkfq5vA==",
+                    "aMDC7bfpHddtMxxEqIpAQA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_12_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ITIkVmBPMuNmoENBrjDuOA==",
+                    "CH5l/t4aUAVMPFibIVul4g==",
+                    "NIQJsYqbaAHdKQ6iEUwHkw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_12_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "aZGr752OVYkjAjhMkEtPew==",
+                    "x3qZL2nJHvUz+FQVnTSsgQ==",
+                    "0BaZVsptLcZ4/pODfjuqRw==",
+                    "m/bh5NRkwzXmkeo2AO+REA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_12_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "1vcfjyTDLLQG0HfKtU21lw==",
+                    "133x4GiO4ChzQ7byE5NqSg==",
+                    "AHU0AQ/2zX9l6VM/t5GFNA==",
+                    "44xCiH3HJsx3u6+VZ/g9aw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_13_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "/iwpAfJ7FOwRUG9JJdLckw==",
+                    "IS0twPlknYrEnS05/OtbAQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_13_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "EdlwuVqDPzOpTlJxuzZqGw==",
+                    "xQk96+dLnzS6ZSkjMVRVpA==",
+                    "ckkOVjPc7954b0d5KMpMHw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_13_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "yzJ1d6jMH23mTAhqHG8P+Q==",
+                    "N8ebpbK4+7zA025e0sAjSw==",
+                    "vbO6G3/YT6Qt3SOd3H1Ziw==",
+                    "p27T/O/JfNWGAzYIrKqCFA==",
+                    "/tULKuiwOxHDGsmmvgxxaQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_13_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "KG+GWVz3uM64a3CYdDYteQ==",
+                    "jvJF5JfAwhuLWq06DiGqRA==",
+                    "Jp9VQveCHxt3X3PCcAF23A==",
+                    "h1kqM5I8PS/cXKNMTF6rGw==",
+                    "YWZ+CcAwqkU1/Ts+I+/sKA==",
+                    "mlZS1v2OjPI8QHWH0Ul7fQ==",
+                    "LRaQD0NGfw2srM9mfJH0aw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_14_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "PYvJHoMAAZAC3xT/7NEugQ==",
+                    "9VpbarbrVe6De+M0CVBWqw==",
+                    "xldXrMj0BIaU5Vb0EtkC4w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_14_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4s+0XOnOeH4aMM0H28TNtQ==",
+                    "no1ysi0oiLArGAHyDK3dtg==",
+                    "bCJ27s+iguI65OlJm3Y5iw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_14_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "CGAXs02MqVqPlwEsCzui0w==",
+                    "n4Bxk829alzNMB3bk8n5Ow==",
+                    "Vx8YOJ7Xk346Oip9V0gP1g==",
+                    "exDEr8M8X3l2wIEwWqNApw==",
+                    "MCHsC/lgZXPs5xU1hU4GQQ==",
+                    "d68EmORXH3/yZn6lW4iKEg==",
+                    "D4imp5TrX+xYkIniXeaU7A==",
+                    "Fd0R7/Zvffl/uiZFF53xgw==",
+                    "W2XADVAR636FSe+ylIi7JA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 9
+            }
+        },
+        "gfpoly_ddf_test_15_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "MnkqEQXrlzCn1I1dtVLAAA==",
+                    "UnBRVf88Ssp7KbL6IFLT+Q==",
+                    "mg9MlG1VMpM6NapNRR2BiA==",
+                    "lPVqExwmt6XCF4cBJRsXmw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_15_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "uMWIFqtShMGQ1/Qi8w4dmA==",
+                    "EaqrQdRrJ7quD9h2L7zXWA==",
+                    "NlgJjVrGJk7kR9X+mqblRA==",
+                    "cFRaSM3uOU8pCrr8YxhP9g==",
+                    "fbzDNzAVraDBiYeJgjcKDw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_15_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "EzdQ4/omdJq171eZAgBxiQ==",
+                    "ZMfk1In+s+4v3mywVNfZrg==",
+                    "MRm9V7xF3NNiexyuptIh0A==",
+                    "PAGbb5c6Xe5FaE3V9ZmOTA==",
+                    "wOaSW46NTYAfls/+S9JfvQ==",
+                    "v534eLRWouTlMB3Q0JTmmA==",
+                    "aFbK/AMZd2j52WV5Yqi+Iw==",
+                    "nj6t60Uhy1qGTk97ddAk/g==",
+                    "wB1OqWWqiJP2quCiUib6gQ==",
+                    "ZHBZMUcfRFWc7ZDJJ8pFmA==",
+                    "VpGzghdq46crQte8geKNYg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 11
+            }
+        },
+        "gfpoly_ddf_test_16_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "k8MLWbLj+Tr5RfL07AUS9A==",
+                    "r9Lx9itHA+okG4COG4X/5g==",
+                    "I0I7c6nH5rx+ARXlBwUQTw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_16_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "mwyXRY+N3utL2ugteSNizw==",
+                    "tgCO4QTeYI3UVluogfhXHw==",
+                    "VgZGKfavT0LnMZe+toQXWQ==",
+                    "9rBLhF8fypWha+ofa4vu2A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_16_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "B2IuqwMD4wemDrrFlKcsSA==",
+                    "WzxxsB20VU/hF6hcZK735A==",
+                    "U3dLdiYskiJWCoLcynt0tg==",
+                    "6x6oPW0L2fEwYlUok1ma5Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_16_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "dE/OdJkVcena6TqHFuIUhQ==",
+                    "eBSCjxIaAzGDE1MSa/Aheg==",
+                    "ozmPFFmqDTz9VtsJa8QISw==",
+                    "x3MvEYSDu/Ny9XZEeABneQ==",
+                    "JrKlSLktqZPGmZDicsVQoQ==",
+                    "g4tGHfX+Io5iF6rV6/eR1A==",
+                    "Sw9cCO8PLzJoSB0Kfp5KrA==",
+                    "EhqJhye0DaFEbuAn2TR+DQ==",
+                    "xbReMu4bYSYqW5T7ci/n1Q==",
+                    "r2aymulnHTEEE0fujImdtw==",
+                    "TVct0a3zvZyN9xjk/q1FVg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 11
+            }
+        },
+        "gfpoly_ddf_test_17_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "93DWkYjGMSiw3W9IQyKYRQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_17_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "djl2CyVDN33qxxu751fyHQ==",
+                    "MCuwULKr6VgcSHklCPtahQ==",
+                    "euZkHb0in3naSLpfwAw7zA==",
+                    "iUPsV+FwNRJsloaNlP0eMg==",
+                    "DreoKWsUA+LLS0/vREkhFw==",
+                    "06whUEjMllm7LUJ0FHiJcw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_17_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "N4E3e2y1t9fZks2is3jylA==",
+                    "4jSR3/qNqCdF150ZFGQVfA==",
+                    "QSQbBo1Uv3BcWkQchol37g==",
+                    "yXFfFnAKnKVlVxEvSYMUQA==",
+                    "1NsNSTTLCk3vY5ll6v5AWg==",
+                    "GBc5g7+DifmqbB60okBJlA==",
+                    "UBVnbCyaSGRUKCDg8LlB7g==",
+                    "5Zg2HutYkj8GbZ5oLW6ZLg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_18_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "AP+IHenxqdh61ebE6ER63g==",
+                    "GECqhpd8LpxTrj23wZz79g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_18_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "9/DPPj/aVl1q184Loro30Q==",
+                    "JASIU8AnuwSZxWbbnuTl3w==",
+                    "cHfihpxLX/YFoCIXbVYxRw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_19_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "nQ5edT3apTvG4DbCdMmoVQ==",
+                    "ZglIMto4xwX+AWOQvVSwtA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_19_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "O5KebdSzhPvho/1gnDk+5w==",
+                    "jrveogAv/7nN4T1AABS8+Q==",
+                    "6TRHCK+II2XDuC9ZtJo0uA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_19_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "gFVbSvM0VQG3Cl6gSWtBjw==",
+                    "/II3WQAe+GMrSiGETzfQZQ==",
+                    "5IryrcH6l6gU122rLUsewg==",
+                    "HtPddMka0xgpXCmsaRvKHQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_1_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "oiZgFBJkiGsMdW6GXS3kbw==",
+                    "3QAty+v9Gq5T1nXhTR6w6w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_1_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "vkKa/odLjnapayo1/vHmJg==",
+                    "+ASE9F3zIoJn6J+vnhok4Q==",
+                    "B1uDggztfcvNUxy5PLxsTw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_1_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "LAlqfLi5Vs7Dt+Eh5pF9DQ==",
+                    "KAeuBJnwsWigndOHNqZzpw==",
+                    "dE35RNoztc1mLc9YU06FuA==",
+                    "xJgt9xlbNYolyZ3u95+nqA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_1_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VNoYeVMqJPshDAWHFHbbuw==",
+                    "hqksH8qFcpIAz7yufdj1GQ==",
+                    "KjQqJeBcUfP1uAbmYjM4ZQ==",
+                    "QoEQmq0kRdLxneZGepsCLQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_1_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "aoXK2dxEu7lQoW7fz4pmow==",
+                    "9lYfz/OQwnaf7ZkWy4WsHA==",
+                    "Y8dGnc0+Arqx/WQYy0rBTA==",
+                    "VyqM+6wdLsSwMnC8EhHoHQ==",
+                    "hojZkr5BMIMfudzamr++lw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_20_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "furNPn1bWgnR4YVrzvnlLA==",
+                    "57il9d18D8XV+j1n2V71nQ==",
+                    "jgTRXf/oaDo7cTUB9wlO8w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_20_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "BNpUJP75ShfntoGD7/izeg==",
+                    "v+lSp6LmErUPkIERONHAeQ==",
+                    "+Rz0/Y9sezhPpW4XqKI2kQ==",
+                    "LG40kwGeEcA5Y2ilSVSkVA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_21_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "QC/iD36DR6XyhazGXvhYYg==",
+                    "6pzqTZ3DhUsiQO/lkxMUKw==",
+                    "fX5P/JHk7wepxhH3ezwAzA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_21_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "UvF6Q1dUDm4jxdUH+LGKLA==",
+                    "WND5s3HMiM4o7CQM/wVbqw==",
+                    "OCfWDK+rKyi5mn2QckQK2w==",
+                    "EHYF79ari2SHbqJODLpU1Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_21_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "f8uJEqf527Ce185Y1k0QKw==",
+                    "i6VqnGiBLKjuNmxHz6Kbyg==",
+                    "ytn2Swro2jGY9pWk4/tOWg==",
+                    "K6b1TGUK60TBIErB5j3ADQ==",
+                    "cSesNk7ILiKXXbN4IP4DaA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_21_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "oMPIVIF8/PW7Nvtvn6AwHg==",
+                    "A35UQUraPWPi0nEN2k2cIw==",
+                    "rSqOmcKWcKJcmsiVMc0BLg==",
+                    "DRllY3GyKhYTv+jqedO77g==",
+                    "9X+JkD8+P9YVnUuRkCDtrw==",
+                    "zFNvsSQIcF/1tXSr8KcKIQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_21_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "YzYsqfpKvpj1Mx4wIqzS4Q==",
+                    "0i35aMfK1cEVIQQAOYNZXw==",
+                    "4DGS9qM55dFmKO6615+HFg==",
+                    "5WGCwOPAnn8iFYBqV+IlFA==",
+                    "MNCLCkvhYRnjg/eY/e6MFQ==",
+                    "pq9WFu1PnTpfL0orApZAzQ==",
+                    "D4oj/edZ43Ewl4bmU+MCUA==",
+                    "awfuE7YunPTavrAnMnfY4Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_22_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4P6qh3UMsg+llGFgH7XPsQ==",
+                    "c6HhlkFyhAwVS4IZIHOEaw==",
+                    "Eb5Umqs+3fND06S6yo3IbQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_22_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "pRCZIJJ6rSxOjl4J/oH4WQ==",
+                    "jeQhNSRLBFr9tjY62wVt1w==",
+                    "6UFsmFQ6Q7Y3XUe0SK7I8Q==",
+                    "kufP2zz5s/MGdHezeYzmbw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_22_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "lfbbv3IGhtQPI68g3ztSLw==",
+                    "bwWBwW+SV1mgdJgvgeg6eA==",
+                    "dclvL8e3MiCCqwpCwFYZag==",
+                    "6HyhBm2wh8wNHPZlrtJbag==",
+                    "bHE7l6VLiW6+uHhjy8dJVw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_22_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "tVEZQg1YQNaYqzQ4Z5DUlw==",
+                    "Z59kyH/eRjqTiJWEaqNxgQ==",
+                    "BsV+P3z/lK2RYIsYu/wcBg==",
+                    "0M04k0hT4W40FihUqiVX5w==",
+                    "pe3zhzMD8Uxbfqe6l8nRtg==",
+                    "YPMvSxSonZdjKRM1quDkLA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_22_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "bh69Wy/qKoxmtTX+Vm145w==",
+                    "f2GjmxjacjxCJsoXE9jo5g==",
+                    "YXXBZIIHC/OVC97yzgkulw==",
+                    "ZF0RNYwrkPOxCacWn1iVBQ==",
+                    "U2z5M8sydwjyqyw3QKDEow==",
+                    "Rsu0dbytuDpAhqodJR8TXw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_22_5": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "o2RBAnFIWRJ8x4z2kWrY6w==",
+                    "erZMpU6HtZ3O30V6VlJmOw==",
+                    "E3EtIocelgIUDgayWneOdQ==",
+                    "Oipnt5t87+iA3puA1o/vZQ==",
+                    "oEtDz+8HTKTVGyM4F4z4fA==",
+                    "+iccLIsx7MNVKVrmqljfKQ==",
+                    "DHSvNCjvIx3Dz5OvdqSz4A==",
+                    "24RJTl43mFHREnJhL3Ed3g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 8
+            }
+        },
+        "gfpoly_ddf_test_23_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "kvJ8NwdM5dhcbwgBJDQFbQ==",
+                    "f6wgnLJhe8h88vHsVD+V4w==",
+                    "p2uGQ8HaR6lhurG0d4jkaA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_23_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "YZLtKTr/gsvioqJVhn1orA==",
+                    "IS3CTi0pZZDEXRoMz25C3Q==",
+                    "kOkQK7y4Bf1k/erakFm1Yg==",
+                    "BWbbVU9st4lPHe5Sy9zN0Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_23_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "wmy07L2gGPOhoJ3C3DcN/Q==",
+                    "9XflCBbeG2sBoJRlU2m36w==",
+                    "scQMXMVlGWYQx3OvjXvrKw==",
+                    "UAhK/x9G5jXG3lW1Pqa3Yw==",
+                    "FLCJRq2Vl58tZ7QNIW7gug==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_23_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "wzYPbBYmgT28erTVH4CsCg==",
+                    "RDABrlABSqJ8H4vp+jdbKA==",
+                    "WikDA0aIcmtKWLdXdZhIdA==",
+                    "BQhm2nCBGgJI4NiSmMJI+g==",
+                    "s3R2cTCji0EhvYdTvODykg==",
+                    "OXNPL/Z/hheZeNtQFbVPvg==",
+                    "UJhx6QJ6odCeCvinSCz7ew==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_23_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ee8RUf8nfRhgiSJs9Com5g==",
+                    "Zr4Ir+MXcOrnlUBKww5RiA==",
+                    "QuN0rqnQ0lL3hc45PbNz+w==",
+                    "5m6WzumIF29iaUEAIfBRjA==",
+                    "V1txgNO/K3X2mJ3+SzZKgg==",
+                    "3dME7V8TJROq60LD0IMGiQ==",
+                    "L9Y5d8+ISyOSfdHgI16Z9g==",
+                    "1ilyCEbXpY62EmSImuDzIg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_24_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "toLGi8Fg7W7SvWiFdtfw4A==",
+                    "BtamLMr85trCjPJR5bnVtA==",
+                    "npHMwRIfGL4vZSYRM35XeQ==",
+                    "mYNLZKS7jt+AlW/RMmahxw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_24_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "MT2T+GkxfMX9Okn4IhKOWw==",
+                    "6S6M7B4ZQmR/s0f7S2tFVA==",
+                    "erEDXuO7hBPe4TvA9HZqzw==",
+                    "cdb7IKM3q74uIaSWCs+Ozw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_24_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "urqFkMopbokSgHl20m6UcQ==",
+                    "ac/JZiVVRSuqllbl1rMNRA==",
+                    "Uk3Hwpm0/gI5JyZx4O0Www==",
+                    "PeFZeChx/VYehq5LxWVenw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_24_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "034nxJeOx7ubXBCG8hLmJw==",
+                    "Oj2rpZ6W9j/4ADLbfLDzKg==",
+                    "GRcao6l9iXlg8u63j3P/2w==",
+                    "QzSJZnwTtLoVackl3bUnOw==",
+                    "+pvY0NVh00TXd3mtMWwQZg==",
+                    "5XVQ3yyztTdVJoaEtuK1Xw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_24_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "CVutuGniz7+1AYAfmsQkKw==",
+                    "FNDZx50aRdKt15c4plMqDA==",
+                    "5IPyScqsXoCt4/h2MG6lOw==",
+                    "txdBeoSU+p7baxR/m7iFMg==",
+                    "6GZiaA5lswBrS1Ti3mToOw==",
+                    "M4RTQUv9Vl0iF6Aa4QW4Qw==",
+                    "nJw3m4jg8Yzhaf41NWpIjw==",
+                    "Qp6hoeg4z/wgyJENMK6DXA==",
+                    "txANu1RaCWenIY72aSflJA==",
+                    "IJSyCB+yy4dm7UDGdKcotA==",
+                    "9a9iqjZYzP3zjZc4NLXLsg==",
+                    "dhOPlgxWzfQJ9twbY30Cjg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 12
+            }
+        },
+        "gfpoly_ddf_test_25_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "qUjI532Z6vIVp6IkHJPIPQ==",
+                    "aanwBfEffWcFS7T8q+zOTA==",
+                    "kQvbRoQwT1Cy/Gyz3GyJBA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_25_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "/CP+GvKxK0PkBbBLsfibfQ==",
+                    "L9nRLnus6PQCCCMsIKMe1g==",
+                    "+b+4Yw5B/07vwj0usDaaUw==",
+                    "5HXDlzRWK3tFIE+Wb9+zzQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_26_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "K4FZ81EJH7ERtoSLFk0jSA==",
+                    "7U/dD9yBODWz93p4xTq4xA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_26_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Lyat51lXIXG+fkURZVW0tg==",
+                    "hSdVPbutd3zILV5VyB7Bfg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_26_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VUSa4E98nOh5yIz4toRb5w==",
+                    "WLB2SR88WS04zW/cF+7jeg==",
+                    "s7Yi+8N9zGptc0aw1eeSiA==",
+                    "enTwTgVdqX0bzPApulyx5g==",
+                    "S4Lcbi+ZYvi1N8V5SQmfjw==",
+                    "tiAVDAFHoUL6LoDCcD9QnA==",
+                    "WzELC7o83XxpuhV+gK9ZHg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_27_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4oIOTR9JR2tVtTfUYTOiRA==",
+                    "rWrX4XF521+ZLL2uXn3wCg==",
+                    "4rVyKr6ahIIoB7Qoyu2xCw==",
+                    "hQ3483OxovnNntcbNbYsQg==",
+                    "oPZzrKDYRcyFtlsYuBcGrw==",
+                    "j4wW1lgeYYNc1+iSaBAOFg==",
+                    "mn6AL4+nneLNaxCfCcMe0Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_27_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "poRrqXHz7WBNCXT2b7jqBA==",
+                    "J2DnFRTfbfmafpm0LjCqZg==",
+                    "XrFyw6LnmXct3+a27ehVzg==",
+                    "U6pGDUg4Zh78nk/zidD1Zg==",
+                    "iV4W/TzW47Z6nCWepZQX7A==",
+                    "DP778fibVx5ochzD945WkQ==",
+                    "vbWrkSEydrXPDEwXSuDCnQ==",
+                    "TeirWxIQfklaLwKwLliWMQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_28_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "q+qaDKgIcj8zblQLD7oNtg==",
+                    "B2hMfWcrtkfxFiR0gsIP5w==",
+                    "KvMj1CiKbZrvijiMCwMP5A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_28_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "oaXy5DTVxVnc1ni5D9nN/A==",
+                    "remjxJn/w5R+OiRAJQ64/g==",
+                    "RVD0NMQzej9cFiQVrry5ng==",
+                    "ZI0Bvakvm0lC4DTqU4WSJg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_28_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "LDz+MChnvsacNw/ftP5Thw==",
+                    "oeYoDnv2hVGCCAvGWcx3CA==",
+                    "EHvqGccduNEOVNwl7C5C1g==",
+                    "H9hgE698jUh0fspy5zItfw==",
+                    "mgXG0H7ioqqHEFRpTHXgvg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_29_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "uQ6lzmPJamZHOtEFIjZadA==",
+                    "AJQ/xK0V3WMhPDFxGxsKGg==",
+                    "PjYKtzpH2thQJv56BSEKuA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_29_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "+wubZpN8w8q9UPpX5E+y1g==",
+                    "gl3xQu6Vq7m4cfpGojlm0w==",
+                    "UEBNGtQNoKrgfPluFZqOpw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_29_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "dO5BoM8cyRkSgpjrmiEqLQ==",
+                    "eQ8l3i+KXHy8T01bs0fotQ==",
+                    "IUq+Rmg2UWyZIPyeYjR+3A==",
+                    "bFepfhNThr9W/haLLqPEFg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_29_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "RB6GZnsh2zVz0eHo+tF3+g==",
+                    "87Xx5G0+u2SGZC8V3aKVng==",
+                    "NVL8m9emLOG9sw5Tyyt/Cw==",
+                    "tS60xqAdTygMaYxxWs3U/A==",
+                    "AYVscy8kbJELQ/pIqBDdgA==",
+                    "zP8SeDv5ospoBPoRXtKoOg==",
+                    "1gELNOTZ2JC8FdUlqAzNnA==",
+                    "EGr5QQpCEZ7NpNgCatYyaQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_2_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "mi60wderAfcAjyvGU9HT6Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_2_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VAkwn3NxTH8MXcaltNjd3w==",
+                    "8kVFHGBNynBPJKItpiYkhg==",
+                    "Knw7duYg4M+7nnUGoE86dw==",
+                    "pE4A0nX0N/A7EbKze3TOtw==",
+                    "0019BkV4cSLrFPaZUQ8SHw==",
+                    "S6hG/qJCk3Weu70K7fVl/w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_2_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "0d7Jj1RjYUaInB1dnQZQPw==",
+                    "YPgigCzayPWowVDU9dxNpg==",
+                    "+Sbn6U6R8hbA9ESk/rQxjg==",
+                    "adWEvbZWfhYuzuiYZX8E6Q==",
+                    "bWSrHmRySIDvgQYn4lqgLA==",
+                    "5rFqOowQmzWR112vv255BQ==",
+                    "jXX4gVka/9ebFd7f8BRvhQ==",
+                    "2NostVp/MUgwlVWmxoz0aA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 8
+            }
+        },
+        "gfpoly_ddf_test_30_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "j4Xkm9Sul/UZwsvppGHbpw==",
+                    "A+xfj3JD/H2mnrf4w03TBw==",
+                    "ztZV1hU+hoR+KlPU3aIL3Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_30_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "FHUUBFqM7r4dHVv4AUWt1w==",
+                    "pRYXLdlAuw8teiwQIKUhbw==",
+                    "3GoQqkqgW+cDsFU8EsAHgg==",
+                    "jX+LrpBpYTAZ7WahdjvIrQ==",
+                    "pX7uMTgpVdiyzH3Jvjs4bQ==",
+                    "QifND2wEbbltqb2axcIF/A==",
+                    "vhz8CW28eG4/6NJqLVtuTw==",
+                    "kpXNs6kjODVthiDeilCShQ==",
+                    "0UPsewSRL2yPAtfeXEGulQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 9
+            }
+        },
+        "gfpoly_ddf_test_30_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "NIfjfA+uALloQF0X9WAS4w==",
+                    "1R99WwfUR58zICn2wtQ6AQ==",
+                    "GQD/CQUw4iNQhhXTUKL6gg==",
+                    "rit0HXJxUr25XBxWdOqEgA==",
+                    "BrtSfJrutjzz9Y8f6Jb+zw==",
+                    "a1ZJk+l/YsPrr/xbOQf2Ew==",
+                    "jQdfDg+TmwFs/Jj4RxjRSQ==",
+                    "vwpSsOz6AVoye3xhe9BXKw==",
+                    "FfxTPv/QtF9ZkeUxP9+8XA==",
+                    "pGda6GREQft32pgeAGU9zQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 10
+            }
+        },
+        "gfpoly_ddf_test_31_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "MkAtK3UQMBOKt07A55Xu8Q==",
+                    "0njlvUxrW6SLjElc8UajgA==",
+                    "1Z8t3xfeOrh0aMtDWsFp/A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_31_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Y1fr9bbBMbimAVenfIe06A==",
+                    "1tgfSKK2ADIn7C9/4FgG/g==",
+                    "4LWoQp7LTTy4RCCciwixzg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_31_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "YNLFFJWwEbL7iY+gCfovuQ==",
+                    "/8f727+S1jrenhGa++tL5w==",
+                    "ZYHwa8VrwSg2Y+PJcEoTUg==",
+                    "0/sp3M2nAC/qfvfVQm84Dg==",
+                    "OevfOoWKDtrePW7JteC4/A==",
+                    "rMnbo2QjttJasMOA7z7mSw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_31_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "qzHoETlE01puYtuvPFSWYA==",
+                    "fKHy2iWfhjuJd2bTgcZ+7g==",
+                    "AdFTeLNMOKERUa30ncyVmA==",
+                    "GLgJKRV/TJhR/q5lMouV9Q==",
+                    "JwCHUXL7dtueoe4q7cVF4Q==",
+                    "4FGBSHysL3nBv7yeG9dQnA==",
+                    "+vg6kHwwT/n0r+fHBgqjyA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_32_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "lij245YpqFw4lcYg7XrMOQ==",
+                    "X7Zj3iuR9iQP1KPs/HXV2g==",
+                    "Okvi1QfFAXpcSL38YnG1qQ==",
+                    "FlRdFd9SYQsEwlf5TP7JaQ==",
+                    "qQISp42E13/7XDUz2ZhY8A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_32_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "WTezIBLTfJL3zv26dtOaVw==",
+                    "V1e+VesH8qyW0pioz7aL/g==",
+                    "r0gyPXAttmyea++j7PHqvQ==",
+                    "i2avZrAqs4vKYExBYaiLLA==",
+                    "PabkBus4ynuf66W7LGm1og==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_32_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "shYen9vCWrbbSi0hsO+Hyg==",
+                    "5h1WYICR3XuUJYfGlzL+LQ==",
+                    "j1WpdL3Kfz943xdAZhqPWA==",
+                    "cJ/rCRJscCgO3vm9bv2oRA==",
+                    "akkqN0CSnvSnN82mlGaB9Q==",
+                    "hYLxkZRSyxxFC0suJ0/9Sw==",
+                    "pAVwCGsaYtnbDsCzF1mA7Q==",
+                    "thLY6SfkPc0+NG8SA+eVpg==",
+                    "PM4Wp7M66Cl1DeUdDZ7IkQ==",
+                    "QeRhdWAYObIHwBkn/Bur1Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_33_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "G1/Joufj/l1sLhqSqq7xDQ==",
+                    "edUiLRxSRKRajzNrm0fmWQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_33_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "HKygQSlgn4WXjo9n+KH8EA==",
+                    "V1CTKt8V4NCFnK7dr1OyQA==",
+                    "/YMOVhvI7azZGf0f5j4bCw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_33_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "3O3UPcsdCyOw5MO6r+jGLw==",
+                    "3r++g3+myoiLWZEBbjuo6g==",
+                    "SYrMmtw0Cf5w7ytPvNc31A==",
+                    "VU7uUqEwc4gO3HgQEr/ACQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_33_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "TWpSbshc88d3GZkjrmixsw==",
+                    "9XUDLrlMNKimLHS+NTCVyg==",
+                    "PgvYyXtmW/Y7373+s4W0+w==",
+                    "lIp9Guu3nBGEOSjZEm1BjQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_34_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4t4801xbRunOdZbHCrdKrw==",
+                    "iBwyfgRJT9A58eAUaQw8tA==",
+                    "dNVWNbx0EAHUpac2e1tglw==",
+                    "yLgacn5sfOGthpMcAQin4A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_34_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "4U6vzofLqgSzYnQ7F98XlA==",
+                    "jFTsEGapWdB8is/6uRh2tw==",
+                    "HsLYvk27C9YwvEY0lQPDrw==",
+                    "748wlt84JVm1SWChcAFcMw==",
+                    "+Bs7x69a4hcsaYxBNjvkjA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_34_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "l4PWsb52bPL/XdJUJwDFKQ==",
+                    "F+NjfeXHVJ+nXnkJR+oKeg==",
+                    "DlLr/ukyQxXy+FtuCyCkQg==",
+                    "1PPVVszGBhEu7kAeE0rcUg==",
+                    "mx+nuZupL6hkIsElxy2Jsg==",
+                    "jajSNSqn5YgiYLYp/nA4EQ==",
+                    "VLKxToikQRdTc3LDKXefdg==",
+                    "pvZ4T6vWPQkNcKheTQSoTQ==",
+                    "vZgvLtXyL9pDx7y2EI5Z/A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_35_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "A9wocLIoMbjrCz0uviMFTA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_35_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "sT3HJR7KRxrknPCvLdVNKQ==",
+                    "FNVAnRIBmzRG06y4faRLug==",
+                    "+c+6YF59bmhYYN+NanPaeA==",
+                    "3usBGRs6DElqMVBOjHX4TQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_35_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "3lY3mDZF4CpwwMts0Ap3AA==",
+                    "mpjYAFnkDT+E47CkTy1FKg==",
+                    "FC/SXgdhFqW+695P1vnUKQ==",
+                    "b5fBP8oHxLYfB/EEz+l4Og==",
+                    "428Fsd/bXfjTEJG70O2cng==",
+                    "ypjmR4Cegfprm5T2yea8Sg==",
+                    "PbxgB2HdXhGt24tg1q9H/A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_35_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "MVHqygEAZ08U+w00psP9mg==",
+                    "71V0GPBmly2yRqZ+JeTjLA==",
+                    "sepPWt2J8lHS6hBy4YCrpQ==",
+                    "zc3mLEm0t2AfSysienhttQ==",
+                    "EI+d5rzTm79mQCV1C5gAoQ==",
+                    "aW4Wje13QKlF8YSxidl/Kw==",
+                    "a9jFovYJ2kN6v+X873UvNA==",
+                    "03fdra3C1qoE7JKq8SNG4A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_36_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "F9bRz8Jj9aoHZzHzGfAQsw==",
+                    "XErDGRyNB5HsHjq1puNklw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_36_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "sqpNbzuRo3WultCHnWHMsA==",
+                    "afSwx3a8wNASR5b8FmzGLA==",
+                    "Np4w3o9vwDgASRNhBkkZ2w==",
+                    "8rELduxbT9xPdElkI5qbrA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_36_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "p1fM/MhTW4a1qaG1FtCblw==",
+                    "UsHyy1+tcPUA10vTybPVtg==",
+                    "fA9k/FVtDgfrjp5j/o+fUA==",
+                    "QGyt4a0DUOPV8LeziQ3b2w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_36_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "HJnPOQkuh1VAE4dp0R7tag==",
+                    "hpV2FVa99tKqaKFlsuwYCw==",
+                    "Drz5UYQroe56aA6vC2uuGg==",
+                    "WQ5mymxLsGCvOjqpyoRgXA==",
+                    "JKSpQiX2t12BiE6plNPsUA==",
+                    "08kaIGiqx3L7pHwmIR/Ekw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_37_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "h/g9fd4foJPqOiQeQhnDkQ==",
+                    "eW05uq5rZhqbx8HQf2KYzQ==",
+                    "VYIYTC9mzuEZPlncM206Yw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_37_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "SBEKYXXvzMk+6Lp0hmXMUg==",
+                    "pqw2Fs2oGFyMY8os525x/g==",
+                    "vvOLdCmZKvpCBVKNjfYf5A==",
+                    "d1El6ySmpX22GaBk0lZ94Q==",
+                    "mm3bqeaZjQusgIEMCap45Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_37_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VXLOfdFS7jWfgyOodbX1Vg==",
+                    "TrjQBUWFvaEJG2Rq4oAQsg==",
+                    "R1rHlnUtTa/A9/HqUxIOSw==",
+                    "kN6UX77n0cysBtlhJ4zUbg==",
+                    "LVZAfkqTyS9/5rYZMQ/rJg==",
+                    "Piu07kZ7DbW+Kue8FPS+Tw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_37_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "kyTopXyA3LAkwlN5OSfYcQ==",
+                    "N3qKkYn8u0q0KBp51gAzhA==",
+                    "GjI8WZhyd3AQ/Y2zytfv5Q==",
+                    "A9CBRiESVEGlPly5uWqWRA==",
+                    "f/yHN20e0WlzIl+WrAkDaQ==",
+                    "HEw2zcmLvjibWxXgNGrrNg==",
+                    "866CjhwnAzo3sRHtsZfXGw==",
+                    "XySpkzdReyiBYvMfrMPIHw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_37_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "a/Rf1bihhXWTJ39W6hVnfQ==",
+                    "lou2Y24NmTTk92aRLJBrrw==",
+                    "DNJPthqBLkiaDTz71y2/bQ==",
+                    "nfogJR+qyPolEh70TyWksQ==",
+                    "39WtJUTFHfi5DsJ6Z7gf7A==",
+                    "/lTHNgnlDimsv46KdVaPNQ==",
+                    "AYMYrDE0cAFkbRmENUFIVg==",
+                    "FGN+5orA0PeYSWwSt8OEWg==",
+                    "Jt2SVl3xn2y2tfAU6kheRA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_38_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "PIBrkt4CPI3ZNnKsRMEGfw==",
+                    "tLMqDfGxiunE3ffv+8HMCA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_38_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "QiuSZpEqEdqnDImLcy1vUA==",
+                    "ORsLdDbYCoiV6eQs7MADlQ==",
+                    "bxABBUWW6HkAExmjY+Diiw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_38_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Lp1yTPzfujjjrkKPfzX5JQ==",
+                    "x66S/GLSKRQnHFKf0irTpg==",
+                    "7lKEU4IMXKXYqnpk7fif8g==",
+                    "ZeHymBGljmdjP4i8B5rJMw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_38_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "M5f2eYZM+IZ2oSgzvyODjw==",
+                    "eCZXay9hgBF8EwLQiy3jQA==",
+                    "CUYS+pzxzEWCC7BAzpbh6g==",
+                    "rkIuuExVJeJSAw7kKLQO5w==",
+                    "fXEV7BEzZsruB4yf3uAITg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_39_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "dYYg7RulSl7MjzildRouSg==",
+                    "Q7ArCmqTQgZfbd2CnPJ/ag==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_39_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "W/C48M0pQmOAPUMQ3Srpbg==",
+                    "UYQLEGEDvL7pd+Kxn6P4dw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_39_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ljfK73MTbyAnJqaPMRJvfQ==",
+                    "GebHwGHYXIgzp9AD2VJK3Q==",
+                    "ktEUsd/kjqqGZP4jHw6f/A==",
+                    "74o4UrHsDhYYmOswj3vQqg==",
+                    "BGamHIkgDXE7MnX2reqLFQ==",
+                    "mmtCWzhZg0rVQgFkLbuj+g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_3_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Uh3uGW0tPANW0SJh1dGJbw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_3_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "yKluOYAlQHw2RV9vHR2eKg==",
+                    "Y/KVeZAMLSTezAKYQzPvVA==",
+                    "ue5cY8BtBS3tPpuaUF2fow==",
+                    "F4bL/wU0XdRLJNpJ3T1Fnw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_40_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "b39Uj/isnhrvaB3IhRy04Q==",
+                    "d+UHWAwDOD7TJiU3l5clmw==",
+                    "sCkfhayXlWQ1KZbhycMDeQ==",
+                    "LtOvMnBGPoFSrBLxJB0Vzg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_40_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "NAvYia8aYtuspjevt5HiFw==",
+                    "GaQGFSb7QpU5u9u95dWdqw==",
+                    "YN3nat4nSgcF3yfrMo9gMQ==",
+                    "qLpNTSm9em3SA5WDNVUv9w==",
+                    "k0Lioek1ShV6mlW/Wv1hcQ==",
+                    "nPdU2QiHHiLwd6+Lu3f+6w==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_40_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "/WBbddcX44uhBQgNi56LfQ==",
+                    "lqoUtQr4Owfagm4YGtfAwQ==",
+                    "IKW7B4CjhnZVEk3x9BKEYw==",
+                    "00VK4ROLhIQVgvkFnlmscA==",
+                    "G1hLtpL6GuAKwCDMMmIW8A==",
+                    "i8I/pw87j0sMndFkwcaLxg==",
+                    "sxsiAGRCMWYyxOSko8HRuQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_41_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "IJodCb+pi+mUJ7QI85mG7w==",
+                    "RXOiqfHm72eWTJRvFmKQ6A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_41_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "9FBAVMv2dAdBjQnsMbISCg==",
+                    "XFaELmiPXnRajXuJ56n2zg==",
+                    "jHawHrzbOdJrUYq8cKMK5A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_41_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ZgEt9LsmXYhmTpk9kv94UQ==",
+                    "W0sgZmHIyYtGTH1sT9gD1Q==",
+                    "dW+kWJhwuO0jha61TDlmkw==",
+                    "4gV5TLchL/Z465WuOgwBsg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_41_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "oCh1Fn1749vu+S6xRRhsuQ==",
+                    "y3+Nu5ZcUqKi/rrpt8gsOw==",
+                    "kwKg6NjvHwAaZBk2fYQWow==",
+                    "bCVoNRIasDyuUZyZpf5X7w==",
+                    "LkrLCA3lf62LkChZ2qKzXw==",
+                    "UNgOxVMUuwHZPmGni4o77g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_42_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "qSGCA/XD8GxaPALZT5F4Fg==",
+                    "19QdslkawiZ8v+3AzVJiZg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_42_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "T0b3Jord9K9nfgqEkIt0Hw==",
+                    "E5sX3xLasxpd85huIg6F1g==",
+                    "jUnSk56o94SJv9obP2+Qsg==",
+                    "RvGg0YdckRqCKRztyjrG8w==",
+                    "h6GXXAaWQqDrpoFbaD6Bsg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_42_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "wqhrMoIZNkccql58pAN4Ng==",
+                    "gWvsnwaxanNDJFYcJhYSnw==",
+                    "etMfkrY/pZ0Xgx7VHDPICg==",
+                    "3Ahm/pBJSaikbzgCtldnsw==",
+                    "jwHC7Ou3DfgseuxKK5loPg==",
+                    "tfqAG7qxwAFjHBeGZsJ8QQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_42_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ZgLpN23Qx8HSQKah05b+5g==",
+                    "cRvH08nPud9sB7Xmpt09cw==",
+                    "hMQ3026fJTpTPL9BHDML6Q==",
+                    "Ij32jKwXnvZDusDywkW19Q==",
+                    "4cjUZdaox3MG/i/DYMpVtg==",
+                    "zkuPrKYhOvNsxd4XKS8twQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_42_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "2ltnishgpfsFkATziIUCxw==",
+                    "4WCsDy8EWox6A12QftinnA==",
+                    "J8PDWMhL1DOsvEL4P32GZg==",
+                    "pJBu/7JsNJZp7AyyYguEeQ==",
+                    "q6kR2i/1oNj5G4FaD52tLw==",
+                    "y2uwhTNXZ4vh9NmZkCaU7w==",
+                    "cl1pk7k94TObBuKqo632Pw==",
+                    "dddko3g8TBx5wRi6NMIFHg==",
+                    "nR8lDoHOV4GaCDDqLQ0B9Q==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 9
+            }
+        },
+        "gfpoly_ddf_test_43_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "9q7SPVQRhcMlBAesC4HOcQ==",
+                    "Xpid/rEYZSQKofUgWuT+HA==",
+                    "LCdnYOCN54wPAY0yZ+qXuA==",
+                    "3Zv4vfcMyTX7WhOeL957nA==",
+                    "o3pOF2u4u9ZHgf4vToUe3g==",
+                    "T2MH6VPi8OwpeEReC3AfCA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_43_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "3qX/PSzTLXRDLayVzXOJew==",
+                    "IIDje8aFSuoB8NxUjlzlWg==",
+                    "IUrO5z4IyzeO/mu+ov6GlA==",
+                    "cqmOwQjLMhT0tWYvDm8bqg==",
+                    "vNvQAUQLL7i+1VyK7PG+Mg==",
+                    "evL5WNh/c9WHnvlJzD+YTg==",
+                    "npFWsIsDI719ZQyuO8Mhng==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_44_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "bVIzUvXv+S9bgxprMUX/0g==",
+                    "xdNqmmhpznffrHcKQLK6WQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_44_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "7oMCzduy9ok8Fmfsh1Zw3w==",
+                    "pXtOO14dEIeZtkISmSKwvQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_44_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "8pqGyrso8yn+a0pG5DgLzA==",
+                    "sDfY3MZnOD1GcLXjQPCdrg==",
+                    "i80Ywk4sbo+iY/PAbFo8qA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_45_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "6ciCfxfBOvUA2X++VzBk1A==",
+                    "xZ6Rz78y1VbRep3OJR90nw==",
+                    "ahO0JR/m2VKN5/N0vzRMuQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_45_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "/1V7H4dYmaoNxOYHq3vCiA==",
+                    "a8F9i4ENVYKH8JHz+q5ESQ==",
+                    "KrM7OMU87QL+j5cjG8VFSg==",
+                    "oAjjfkrG1Bk2LW5Ubf08aA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_46_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "nIqiFaqlw54RV1QfXJe41A==",
+                    "AlINK1yz0eJnjCOdg4rJeQ==",
+                    "N0NOtn1sw/4I+9F84L0ziQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_46_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "Ehay1NncgzoKq/bQr/digw==",
+                    "irqg6aq6OToLSWK/5XY5Iw==",
+                    "yQfY0pZgytJLwMzPwu2zXQ==",
+                    "gcdb/JV7BgV4kEpFBpQG5A==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_46_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "v1+NdREUReFESMIsI1lwoQ==",
+                    "tMVw6sU2NWDAkKA5mxZmsA==",
+                    "PnlyfyROIMAA0l0HIILa/g==",
+                    "a/3P7GSZbjLxJI7Bgss6mg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_46_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "0XqXOL0w5DXFxFbd4w5mBg==",
+                    "lGjZ5+nu16oLMNi1taj2WA==",
+                    "Nz9h7UmaOK7epnCUXCz7sw==",
+                    "Wjm25NhZYOfvXYnsJPJOeQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_46_4": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "/86g07ZXw2XbwQXulPorSw==",
+                    "RMUi3oe1bLlVuckf3ZEMeQ==",
+                    "BMSvFwTKHC1jzLSRnULJ3A==",
+                    "g5/wTatzuIpXXXH8J5x7oA==",
+                    "2wpnF9y1AZ6spEA7pV0Pdw==",
+                    "puQLcHU2X63EFx2q0BnPvw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 6
+            }
+        },
+        "gfpoly_ddf_test_47_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "5jLN0dBr41frbsF9JsWqMw==",
+                    "DpOhWzZgisOgiUitjhEz9w==",
+                    "z+vQ40Fx+Lmr9ckFM0PVTA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_47_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "pYXx3wExn2b10n3QX0Gj2g==",
+                    "3hFCY/SHpbIZExHqWkExDQ==",
+                    "NV2TiVZ8NKjZXqaZ8CKb/Q==",
+                    "pSo12rWPBGrQVriqz6NTFA==",
+                    "D0IDVqQ5EOKOAP+fEGN3VQ==",
+                    "Lml/BW2/CnXatPFkXnzVMg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_48_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VgojE4C2yhN7Y/DITNFXmg==",
+                    "CvgWaQdz91qIfLfRJ69xVA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_48_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VqOrZY8jn/nOeyCM4E+93Q==",
+                    "yfyn37vPaCBdejhB8k1Jsg==",
+                    "eWV4Jwg7R9KwUozELffrvw==",
+                    "/1D/n6o1vSadVUzxjud1Dg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_49_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VV7MTVRgQwVWpgVBs49jsw==",
+                    "I/aQq+bQkvD7iUZySdYSxg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_49_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "VmmdZoKtSjv7T6yMiDvx0Q==",
+                    "tfxsqh5jpQeJq5NQ4vtjGw==",
+                    "CpcjBZeVaxz/oGE8pVaq3w==",
+                    "7g5DE/noUJgx4CCpgPSIoA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_4_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ipGU1KVoRLDuTUK67Njjlg==",
+                    "lE01Fx5Zh/ADZJ+FCEaGJg==",
+                    "mDsD/HCxulrwS9OyAE4nlQ==",
+                    "jvAb+CrrAT6uYnMAKe9FEw==",
+                    "VN8NRJDNUIB/v/JFS7LR3g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_5_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "ShYXVB7VlVIKv13L5najKQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_5_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "svpuf1cDQp+F6RTnnw5KgA==",
+                    "yf3pWgXIExrPAVBi1v+EKw==",
+                    "MKLGWUNb2bbS1TRZBWMZdw==",
+                    "HiYM/B1I+Ui2edBOSrCRNA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_5_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "t7SNipR63bAz7w5mKxTgog==",
+                    "Riy5RJWZPkx8+TTP43e2vg==",
+                    "Zz5b8N4aD888NUWeK0txaQ==",
+                    "tvXPe4Ck9zDWtpKhqHbE1g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_5_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "6NAWdCqZV8vv7qp5IJkoPQ==",
+                    "NOBr0eZ/iUk8P18GzJ4lTQ==",
+                    "gTkNKWxPtfGmY7r5YkGtXw==",
+                    "oc6DyA6HcFPEEMVerq2BIw==",
+                    "7S0vaO/mGdLJJsKOvEqWwQ==",
+                    "Hko7kImrBLd6zNY2+R4oEQ==",
+                    "yF6EvcWqF0CPb7cU6QGcyw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 7
+            }
+        },
+        "gfpoly_ddf_test_6_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "I/vXeFRx3mTAp2L3kjrAMg==",
+                    "02JYxbocvTSPAEbOnStYwQ==",
+                    "Myq9yzL/viE5rrCAHjY9ww==",
+                    "S1II2EjHw8JxaDM6FvSJBg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_6_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "N0wDiVFMzYLb85mrttbqPw==",
+                    "sWBUvQNymLUd+HqGcq/4dw==",
+                    "8QRaB5Rx11G4Xmeynt14yw==",
+                    "vCnqeOirPKUGvhnOImvITQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_6_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "BAkALC43AmslDWBnAToiTg==",
+                    "VW09j1VCV6qrxRKDKi04gA==",
+                    "QOel5l94DGQYgYIQsNy5eQ==",
+                    "fpilMlwPi0T/dvNh0jwBIg==",
+                    "BVqrs42+Oj3zPviNelT6jQ==",
+                    "t20nGji7M+Vw4gB6pNPrzQ==",
+                    "Jcb2EmWrB9Bcx4I88qrYgA==",
+                    "hgNZd67bRxZDp8cdd8QEvA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 8
+            }
+        },
+        "gfpoly_ddf_test_7_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "sz//smpTjPiytpHZ1fhTRg==",
+                    "JnsXLFzbDRGcR67ZBxysSA==",
+                    "fqqAb/OnSwrkkKEEVVkwPA==",
+                    "PQGhMQeJlwYBHVsXEhAUZA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_7_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "irdU6l+86s4vQfdAmTEgiw==",
+                    "qNo3ZcUSqms8N1Dy90KxSg==",
+                    "Nn+/Tpzu8cykgYp0nKMx0g==",
+                    "UhSJH7bGXrVq4xs9oINjNg==",
+                    "fGgwq5Zi+JCBq0wJ96zVPg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 5
+            }
+        },
+        "gfpoly_ddf_test_7_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "thmIGjPC0zpYvU4gj/atkg==",
+                    "biZNq64fw6IKg+277h64fw==",
+                    "BHFEsA5KZunrKKdJFp2jEA==",
+                    "Q3+7lBA4qyHZwTEuPnNFrw==",
+                    "avMCqA1jJqcG48+l//zJ+g==",
+                    "oJYW6NoITY6JPT8LkMrBwQ==",
+                    "xXZwtTFeSvwaI/d/kZFEWQ==",
+                    "Gb2HwQOwJgW3zhMkQN/UDQ==",
+                    "f4gOMudS0Pgz0OzYOzV8FA==",
+                    "fN8Alvfm4tNv0U2rTWdjnA==",
+                    "bUR/wGp5838tGJkz92BlSg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 11
+            }
+        },
+        "gfpoly_ddf_test_8_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "oLoqih5UoHY5v9/NaXfW+A==",
+                    "YA8qiQBdGlL3OW2iDXeJAQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 2
+            }
+        },
+        "gfpoly_ddf_test_8_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "WqKzpahFcEMeFwCwWQNfmw==",
+                    "XZ3xS3ch0RJK+Q2jajN0Ng==",
+                    "F510oWokzFNWFggnOTixSg==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 3
+            }
+        },
+        "gfpoly_ddf_test_8_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "zBtylC2vCyV0Aah1BHKuWg==",
+                    "3TcLFpGyiGaTi2bob2k4Og==",
+                    "X57PqYpM3Q1ciZwr0KRB2g==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_8_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "2L9Sile71u+nkwTrBbkVqg==",
+                    "Ur8P9t+jOeuCKbCqBRTE1A==",
+                    "xUBReXriDxFZ50hZB6p4SA==",
+                    "tUecddr2bAQKCdDAvKPNrQ==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_9_0": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "dWvccUgOdwsI1UwaF+W55Q==",
+                    "3mSJgraX2CHslEpTIkHJWg==",
+                    "WleIzxIh3hjc8QrnbiYV4A==",
+                    "S5W3BAr5l9mBLwoHru7qzw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 4
+            }
+        },
+        "gfpoly_ddf_test_9_1": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "uVYldmup9hj6JEBg2g38dg==",
+                    "Azwm0hI+GXWrykNOSeO4xQ==",
+                    "9/VY4x8avym5Jd8gZ1ObsQ==",
+                    "sxAFquHjKR71OTHI8LoSHQ==",
+                    "v+g/xpXD7QpV33UspDZbUQ==",
+                    "Y0hgO3zHZQE4QARvaDadhA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 1
+            }
+        },
+        "gfpoly_ddf_test_9_2": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "IuWacX0oZ9yrgo/7JwRD3w==",
+                    "RvyNhCBkFo0wLLCUFyaSqw==",
+                    "W61EdQ9v0BCiKbHue2uuew==",
+                    "vRbQvy9HX3geAC3rmYZd5g==",
+                    "IOWEQ+LtkEpXGOvd+JYP+g==",
+                    "5nbmOjNdsg4fopNhkeWiiQ==",
+                    "9LLLEtvVsnb1nO0VE6CXbA==",
+                    "ulxXIIj1ktgLhQ6wC7WuhA==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 8
+            }
+        },
+        "gfpoly_ddf_test_9_3": {
+            "action": "gfpoly_factor_edf",
+            "arguments": {
+                "F": [
+                    "i02nmwyZgGfOut5j+q/Oyw==",
+                    "XELxzE2Fc6FLSk8rSQM95g==",
+                    "QaEM6kNBy5Ptyiw+axpL/A==",
+                    "p2n2UHT8sMDVnWWnUKx7AA==",
+                    "kMyHM/jy337n4IBRK2qIRQ==",
+                    "b4U7P23TBUC6v/QsVsdQoQ==",
+                    "6VtWaAKXi5bLOQK5uw+BlQ==",
+                    "x0gPyWRheAoeKC3cKLgvVg==",
+                    "ztNsHL99w7rBmqDM0q/xrw==",
+                    "gAAAAAAAAAAAAAAAAAAAAA=="
+                ],
+                "d": 9
+            }
+        }
+    }
+}
