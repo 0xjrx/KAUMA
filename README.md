@@ -53,15 +53,20 @@ curl -sSL https://install.python-poetry.org | python3 -
 # Install dependencies using Poetry
 poetry install
 
-# Activate the virtual environment
+# activate virtual environment
 poetry shell
+
+# Install whl
+pip install dist/<whl file>
+
+# Its now ready to use
 ```
 ## Usage
 
 ### Basic Usage
 
 ```bash
-bash kauma input.json
+bash kauma json/input.json
 ```
 
 ### Input Format

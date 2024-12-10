@@ -1,22 +1,30 @@
 [tool.poetry]
 name = "kauma"
-version = "0.1.1"
+version = "1.0.0"
 description = ""
 authors = ["0xjrx <mrmarquard@protonmail.com>"]
 readme = "README.md"
+
 packages = [
-  {include = "*.py", from = "tasks"},
-  {include = "*.py", from = "common"},
-  {include = "tests"},
-  {include = "kauma"},
-  {include = "test.json"},
-  {include = "*.py"}
-  ]
+  { include = "*.py", from = "tasks" },
+  { include = "*.py", from = "common" },
+  { include = "tests" },
+  { include = "kauma" },
+  { include = "*.py" }
+]
+
+# Include any non-Python files you want packaged
+include = [
+  "json/*.json"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pendulum = "^3.0.0"
+cffi = "^1.15"
+cryptography = "^41.0.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
