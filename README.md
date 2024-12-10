@@ -14,6 +14,8 @@ KAUMA implements several cryptographic operations and methods:
   - Support for both standard and GCM semantics
   - Derivative calculation for polynomials (removes even-degree terms and 0-degree term)
   - GCD calculation for two polynomials
+  - Sorting of polynomials
+
 - **Cryptographic Primitives**
   - SEA-128 encryption and decryption
   - Galois Field multiplication
@@ -26,6 +28,15 @@ KAUMA implements several cryptographic operations and methods:
 - **PKCS#7 Padding Cracking via Padding Oracle Attack**
   - Retrieve plaintext by cracking its PKCS#7 padding given a vulnerable server
   - Note: This implementation uses a specific binary protocol to communicate. If you want to use it with your server, you have to adjust the communication.
+
+- **Factorization Algorithms**
+  - SFF: Factorize a Polynomial into its square free factors
+  - DDF: Factorize a Polynomial into its distint degree factors
+  - EDF: Factorize a Polynomial into its equal degree Factors
+
+- **AES GCM Full Break on Nonce reuse**
+  - Break AES GCM on nonce reuse and recover the authentication key and mask
+  - Authenticate a forged message
 
 ## Installation
 
@@ -147,7 +158,8 @@ The implementation handles two different bit representations:
 1. Standard representation: Used for normal arithmetic operations
 2. GCM semantic: Required for Galois Counter Mode operations
    - Involves bit reversal within each byte
-   - Automatically handled by the FieldElement class
+   - conversions for Polynomials through `_base64_to_poly` and `poly_to_b64`
+   - conversion for Field Elements through `FieldElement.gcm_sem(int)`
    - Essential for compatibility with GCM mode encryption
 
 ### 3. Polynomial-Block Conversions
@@ -168,12 +180,29 @@ The implementation handles two different bit representations:
 
 ### 6. GCM Mode
 - Authenticated encryption with associated data
-- `GCM_encrypt`, `GCM_decrypt` uses AES-128 as the underlying block cipher
-- `GCM_encrypt_sea`, `GCM_decrypt_sea` uses SEA-128 as the underlying block cipher
+- `GCM_encrypt`, `GCM_decrypt` uses AES-128/SEA-128 as the underlying block cipher, depending on a given key
 
 ### 7. PKCS#7 Padding Oracle Attack
 - `padding_oracle_crack` function
 - Decrypt a PKCS#7 padding given a hostname (for the vulnerable server), port, initialization vector (IV) and ciphertext
+
+### Square Free Factorization
+  - `sff(Polynomial)` function
+  - Factorizes a Polynomial into its square free factors
+
+### Distinct Degree Factorization
+  - `ddf(Polynomial)` function
+  - Factorizes a monic square free Polynomial into its distinct degree factors
+
+### Equal Degree Factorization - Cantor Zassenhaus Algorithm
+  - `edf(Polynomial, degree)` function
+  - Factorizes a square free monic Polynomial which is a product of Polynoms of Degree d into its equal degree factors
+
+### GCM Crack Attack
+  - `gcm_crack()` function
+  - Achieve a full break on AES GCM given 3 messages authenticated with the same nonce
+  - Outputs the authentication key h, mask and the newly generated tag for a forged message
+
 
 ### Output Format
 
@@ -197,22 +226,24 @@ KAUMA outputs results in JSON format to stdout:
 
 ```
 kauma/
-├── kauma             # Script to run the program 
+├── kauma            # Script to run the program 
 ├── tests            # Script to run unit tests defined in common/tests
-├── kauma.py         # Entry point, gets executed when running kauma and parses the file tasks/parse.py
+├── kauma_conditional_mp.py         # Entry point, gets executed when running kauma and parses the data to the differet functions. Uses multi processing
+├── tests.py         # Unit tests
 ├── tasks/           # Cryptographic implementations
 │   ├── poly.py      # Polynomial operations
 │   ├── sea.py       # SEA-128 implementation
 │   ├── gfmul.py     # Field multiplication
 │   ├── xex.py       # XEX mode
 │   ├── gcm.py       # GCM encryption and decryption using AES or SEA
-│   ├── parser_mp.py # Parser for input with multiprocessing
 │   ├── padding_oracle_crack.py  # PKCS#7 padding oracle attack
 │   ├── server.py    # Demo oracle server
-│   └── polynom.py   # Operations with Polynomials in GF(2^128)
-└── common/          # Shared utilities and common functions
-    ├── common.py    # Includes a function to write errors to stderr
-    └── tests.py     # Includes unit tests
+│   └── polynom_perf.py   # Operations with Polynomials in GF(2^128)
+│   └── gcm_pwn.py   # Factorization Algorithms for Polynomials including AES GCM crack
+├── common/          # Shared utilities and common functions
+│   ├── common.py    # Includes a function to write errors to stderr
+└── json/            # Testcase files for various functions
+
 ```
 
 ## Development

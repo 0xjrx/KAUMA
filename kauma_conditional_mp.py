@@ -354,7 +354,8 @@ class ParseJson:
         sequential_cases = []
 
         for test_case_id, test_case in data["testcases"].items():
-            if test_case.get("action") in {"block2poly", "poly2block","gfmul", "handle_gfpoly_pow", "handle_gfpoly_sqrt", "gfpoly_diff", "gfpoly_makemonic", "handle_gfpoly_gcd", "padding_oracle", "gfpoly_pow", "gfpoly_factor_sff", "gfpoly_factor_ddf", "gfpoly_factor_edf"}:
+            if test_case.get("action") in {"handle_gfpoly_gcd", "padding_oracle", "gfpoly_pow", "gfpoly_factor_sff", "gfpoly_factor_ddf", "gfpoly_factor_edf"}:
+
                 parallel_cases.append((test_case, test_case_id))
             else:
                 sequential_cases.append((test_case, test_case_id))
