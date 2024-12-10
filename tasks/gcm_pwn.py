@@ -1,9 +1,9 @@
 import base64
 
-from cryptography.hazmat.primitives.ciphers import base
+
 from tasks.polynom_perf import Polynom, FieldElement
 import random
-from common import calc_l, poly_to_b64, slice_input, pad_ad, pad_slice_ct
+from common import calc_l, poly_to_b64, pad_ad, pad_slice_ct
 from tasks.gcm import ghash
 
 def sff(polynom: 'Polynom'):
@@ -70,7 +70,16 @@ def ddf(polynom: 'Polynom'):
         
     return sort_polynomials_with_key(z, "degree")
 
-def sort_polynomials_with_key(data, key):
+def sort_polynomials_with_key(data: list, key: str):
+    """
+    Sort Polynomials based on a key, f.e. Degree of Exponent
+
+    Args:
+        data: Array of Polynomials
+        key: String
+    Returns:
+        Sorted_data: List of sorted polynomials with their key
+    """
     polys_obj = [Polynom(item["factor"]) for item in data]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
     
@@ -87,7 +96,16 @@ def sort_polynomials_with_key(data, key):
      
     return sorted_data # Stop searching once the match is found
     
-def rand_poly(bound):
+def rand_poly(bound) -> Polynom:
+    """
+    Generates a random polynom with degree lower then the input.
+
+    Args:
+        Bound: Degree Boundary
+    Returns:
+        Random Polynom with degree with degree bound-1
+    """
+
     rand_elements = []
     magic_value = (1<<128)-1
     bound_rand = random.randint(0, bound-1)

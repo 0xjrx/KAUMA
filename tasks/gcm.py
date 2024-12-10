@@ -3,7 +3,7 @@
 import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from tasks.sea import sea_enc
-from common import gcm_sem, slice_input
+from common import gcm_sem, slice_input, calc_l, pad_slice_ct, pad_ad
 from tasks.polynom_perf import FieldElement
 
 
@@ -82,15 +82,8 @@ def GCM_encrypt(nonce, key, plaintext, associated_data, mode):
     h_field_elem = FieldElement(int.from_bytes(auth_key, 'little'))
    
     # Process associated data
-    associated_data_blocks = []
-    for i in range(0, len(associated_data_bytes), 16):
-        block = associated_data_bytes[i:i + 16]
-        associated_data_blocks.append(block)
+    associated_data_blocks = pad_ad(associated_data_bytes)
     
-
-
-
-   
     # Encrypt using counter mode starting at 2 (1 is reserved for tag)
     ctr = 2
     ghash_blocks = []

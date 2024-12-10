@@ -97,7 +97,16 @@ def gcm_sem(element) -> int:
         element = element.to_bytes(16, 'little') 
         reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
         return int.from_bytes(reversed_element, 'little')
+
 def pad_ad(ad):
+    """
+    Function for padding of associated data needed in AES GCM
+    
+    Args:
+        ad: associated data in byte format
+    Returns:
+        ad_blocks: padded associated data bytes
+    """
     ad_blocks = []
     if not ad:  # If ad is empty, add a single block of zeros
         ad_blocks.append(b'\x00' * 16)
@@ -110,12 +119,29 @@ def pad_ad(ad):
     return ad_blocks
 
 def pad_slice_ct(ct):
+    """
+    Funtion to slice and pad ciphertext or plaintext blocks for AES GCM
+
+    Args:
+        ct: Ciphertext in bytes
+    Returns:
+        padded and sliced ct
+    """
     ct = slice_input(ct)
     for block in ct:
         if len(block) <16:
             block = block + b'\x00' *(16-len(block))
     return ct
 def calc_l(ad, ct):
+    """
+    Calculates Length fiel for GHASH
+    
+    Args:
+        ad: associated data, unpadded
+        ct: unadded ciphertext/plaintext
+    Returns: 
+        L: Length fiel in bytes format
+    """
     len_a = len(ad)*8
     len_b = len(base64.b64decode(ct))*8
     L = len_a.to_bytes(8, 'big')+ len_b.to_bytes(8, 'big')
