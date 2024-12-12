@@ -128,12 +128,10 @@ def sort_polynomials_with_key(data, key):
 
 
 def rand_poly(degree):
-    rand_elements = [random.getrandbits(128) for _ in range(degree+1)]
-    leading = random.getrandbits(128)
-    while leading == 0:
-        leading = random.getrandbits(128)
-    rand_elements.append(leading)
-    return Polynom(rand_elements)
+    random_poly = []
+    for i in range(degree+1):
+        random_poly.append(random.getrandbits(128))
+    return Polynom(random_poly)
 
 
 def edf(polynom, d):
@@ -154,7 +152,9 @@ def edf(polynom, d):
     z.append(f.int)
     
     while len(z) < n:
+        print(f"F Polynom: {f.int}")
         h = rand_poly(f.degree()-1)
+        print(f"Random polynom: {h.int}")
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_) + Polynom([1])
         
@@ -164,14 +164,15 @@ def edf(polynom, d):
             if u_.degree() > d:
                 j = u_.gcd(g)
                 
-                if (j.int != [1]) and (j != u_):
+                if (j.int != [1]) and (j.int != u_.int):
                     z.append(j.int)
                     u_div_j, _ = u_/j
                     z.append(u_div_j.int)
                     z.remove(u)
-    
+    print(f"z: {z}") 
     polys_obj = [Polynom(group) for group in z]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
+    print(f"Sorted polys: {[poly_to_b64(p.int) for p in sorted_polynomials]}")
     return sorted_polynomials
 
 
