@@ -127,7 +127,7 @@ def sort_polynomials_with_key(data, key):
 
 
 
-def rand_poly(bound):
+def rand_poly(degree):
     """
     Generates a random polynomial with degree lower than the input bound.
 
@@ -139,7 +139,7 @@ def rand_poly(bound):
     """
     rand_elements = []
     magic_value = 2**128
-    for _ in range(bound+1):
+    for _ in range(degree+1):
         rand_elements.append(random.randint(0, magic_value))
     return Polynom(rand_elements)
 
@@ -162,7 +162,7 @@ def edf(polynom, d):
     z.append(f.int)
     
     while len(z) < n:
-        h = rand_poly(f.degree())
+        h = rand_poly(f.degree()-1)
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_) + Polynom([1])
         
