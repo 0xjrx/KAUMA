@@ -138,11 +138,9 @@ def rand_poly(bound):
         A random Polynom with a degree less than the specified bound
     """
     rand_elements = []
-    magic_value = (1<<128)-1
-    bound_rand = random.randint(0, bound-1)
-    for _ in range(bound_rand):
+    magic_value = 2**128
+    for _ in range(bound+1):
         rand_elements.append(random.randint(0, magic_value))
-    rand_elements.append(random.randint(1, magic_value))
     return Polynom(rand_elements)
 
 
