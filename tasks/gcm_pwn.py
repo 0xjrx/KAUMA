@@ -128,19 +128,11 @@ def sort_polynomials_with_key(data, key):
 
 
 def rand_poly(degree):
-    """
-    Generates a random polynomial with degree lower than the input bound.
-
-    Args:
-        bound: Maximum degree boundary for the random polynomial
-
-    Returns:
-        A random Polynom with a degree less than the specified bound
-    """
-    rand_elements = []
-    magic_value = 2**128
-    for _ in range(degree+1):
-        rand_elements.append(random.randint(0, magic_value))
+    rand_elements = [random.getrandbits(128) for _ in range(degree+1)]
+    leading = random.getrandbits(128)
+    while leading == 0:
+        leading = random.getrandbits(128)
+    rand_elements.append(leading)
     return Polynom(rand_elements)
 
 
@@ -157,7 +149,7 @@ def edf(polynom, d):
     """
     f = polynom
     q = 1<<128
-    n = polynom.degree()/d
+    n = polynom.degree()//d
     z = []
     z.append(f.int)
     
