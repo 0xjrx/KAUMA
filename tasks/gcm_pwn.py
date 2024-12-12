@@ -142,7 +142,7 @@ def rand_poly(bound):
     for _ in range(bound_rand):
         rand_elements.append(random.randint(0, magic_value))
     if rand_elements[-1] ==0 and len(rand_elements)>1:
-        rand_elements.append(random.randint(0, magic_value))
+        rand_elements.append(random.randint(1, magic_value))
     return Polynom(rand_elements)
 
 
@@ -158,6 +158,8 @@ def edf(polynom, d):
         A list of sorted polynomial factors
     """
     f = polynom
+    if f.int ==[]:
+        f = Polynom([0])
     q = 1<<128
     n = polynom.degree()/d
     z = []
