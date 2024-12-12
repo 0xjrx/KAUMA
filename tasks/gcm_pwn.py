@@ -152,9 +152,7 @@ def edf(polynom, d):
     z.append(f.int)
     
     while len(z) < n:
-        print(f"F Polynom: {f.int}")
         h = rand_poly(f.degree()-1)
-        print(f"Random polynom: {h.int}")
         g_ = ((q**d)-1)//3
         g = h.poly_powmod(f, g_) + Polynom([1])
         
@@ -169,10 +167,8 @@ def edf(polynom, d):
                     u_div_j, _ = u_/j
                     z.append(u_div_j.int)
                     z.remove(u)
-    print(f"z: {z}") 
     polys_obj = [Polynom(group) for group in z]
     sorted_polynomials = polys_obj[0].gfpoly_sort(*polys_obj[1:])
-    print(f"Sorted polys: {[poly_to_b64(p.int) for p in sorted_polynomials]}")
     return sorted_polynomials
 
 
