@@ -9,7 +9,7 @@ from tasks.xex import XEX
 from tasks.gcm import GCM_encrypt, GCM_decrypt
 from tasks.polynom import FieldElement, Polynom
 from tasks.gcm_pwn import sff, ddf, edf
-from kauma_conditional_mp import _base64_to_poly, poly_to_b64
+from kauma_conditional_mp import _base64_to_poly, poly_to_b64, handle_gcm_crack
 def test_gfmul() -> None:
     element_1 = "ARIAAAAAAAAAAAAAAAAAgA=="
     element_2 = "AgAAAAAAAAAAAAAAAAAAAA=="
@@ -510,7 +510,33 @@ def test_gfpoly_factor_edf()-> None:
     assert res == result
 
     print(f"EDF works, result is: {res}\n")
-
+def gcm_crack_test():
+    arguments = {
+        "nonce": "GO40SrNmnQBOiEgT",
+        "m1": {
+          "ciphertext": "ZD+Sol2w6z3RPfPgXJop3MuETGSmPXW5Rz2e",
+          "associated_data": "t5Xj25vikzXgZibQkceiGnYxkco=",
+          "tag": "KZKAhAdX/+xAexA9trIsmQ=="
+        },
+        "m2": {
+          "ciphertext": "1hGis5QqVRPCIqcRMUC4tqedLRMpAMFX+CKXyxCyWgDtm1c=",
+          "associated_data": "",
+          "tag": "bQxiEyh7Cc4nqfB3ShflXQ=="
+        },
+        "m3": {
+          "ciphertext": "lQ6QeIV85i1q",
+          "associated_data": "",
+          "tag": "Wps2KPnZwX8d2lz20NS1gQ=="
+        },
+        "forgery": {
+          "ciphertext": "MlbU8Q==",
+          "associated_data": "OLLU"
+        }
+      } 
+    res = {"responses":{"gcm_crack": handle_gcm_crack(arguments)}}
+    print(res) 
+    assert res == {"responses": {"gcm_crack": {"tag": "q+PeAo2fIUWZ2ZBkW61JOA==", "H": "gGfELiKC9UJ0RJZ00ok7ww==", "mask": "E0BaHUt4JswZlDI0QmWIvQ=="}}}
+    print("TEst case succesful") 
 def tests_run() -> None:
     test_block2poly()
     test_poly2block()
@@ -537,6 +563,9 @@ def tests_run() -> None:
     test_gfpoly_sqrt()
     test_gfpoly_diff()
     test_gfpoly_gcd()
+    for i in range(10):
+        print(i)
+        gcm_crack_test()
     test_gfpoly_factor_sff()
     test_gfpoly_factor_ddf()
 if __name__ == "__main__":

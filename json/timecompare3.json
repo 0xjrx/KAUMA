@@ -1,0 +1,59 @@
+{
+  "testcases": {
+    "gfpoly_sff_test_252": {
+     	"action": "gfpoly_factor_sff",
+     	"arguments": {
+     		"F": [
+     			"C2LSSYKOtoNLyaL0QqDxwQ==",
+     			"Vz1lVxdwldMD7UAPpaLJ9w==",
+     			"jOjNoDvt/SGxdtEa6KWEMw==",
+     			"ysPbPnbYoK7qJBzlzNurCA==",
+     			"Iyl0TVxnxD1y7ZvFOovIuw==",
+     			"E8wcniE6ywwv5mHmmiEJJQ==",
+     			"utlCI6o0eJThqGW22cI9kQ==",
+     			"Dspyc4o0gGKVgq9cQVOz4Q==",
+     			"ITyToEald2e+oIRHbhK17w==",
+     			"D+aQ9bTa65tw7647i9U6+w==",
+     			"qLXuySA8BBjvUSRep0L1Fg==",
+     			"d+7JiTL5GKf/y4XwqdJcAQ==",
+     			"iCfpBo9MPu5Nl7ty0GcVZA==",
+     			"HWaS4im6cJM//QI6fevUBw==",
+     			"xiTV4IrOOMBDylqMAAV4Tw==",
+     			"yIOyt5lZT17YggTK/TmsMA==",
+     			"7OH6jnh5ZJbFWqIlduAeRA==",
+     			"xVFsO9aOftzm7RXvacM4fQ==",
+     			"YK0cYypRtQDay+WvnMA6IA==",
+     			"PoxvgjvIPbkwH7NBlO0Edw==",
+     			"c8UsukslfnkzNwxD5iOBig==",
+     			"1azw7b26R4j/r9NcAlZ3Cw==",
+     			"J7fysRuB035OlJX0fZM/ow==",
+     			"KNulIjeqJ9btKJmqmDlVhA==",
+     			"9G9XgTBoIUIJC9/HT3nKHw==",
+     			"OU28vAdUwP5fGGA8S8YFiQ==",
+     			"svY+eMtusKHJpC/Z8q7GDg==",
+     			"VU4/wB2OAIf5HTfLELoVmQ==",
+     			"km11x5X7vho6b3gqtUyoCQ==",
+     			"AfUTWnlqxNPCCA/0W+eD8Q==",
+     			"bT0qwRUbj1kzFvc0UH3OnQ==",
+     			"y/luC2iGAO6hcmHQJdCX8A==",
+     			"onS5o7huxxmKKPJAEkCqoA==",
+     			"x5xMaeVe9eS94jNp8tLnbA==",
+     			"HY9qBpBDvGkUVYLDh3IXaA==",
+     			"dtaJ2JS9g8cgCTBGQ0ZxOg==",
+     			"NBjsiVF1JeiLOzHIJegSjA==",
+     			"x+nw96TYONCsizCNEvguLQ==",
+     			"i7anCryj2+KCyAnR7G0Jzg==",
+     			"x4KaOkUelQOdSTmEkj6rFQ==",
+     			"U24+Se46BRBbuKUV/CA9sg==",
+     			"2fb2NRn2O8lcAnrMZXCCBA==",
+     			"J3e1lBfvEh3CdEztWZKiOg==",
+     			"j/Tav3GBDW2jAvtT0Dp1vA==",
+     			"OuoihzYz9XPlAsEQFtF/Rw==",
+     			"psmcmdp9pu78uNY2TNOSfw==",
+     			"9XD2JApu53jBfJFWlUCOig==",
+     			"gAAAAAAAAAAAAAAAAAAAAA=="
+     		]
+     	}
+     }
+  }
+}

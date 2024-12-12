@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kauma"
-version = "1.0.0"
+version = "1.0.1"
 description = ""
 authors = ["0xjrx <mrmarquard@protonmail.com>"]
 readme = "README.md"

@@ -83,6 +83,12 @@ R_HI = (REDUCTION_POLYNOMIAL >> 64) & 0xFFFFFFFFFFFFFFFF
 def gf2mul_int(x: int, y: int, r_lo=R_LO, r_hi=R_HI) -> int:
     """
     Multiply two 128-bit integers x and y in GF(2^128) using the C function.
+
+    :param x: A 128-bit integer (0 <= x < 2^128)
+    :param y: A 128-bit integer (0 <= y < 2^128)
+    :param r_lo: Lower 64 bits of the reduction polynomial (default: R_LO)
+    :param r_hi: Upper 64 bits of the reduction polynomial (default: R_HI)
+    :return: The product (x * y) mod the given reduction polynomial, as an int.
     """
     x_lo = x & 0xFFFFFFFFFFFFFFFF
     x_hi = (x >> 64) & 0xFFFFFFFFFFFFFFFF
@@ -100,32 +106,66 @@ def gf2mul_int(x: int, y: int, r_lo=R_LO, r_hi=R_HI) -> int:
 
 class FieldElement:
     """
-    Represents a field element for its base64 representation.
-    Provides arithmetic in GF(2^128).
+    Represents a field element in GF(2^128).
+
+    Provides arithmetic operations (+, *, /), inversion, and square root
+    operations within the finite field defined by the given reduction polynomial.
     """
 
     _IRR_POLY = _IRR_POLY
     _REDUCTION_POLYNOMIAL = REDUCTION_POLYNOMIAL
 
     def __init__(self, element: int):
+        """
+        Initialize a FieldElement.
+
+        param element: A 128-bit integer representing the element.
+        """
         self.element = element
 
     def gcm_sem(self, element) -> int:
+        """
+        Perform a GCM semantic conversion.
+
+        param element: The integer to map.
+        return: The mapped integer.
+        """
         element = element.to_bytes(16, 'little') 
         reversed_element = bytes(BIT_REVERSE_TABLE[b] for b in element)
         return int.from_bytes(reversed_element, 'little')
 
     def __mul__(self, other: 'FieldElement') -> 'FieldElement':
+        """
+        Multiply two FieldElements in GF(2^128).
+
+        :param other: Another FieldElement.
+        :return: The product as a FieldElement.
+        """
         # Directly use gf2mul_int to multiply
         product = gf2mul_int(self.element, other.element)
         return FieldElement(product)
 
     def __add__(self, other: 'FieldElement') -> 'FieldElement':
+        """
+        Add two FieldElements in GF(2^128). Addition is XOR.
+
+        :param other: Another FieldElement.
+        :return: The sum as a FieldElement.
+        """
         # Addition is XOR in GF(2)
         xor = self.element ^ other.element    
         return FieldElement(xor)
     
     def inv(self, Element):
+        """
+        Compute the multiplicative inverse of a FieldElement 'element' in GF(2^128).
+
+        Uses the Extended Euclidean Algorithm to find the inverse modulo the
+        reduction polynomial.
+
+        :param element: The integer representation of the FieldElement to invert.
+        :return: The inverse as a FieldElement.
+        """
         mod = self._REDUCTION_POLYNOMIAL
         a = int(Element)
         u, v = a, mod
@@ -140,11 +180,25 @@ class FieldElement:
         return FieldElement(g1)
 
     def __truediv__(self, other) -> 'FieldElement':
+        """
+        Divide one FieldElement by another.
+
+        :param other: The divisor FieldElement.
+        :return: The quotient as a FieldElement.
+        :raises ValueError: If dividing by zero.
+        """
         if int(other) == 0:
             raise ValueError("Division by zero")
         return self * self.inv(other)
     
     def sqrt(self) -> 'FieldElement':
+        """
+        Compute the square root of the FieldElement by exponentiation.
+
+        Implemented as element^(2^(127)) in GF(2^128).
+
+        :return: The square root as a FieldElement.
+        """
         base = self
         result = FieldElement(1)
         exponent = (1 << 127)
@@ -166,21 +220,41 @@ class FieldElement:
 
 class Polynom:
     """
-    Represents polynomials over GF(2^128) with coefficients encoded as integers.
+    Represents polynomials over GF(2^128).
+
+    Each coefficient is a 128-bit integer (using FieldElement arithmetic).
+    Methods for addition, multiplication, division, GCD, etc., are provided.
     """
 
     def __init__(self, polynomials: list):
+        """
+        Initialize a polynomial with a list of coefficients.
+
+        :param polynomials: A list of integers representing the polynomial's coefficients.
+        """
         self.int = polynomials
 
     def degree(self):
+        """Return the degree of the polynomial."""
         return len(self.int)-1
 
     def _normalize(self):
+        """
+        Normalize the polynomial by removing trailing zeros.
+
+        :return: A normalized Polynom.
+        """
         while self.int and self.int[-1] == 0:
             self.int.pop()
         return Polynom(self.int)
 
     def __add__(self, other):
+        """
+        Add two polynomials over GF(2^128). Addition is coefficient-wise XOR.
+
+        :param other: Another Polynom.
+        :return: The sum as a Polynom.
+        """
         if self.int == other.int:
             return Polynom([0])
         
@@ -201,6 +275,14 @@ class Polynom:
         return result    
 
     def __mul__(self, other):
+        """
+        Multiply two polynomials over GF(2^128).
+
+        Uses gf2mul_int for each coefficient multiplication and XOR for combination.
+
+        :param other: Another Polynom.
+        :return: The product as a Polynom.
+        """
         if self.int == [0] or other.int == [0]:
             return Polynom([0])
 
@@ -219,6 +301,12 @@ class Polynom:
         return Polynom(result_poly)
 
     def __pow__(self, exponent) -> 'Polynom':
+        """
+        Raise the polynomial to a given integer exponent (naive method).
+
+        :param exponent: The exponent.
+        :return: self^exponent as a Polynom.
+        """
         if exponent ==0:
             return Polynom([1])
         if exponent ==1:
@@ -233,6 +321,14 @@ class Polynom:
         return result
      
     def __truediv__(self, divisor):
+        """
+        Divide one polynomial by another (with remainder).
+
+        Uses polynomial long division over GF(2^128).
+
+        :param divisor: The divisor Polynom.
+        :return: (quotient, remainder) as (Polynom, Polynom).
+        """
         if len(divisor.int) == 0:
             return Polynom([0]), self
             
@@ -290,6 +386,13 @@ class Polynom:
         return quotient, remainder
 
     def poly_powmod(self, modulus: 'Polynom', exponent) -> 'Polynom':
+        """
+        Compute self^exponent mod modulus using fast exponentiation.
+
+        :param modulus: The modulus polynomial.
+        :param exponent: The exponent (integer).
+        :return: (self^exponent) mod modulus as a Polynom.
+        """
         if exponent == 0:
             return Polynom([1])
         
@@ -311,6 +414,12 @@ class Polynom:
         return result
 
     def gfpoly_sort(self, *others):
+        """
+        Sort polynomials based on their degree and coefficients.
+
+        :param others: Additional Polynom objects to sort along with self.
+        :return: A sorted list of Polynom objects.
+        """
         all_poly = [self] + list(others)
         def compare_polys(poly):
             key = [poly.degree()]
@@ -321,6 +430,11 @@ class Polynom:
         return sorted_polys
 
     def gfpoly_makemonic(self) -> list:
+        """
+        Make the polynomial monic by dividing all coefficients by the leading coefficient.
+
+        :return: A list of normalized coefficients.
+        """
         highest_coefficient = int(FieldElement(self.int[-1]))
         new_poly = [0] * len(self.int)
         
@@ -331,6 +445,11 @@ class Polynom:
         return [coeff for coeff in new_poly]
 
     def sqrt(self) -> 'Polynom':
+        """
+        Compute a "square root" of the polynomial by taking the sqrt of certain coefficients.
+
+        :return: A Polynom representing the square root.
+        """
         result = []
         for degree, coeff in enumerate(self.int):
             if (degree+1)%2:
@@ -340,6 +459,11 @@ class Polynom:
         return Polynom(result)
 
     def derivative(self) -> 'Polynom':
+        """
+        Compute the formal derivative of the polynomial.
+
+        :return: The derivative as a Polynom.
+        """
         if self.degree() == 0:
             return Polynom([0])
         
@@ -355,6 +479,12 @@ class Polynom:
         return result_poly
 
     def gcd(self, other) -> 'Polynom':
+        """
+        Compute the greatest common divisor (GCD) of two polynomials.
+
+        :param other: Another Polynom.
+        :return: The GCD as a Polynom.
+        """
         f = self
         g = other
         if len(other.int)>len(self.int):
