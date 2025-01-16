@@ -140,8 +140,8 @@ Example usage:
 # Create polynomials with base64-encoded coefficients
 # Each coefficient represents a field element
 # Highest degree term is rightmost in the list
-p1 = Polynom(["AAAAAAAAAAAAAAAAAAAAAA==", "gAAAAAAAAAAAAAAAAAAAAA=="])  # x + 1
-p2 = Polynom(["gAAAAAAAAAAAAAAAAAAAAA==", "AAAAAAAAAAAAAAAAAAAAAA=="])  # 1 + x
+p1 = Polynom([1, 0])  # x + 1
+p2 = Polynom([1, 0])  # 1 + x
 
 # Perform operations
 sum_poly = p1 + p2    # Polynomial addition
